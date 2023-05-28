@@ -1,0 +1,36 @@
+.outerContainer {
+    position: absolute;
+    inset: 0;
+    z-index: var(--ui-popup-z-index);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popupContainer {
+    position: relative;
+}
+
+.quietButton {
+    appearance: none;
+    outline:0;
+    padding:0;
+    background:none;
+    border:none;
+    cursor: pointer;
+}
+.quietButton:active {
+    position: relative;
+    top: 1px;
+}
+
+.deathTypeContainer {
+    align-items: center;
+    display: flex;
+    height: 38px;
+    justify-content: center;
+    left: 4px;
+    top: 18px;
+    position: absolute;
+    width: 42px;
+}

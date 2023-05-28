@@ -1,0 +1,8 @@
+.inventory {
+    display: flex;
+}
+
+.inventoryEntry {
+    display: flex;
+    gap: 1px;
+}
