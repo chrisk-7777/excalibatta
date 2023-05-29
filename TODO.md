@@ -3,7 +3,7 @@
 - [x] Lift common stuff into GameObject class
 - [x] Collect flour
 - [x] Goal tile
-- [ ] z layer
+- [x] z layer
 - [ ] Stop / start game timer
 - [ ] Fix janky control
 - [ ] Particle effect when collect

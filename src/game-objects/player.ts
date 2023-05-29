@@ -42,6 +42,8 @@ export class Player extends GameObject {
       level,
     });
 
+    this.zOffset = 100;
+
     this.canCollectItems = true;
     this.canCompleteLevel = true;
     this.direction = CONSTS.DIRECTION_RIGHT;

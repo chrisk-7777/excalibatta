@@ -1,4 +1,4 @@
-import { Actor, CollisionType, Vector, vec } from 'excalibur';
+import { Actor, CollisionType, Engine, Vector, vec } from 'excalibur';
 
 import { Level } from '../services/level';
 import { CELL_SIZE, FourDirections, directionUpdateMap } from '../helpers/consts';
@@ -16,6 +16,7 @@ export abstract class GameObject extends Actor {
   canBeStolen: boolean;
   canCollectItems: boolean;
   level: Level;
+  zOffset: number;
 
   constructor(options: Options) {
     super({
@@ -28,6 +29,7 @@ export abstract class GameObject extends Actor {
     this.canBeStolen = false;
     this.canCollectItems = false;
     this.level = options.level;
+    this.zOffset = 1;
   }
 
   isSolidForBody() {
@@ -74,5 +76,11 @@ export abstract class GameObject extends Actor {
     }
 
     return Boolean(collision.withSolidPlacement());
+  }
+
+  update(engine: Engine, delta: number): void {
+    super.update(engine, delta);
+
+    this.z = this.pos.y + this.zOffset;
   }
 }
