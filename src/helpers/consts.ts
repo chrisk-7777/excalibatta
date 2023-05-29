@@ -32,6 +32,12 @@ export const DIRECTION_RIGHT = 'RIGHT';
 export const DIRECTION_UP = 'UP';
 export const DIRECTION_DOWN = 'DOWN';
 
+export type FourDirections =
+  | typeof DIRECTION_DOWN
+  | typeof DIRECTION_UP
+  | typeof DIRECTION_LEFT
+  | typeof DIRECTION_RIGHT;
+
 export const DEATH_TYPE_CLOCK = 'CLOCK';
 
 export const directionUpdateMap = {
@@ -39,7 +45,7 @@ export const directionUpdateMap = {
   [DIRECTION_RIGHT]: { x: 1, y: 0 },
   [DIRECTION_UP]: { x: 0, y: -1 },
   [DIRECTION_DOWN]: { x: 0, y: 1 },
-};
+} as const;
 
 export const BODY_SKINS = {
   NORMAL: 'NORMAL',
@@ -78,46 +84,46 @@ export const THEME_BACKGROUNDS = {
 
 export const THEME_TILES_MAP = {
   [LEVEL_THEMES.YELLOW]: {
-    FLOOR: '1x1',
-    TOP: '1x0',
-    LEFT: '0x1',
-    RIGHT: '2x1',
-    BOTTOM: '1x2',
-    WALL: '0x2',
+    FLOOR: [1, 1],
+    TOP: [1, 0],
+    LEFT: [0, 1],
+    RIGHT: [2, 1],
+    BOTTOM: [1, 2],
+    WALL: [0, 2],
   },
   [LEVEL_THEMES.BLUE]: {
-    FLOOR: '4x1',
-    TOP: '4x0',
-    LEFT: '3x1',
-    RIGHT: '5x1',
-    BOTTOM: '4x2',
-    WALL: '3x2',
+    FLOOR: [4, 1],
+    TOP: [4, 0],
+    LEFT: [3, 1],
+    RIGHT: [5, 1],
+    BOTTOM: [4, 2],
+    WALL: [3, 2],
   },
   [LEVEL_THEMES.GREEN]: {
-    FLOOR: '7x1',
-    TOP: '7x0',
-    LEFT: '6x1',
-    RIGHT: '8x1',
-    BOTTOM: '7x2',
-    WALL: '6x2',
+    FLOOR: [7, 1],
+    TOP: [7, 0],
+    LEFT: [6, 1],
+    RIGHT: [8, 1],
+    BOTTOM: [7, 2],
+    WALL: [6, 2],
   },
   [LEVEL_THEMES.PINK]: {
-    FLOOR: '10x1',
-    TOP: '10x0',
-    LEFT: '9x1',
-    RIGHT: '11x1',
-    BOTTOM: '10x2',
-    WALL: '9x2',
+    FLOOR: [10, 1],
+    TOP: [10, 0],
+    LEFT: [9, 1],
+    RIGHT: [11, 1],
+    BOTTOM: [10, 2],
+    WALL: [9, 2],
   },
   [LEVEL_THEMES.GRAY]: {
-    FLOOR: '13x1',
-    TOP: '13x0',
-    LEFT: '12x1',
-    RIGHT: '14x1',
-    BOTTOM: '13x2',
-    WALL: '12x2',
+    FLOOR: [13, 1],
+    TOP: [13, 0],
+    LEFT: [12, 1],
+    RIGHT: [14, 1],
+    BOTTOM: [13, 2],
+    WALL: [12, 2],
   },
-};
+} as const;
 
 export const ICE_CORNERS = {
   TOP_LEFT: 'TOP_LEFT',

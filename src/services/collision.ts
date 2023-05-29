@@ -1,20 +1,16 @@
-import { Actor, Vector } from 'excalibur';
-import { Player } from '../game-objects/player';
+import { Vector } from 'excalibur';
+
+import { GameObject } from '../game-objects/game-object';
 import { Level } from './level';
-import { FirePickup } from '../game-objects/fire-pickup';
-import { WaterPickup } from '../game-objects/water-pickup';
-import { IcePickup } from '../game-objects/ice-pickup';
-import { GreenKeyPickup } from '../game-objects/green-key-pickup';
-import { BlueKeyPickup } from '../game-objects/blue-key-pickup';
 
 export class Collision {
-  forBody: Player;
+  forBody: GameObject;
   level: Level;
-  placementsAtPosition: Array<Player | FirePickup> = [];
+  placementsAtPosition: Array<GameObject> = [];
   x: number;
   y: number;
 
-  constructor(forBody: Player, level: Level, position: Vector | null = null) {
+  constructor(forBody: GameObject, level: Level, position: Vector | null = null) {
     this.forBody = forBody;
     this.level = level;
     this.x = position ? position.x : forBody.pos.x;
@@ -25,21 +21,15 @@ export class Collision {
   scanPlacementsAtPosition() {
     this.placementsAtPosition = this.level.actors.filter((p) => {
       const isSelf = p.id === this.forBody.id;
-      const isType =
-        p instanceof Player ||
-        p instanceof FirePickup ||
-        p instanceof WaterPickup ||
-        p instanceof IcePickup ||
-        p instanceof BlueKeyPickup ||
-        p instanceof GreenKeyPickup;
+      const isType = p instanceof GameObject;
 
       return !isSelf && isType && p.pos.x === this.x && p.pos.y === this.y;
-    }) as any;
+    }) as Array<GameObject>;
   }
 
-  // withSolidPlacement() {
-  //   return this.placementsAtPosition.find((p) => p.isSolidForBody(this.forBody));
-  // }
+  withSolidPlacement() {
+    return this.placementsAtPosition.find((p) => p.isSolidForBody());
+  }
 
   withPlacementAddsToInventory() {
     if (this.forBody.canCollectItems) {

@@ -1,18 +1,12 @@
-/* eslint-disable @typescript-eslint/no-inferrable-types */
-import { Actor, Animation, CollisionType, Engine, Input, Sprite, SpriteSheet, Vector, vec } from 'excalibur';
+import { Animation, Engine, Input, Sprite, SpriteSheet, Vector, vec } from 'excalibur';
 
-import { TILES } from '../helpers/tiles';
-import * as CONSTS from '../helpers/consts';
+import { Collision } from '../services/collision';
+import { GameObject } from './game-object';
 import { Level } from '../services/level';
 import { Resources, TileSetGrid32 } from '../services/resources';
-import { Collision } from '../services/collision';
+import { TILES } from '../helpers/tiles';
+import * as CONSTS from '../helpers/consts';
 import soundsManager, { SFX } from '../services/sounds';
-
-type FourDirections =
-  | typeof CONSTS.DIRECTION_DOWN
-  | typeof CONSTS.DIRECTION_UP
-  | typeof CONSTS.DIRECTION_LEFT
-  | typeof CONSTS.DIRECTION_RIGHT;
 
 const heroSkinMap = {
   [CONSTS.BODY_SKINS.NORMAL]: [TILES.HERO_LEFT, TILES.HERO_RIGHT],
@@ -27,24 +21,37 @@ const heroSkinMap = {
   [CONSTS.HERO_RUN_2]: [TILES.HERO_RUN_2_LEFT, TILES.HERO_RUN_2_RIGHT],
 } as const;
 
-export class Player extends Actor {
-  canCollectItems: boolean = true;
-  canCompleteLevel: boolean = true;
-  direction: typeof CONSTS.DIRECTION_LEFT | typeof CONSTS.DIRECTION_RIGHT = CONSTS.DIRECTION_RIGHT;
-  interactsWithGround: boolean = true;
-  isDead: boolean = false;
-  level: Level;
-  movingPixelDirection: FourDirections = CONSTS.DIRECTION_RIGHT;
-  movingPixelsRemaining: number = 0;
-  skin: keyof typeof heroSkinMap = CONSTS.BODY_SKINS.NORMAL;
-  spriteWalkFrame: 0 | 1 = 0;
-  targetPos: Vector;
-  travelPixelsPerFrame: number = 1.5;
+export class Player extends GameObject {
+  canCollectItems: boolean;
+  canCompleteLevel: boolean;
+  direction: typeof CONSTS.DIRECTION_LEFT | typeof CONSTS.DIRECTION_RIGHT;
+  interactsWithGround: boolean;
+  isDead: boolean;
+  movingPixelDirection: CONSTS.FourDirections;
+  movingPixelsRemaining: number;
+  skin: keyof typeof heroSkinMap;
+  spriteWalkFrame: 0 | 1;
+  travelPixelsPerFrame: number;
 
   constructor(pos: Vector, level: Level) {
-    super({ pos, width: 16, height: 16, anchor: vec(0, 0), collisionType: CollisionType.Passive });
-    this.targetPos = pos.clone();
-    this.level = level;
+    super({
+      pos,
+      width: 16,
+      height: 16,
+      anchor: vec(0, 0),
+      level,
+    });
+
+    this.canCollectItems = true;
+    this.canCompleteLevel = true;
+    this.direction = CONSTS.DIRECTION_RIGHT;
+    this.interactsWithGround = true;
+    this.isDead = false;
+    this.movingPixelDirection = CONSTS.DIRECTION_RIGHT;
+    this.movingPixelsRemaining = 0;
+    this.skin = CONSTS.BODY_SKINS.NORMAL;
+    this.spriteWalkFrame = 0;
+    this.travelPixelsPerFrame = 1.5;
   }
 
   onInitialize(): void {
@@ -71,16 +78,6 @@ export class Player extends Actor {
     });
   }
 
-  // move to parent
-  addsItemToInventoryOnCollide() {
-    return null;
-  }
-
-  // move to parent
-  collect() {
-    //
-  }
-
   // Not used
   updateWalkFrame() {
     this.spriteWalkFrame = this.spriteWalkFrame === 1 ? 0 : 1;
@@ -91,7 +88,7 @@ export class Player extends Actor {
   }
 
   // Body
-  requestMovement(direction: FourDirections) {
+  requestMovement(direction: CONSTS.FourDirections) {
     // console.log('req', direction, this.movingPixelsRemaining);
     //Attempt to start moving
     if (this.movingPixelsRemaining !== 0) {
@@ -106,10 +103,10 @@ export class Player extends Actor {
     //   return;
     // }
 
-    // //Make sure the next space is available
-    // if (this.isSolidAtNextPosition(direction)) {
-    //   return;
-    // }
+    //Make sure the next space is available
+    if (this.isSolidAtNextPosition(direction)) {
+      return;
+    }
 
     // // Maybe hop out of non-normal skin
     // if (this.skin === BODY_SKINS.WATER) {

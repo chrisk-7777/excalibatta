@@ -1,21 +1,20 @@
-import { Actor, CollisionType, Sprite, SpriteSheet, Vector, vec } from 'excalibur';
+import { Sprite, SpriteSheet, Vector, vec } from 'excalibur';
+
+import { CELL_SIZE, PLACEMENT_TYPE_WATER_PICKUP } from '../helpers/consts';
+import { GameObject } from './game-object';
+import { Level } from '../services/level';
 import { Resources, TileSetGrid16 } from '../services/resources';
 import { TILES } from '../helpers/tiles';
-import { PLACEMENT_TYPE_WATER_PICKUP } from '../helpers/consts';
-import { Level } from '../services/level';
 
-export class WaterPickup extends Actor {
-  level: Level;
-
+export class WaterPickup extends GameObject {
   constructor(pos: Vector, level: Level) {
     super({
       pos,
-      width: 16,
-      height: 16,
+      width: CELL_SIZE,
+      height: CELL_SIZE,
       anchor: vec(0, 0),
-      collisionType: CollisionType.Passive,
+      level,
     });
-    this.level = level;
   }
 
   onInitialize(): void {

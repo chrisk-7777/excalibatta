@@ -1,21 +1,20 @@
-import { Actor, CollisionType, Sprite, SpriteSheet, Vector, vec } from 'excalibur';
+import { Sprite, SpriteSheet, Vector, vec } from 'excalibur';
+
+import { GameObject } from './game-object';
+import { Level } from '../services/level';
+import { PLACEMENT_TYPE_KEY_GREEN } from '../helpers/consts';
 import { Resources, TileSetGrid16 } from '../services/resources';
 import { TILES } from '../helpers/tiles';
-import { PLACEMENT_TYPE_KEY_GREEN } from '../helpers/consts';
-import { Level } from '../services/level';
 
-export class GreenKeyPickup extends Actor {
-  level: Level;
-
+export class GreenKeyPickup extends GameObject {
   constructor(pos: Vector, level: Level) {
     super({
       pos,
       width: 16,
       height: 16,
       anchor: vec(0, 0),
-      collisionType: CollisionType.Passive,
+      level,
     });
-    this.level = level;
   }
 
   onInitialize(): void {
