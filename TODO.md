@@ -1,8 +1,8 @@
 - [x] Background layers / map (LevelBackgroundTilesLayer)
 - [x] Wall limits
 - [x] Lift common stuff into GameObject class
-- [ ] Collect flour
-- [ ] Goal tile
+- [x] Collect flour
+- [x] Goal tile
 - [ ] z layer
 - [ ] Stop / start game timer
 - [ ] Fix janky control

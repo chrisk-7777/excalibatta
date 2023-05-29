@@ -12,12 +12,14 @@ import { Resources } from './resources';
 import { WaterPickup } from '../game-objects/water-pickup';
 import * as CONSTS from '../helpers/consts';
 import Levels from '../levels/levels-map';
+import { Flour } from '../game-objects/flour';
+import { Goal } from '../game-objects/goal';
 
 const placementTypeClassMap = {
   [CONSTS.PLACEMENT_TYPE_HERO]: Player,
-  // [CONSTS.PLACEMENT_TYPE_GOAL]: Goal,
+  [CONSTS.PLACEMENT_TYPE_GOAL]: Goal,
   // [CONSTS.PLACEMENT_TYPE_WALL]: Wall,
-  // [CONSTS.PLACEMENT_TYPE_FLOUR]: Flour,
+  [CONSTS.PLACEMENT_TYPE_FLOUR]: Flour,
   // [CONSTS.PLACEMENT_TYPE_CELEBRATION]: Celebration,
   // [CONSTS.PLACEMENT_TYPE_LOCK]: Lock,
   [CONSTS.PLACEMENT_TYPE_KEY_GREEN]: GreenKeyPickup,
@@ -113,6 +115,9 @@ export class Level extends Scene {
         this.add(instance);
       }
     });
+
+    // Funky smell - triggering event for ui to update... can be better?
+    this.inventory.clear();
   }
 
   setDeathOutcome(causeOfDeath: string) {

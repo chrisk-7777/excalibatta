@@ -29,9 +29,4 @@ export class BlueKeyPickup extends GameObject {
   addsItemToInventoryOnCollide() {
     return PLACEMENT_TYPE_KEY_BLUE;
   }
-
-  collect() {
-    this.active = false;
-    this.level.inventory.add(this.addsItemToInventoryOnCollide());
-  }
 }

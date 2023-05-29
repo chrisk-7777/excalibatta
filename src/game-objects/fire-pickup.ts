@@ -29,9 +29,4 @@ export class FirePickup extends GameObject {
   addsItemToInventoryOnCollide() {
     return PLACEMENT_TYPE_FIRE_PICKUP;
   }
-
-  collect() {
-    this.active = false;
-    this.level.inventory.add(this.addsItemToInventoryOnCollide());
-  }
 }

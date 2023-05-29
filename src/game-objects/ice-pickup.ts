@@ -29,9 +29,4 @@ export class IcePickup extends GameObject {
   addsItemToInventoryOnCollide() {
     return PLACEMENT_TYPE_ICE_PICKUP;
   }
-
-  collect() {
-    this.active = false;
-    this.level.inventory.add(this.addsItemToInventoryOnCollide());
-  }
 }

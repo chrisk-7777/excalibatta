@@ -13,7 +13,8 @@ interface Options {
 }
 
 export abstract class GameObject extends Actor {
-  canCollectItems: boolean = false;
+  canBeStolen: boolean;
+  canCollectItems: boolean;
   level: Level;
 
   constructor(options: Options) {
@@ -24,6 +25,8 @@ export abstract class GameObject extends Actor {
       anchor: options.anchor,
       collisionType: CollisionType.Passive,
     });
+    this.canBeStolen = false;
+    this.canCollectItems = false;
     this.level = options.level;
   }
 
@@ -31,12 +34,20 @@ export abstract class GameObject extends Actor {
     return false;
   }
 
-  addsItemToInventoryOnCollide() {
+  addsItemToInventoryOnCollide(): string | null {
     return null;
   }
 
+  completesLevelOnCollide(): boolean {
+    return false;
+  }
+
   collect() {
-    return;
+    const item = this.addsItemToInventoryOnCollide();
+    if (item) {
+      this.active = false;
+      this.level.inventory.add(item);
+    }
   }
 
   getCollisionAtNextPosition(direction: FourDirections) {

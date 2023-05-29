@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { G } from '../../services/global';
-import { Inventory } from '../../services/inventory';
+import { Inventory, InventoryItems } from '../../services/inventory';
 import { TILES } from '../../helpers/tiles';
 import * as CONSTS from '../../helpers/consts';
 import Sprite from '../sprite/sprite';
@@ -32,32 +32,25 @@ const showInventory = [
 ];
 
 export default function InventoryList() {
-  const [inventory, setInventory] = useState<Inventory | null>(null);
-  const [hack, setHack] = useState(0);
+  const [inventory, setInventory] = useState<InventoryItems>({});
 
   useEffect(() => {
     const handle = (e: any) => {
-      console.log('update received', e.inventory);
       setInventory(e.inventory);
-      setHack((hack) => hack + 1); // force re-render because we're passing a reference to inventory which isn't reactive. think about better option for that
     };
 
     G.on('InventoryUpdated', handle);
-
-    return () => {
-      G.off('InventoryUpdated', handle);
-    };
+    return () => G.off('InventoryUpdated', handle);
   }, []);
 
   if (!inventory) {
     return null;
   }
 
-  console.log(inventory);
   return (
     <div className={styles.inventory}>
       {showInventory
-        .filter((i) => inventory.has(i.key))
+        .filter((i) => inventory[i.key])
         .map((i) => (
           <div key={i.key} className={styles.inventoryEntry}>
             <Sprite frameCoord={i.tile} />

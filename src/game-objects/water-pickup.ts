@@ -18,20 +18,11 @@ export class WaterPickup extends GameObject {
   }
 
   onInitialize(): void {
-    const spriteSheet = SpriteSheet.fromImageSource({
-      image: Resources.TileSet,
-      grid: TileSetGrid16,
-    });
-
+    const spriteSheet = SpriteSheet.fromImageSource({ image: Resources.TileSet, grid: TileSetGrid16 });
     this.graphics.use(spriteSheet.getSprite(TILES.WATER_PICKUP[0], TILES.WATER_PICKUP[1]) as Sprite);
   }
 
   addsItemToInventoryOnCollide() {
     return PLACEMENT_TYPE_WATER_PICKUP;
-  }
-
-  collect() {
-    this.active = false;
-    this.level.inventory.add(this.addsItemToInventoryOnCollide());
   }
 }

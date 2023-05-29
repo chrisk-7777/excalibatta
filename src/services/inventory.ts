@@ -1,29 +1,21 @@
 import { G } from '../services/global';
 
+export type InventoryItems = Record<string, boolean>;
+
 export class Inventory {
-  inventoryMap: Map<string, boolean>;
+  items: InventoryItems;
 
   constructor() {
-    this.inventoryMap = new Map();
-  }
-
-  has(key: string) {
-    return Boolean(this.inventoryMap.has(key));
+    this.items = {};
   }
 
   add(key: string) {
-    if (!key) {
-      console.warn('WARNING! Trying to add falsy key to Inventory', key);
-      return;
-    }
-
-    this.inventoryMap.set(key, true);
-    console.log(key, this.inventoryMap);
-
-    G.emit('InventoryUpdated', { inventory: this });
+    this.items[key] = true;
+    G.emit('InventoryUpdated', { inventory: { ...this.items } });
   }
 
   clear() {
-    this.inventoryMap = new Map();
+    this.items = {};
+    G.emit('InventoryUpdated', { inventory: { ...this.items } });
   }
 }

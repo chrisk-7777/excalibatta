@@ -1,15 +1,28 @@
-import { CELL_SIZE, PLACEMENT_TYPE_FLOUR } from '../../helpers/consts';
+import { CELL_SIZE } from '../../helpers/consts';
 import Sprite from '../sprite/sprite';
 import { TILES } from '../../helpers/tiles';
 import PixelNumber from '../pixel-number/pixel-number';
 
 import styles from './flour-count.module.css';
+import { G } from '../../services/global';
+import { useEffect, useState } from 'react';
+import { Flour } from '../../game-objects/flour';
 
 export default function FlourCount() {
-  const count = '0';
-  // level.placements.filter((p) => {
-  //   return p.type === PLACEMENT_TYPE_FLOUR && !p.hasBeenCollected;
-  // }).length;
+  const [count, setCount] = useState('0');
+
+  useEffect(() => {
+    const handle = () => {
+      const count = G.game?.currentScene.actors.filter((p) => {
+        return p instanceof Flour && p.active;
+      });
+
+      setCount((count ?? []).length.toString());
+    };
+
+    G.on('InventoryUpdated', handle);
+    return () => G.off('InventoryUpdated', handle);
+  }, []);
 
   return (
     <div className={styles.flourCount}>
