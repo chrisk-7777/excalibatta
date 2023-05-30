@@ -91,11 +91,6 @@ button:focus-visible {
   z-index: 10;
   overflow: hidden;
   pointer-events: none;
-}
-
-#ui > div {
-  transform: scale(3);
-  transform-origin: 0 0;
   image-rendering: crisp-edges;
 }
 

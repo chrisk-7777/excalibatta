@@ -33,13 +33,14 @@ export class Player extends GameObject {
   spriteWalkFrame: 0 | 1;
   travelPixelsPerFrame: number;
 
-  constructor(pos: Vector, level: Level) {
+  constructor(pos: Vector, level: Level, type: string) {
     super({
       pos,
       width: 16,
       height: 16,
       anchor: vec(0, 0),
       level,
+      type,
     });
 
     this.zOffset = 100;
@@ -146,6 +147,7 @@ export class Player extends GameObject {
   handleCollisions() {
     const collision = new Collision(this, this.level);
 
+    // Adding to inventory
     const collideThatAddsToInventory = collision.withPlacementAddsToInventory();
     if (collideThatAddsToInventory) {
       collideThatAddsToInventory.collect();
@@ -156,6 +158,17 @@ export class Player extends GameObject {
       // });
       soundsManager.playSfx(SFX.COLLECT);
     }
+
+    // Damaging and death
+    const takesDamages = collision.withSelfGetsDamaged();
+    if (takesDamages) {
+      console.log(takesDamages.type);
+      this.takesDamage(takesDamages.type);
+    }
+  }
+
+  takesDamage(deathType: string): void {
+    this.level.setDeathOutcome(deathType);
   }
 
   onDoneMoving() {
@@ -168,8 +181,8 @@ export class Player extends GameObject {
     // this.onPostMove();
   }
 
-  update(engine: Engine, delta: number): void {
-    super.update(engine, delta);
+  onPreUpdate(engine: Engine, delta: number): void {
+    // super.update(engine, delta);
 
     // console.log("***", this.movingPixelDirection);
 
@@ -213,4 +226,23 @@ export class Player extends GameObject {
     // console.log(this.pos.x);
     this.graphics.use(this.getFrame(), { anchor: vec(0.25, 0.5) });
   }
+
+  // onPreUpdate(engine: Engine, elapsedMs: number): void {
+  //   this.vel = Vector.Zero;
+
+  //   if (engine.input.keyboard.isHeld(Input.Keys.ArrowRight)) {
+  //     this.vel = vec(64, 0);
+  //   }
+  //   if (engine.input.keyboard.isHeld(Input.Keys.ArrowLeft)) {
+  //     this.vel = vec(-64, 0);
+  //   }
+  //   if (engine.input.keyboard.isHeld(Input.Keys.ArrowUp)) {
+  //     this.vel = vec(0, -64);
+  //   }
+  //   if (engine.input.keyboard.isHeld(Input.Keys.ArrowDown)) {
+  //     this.vel = vec(0, 64);
+  //   }
+
+  //   this.graphics.use(this.getFrame(), { anchor: vec(0.25, 0.5) });
+  // }
 }

@@ -4,6 +4,15 @@
 - [x] Collect flour
 - [x] Goal tile
 - [x] z layer
-- [ ] Stop / start game timer
-- [ ] Fix janky control
+- [x] camera follow
+- [x] death tile like water or fire
+- [x] (1) Stop / start game timer
+- [x] restart level
+- [x] tearing on camera
+- [ ] internal Wall
+- [ ] DoorSwitch
+- [ ] (2) Fix janky control
 - [ ] Particle effect when collect
+- [ ] Teleport
+- [ ] game instance doesn't need to be a global, it can just be exported from the file. similar to inventory
+- [ ] reset events for death message and timer are a bit icky

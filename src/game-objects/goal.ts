@@ -8,13 +8,14 @@ import { Flour } from './flour';
 import { Resources, TileSetGrid16 } from '../services/resources';
 
 export class Goal extends GameObject {
-  constructor(pos: Vector, level: Level) {
+  constructor(pos: Vector, level: Level, type: string) {
     super({
       pos,
       width: CELL_SIZE,
       height: CELL_SIZE,
       anchor: vec(0, 0),
       level,
+      type,
     });
   }
 

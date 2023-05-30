@@ -9,6 +9,7 @@ interface Options {
   height: number;
   level: Level;
   pos: Vector;
+  type: string;
   width: number;
 }
 
@@ -16,6 +17,7 @@ export abstract class GameObject extends Actor {
   canBeStolen: boolean;
   canCollectItems: boolean;
   level: Level;
+  type: string;
   zOffset: number;
 
   constructor(options: Options) {
@@ -29,6 +31,7 @@ export abstract class GameObject extends Actor {
     this.canBeStolen = false;
     this.canCollectItems = false;
     this.level = options.level;
+    this.type = options.type;
     this.zOffset = 1;
   }
 
@@ -42,6 +45,16 @@ export abstract class GameObject extends Actor {
 
   completesLevelOnCollide(): boolean {
     return false;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  damagesBodyOnCollide(_body: GameObject): boolean {
+    return false;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  takesDamage(_body: string): void {
+    return;
   }
 
   collect() {
@@ -68,8 +81,6 @@ export abstract class GameObject extends Actor {
 
     const collision = this.getCollisionAtNextPosition(direction);
     const isOutOfBounds = this.level.isPositionOutOfBounds(collision.x, collision.y);
-
-    console.log(isOutOfBounds);
 
     if (isOutOfBounds) {
       return true;

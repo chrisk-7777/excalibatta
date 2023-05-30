@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { DisplayMode, Engine, Loader } from 'excalibur';
+import { DisplayMode, Engine, Loader, Scene } from 'excalibur';
 
 import { G } from './services/global';
 import { Level } from './services/level';
@@ -11,7 +11,7 @@ import TopHud from './components/top-hud/top-hud';
 
 import './index.css';
 
-import { DevTool } from '@excaliburjs/dev-tools';
+// import { DevTool } from '@excaliburjs/dev-tools';
 
 G.game = new Engine({
   displayMode: DisplayMode.FitContainer,
@@ -22,12 +22,20 @@ G.game = new Engine({
   suppressPlayButton: true,
   canvasElementId: 'game',
 });
-const d = new DevTool(G.game);
+// G.game.showDebug(true);
+// new DevTool(G.game);
 
-const level = new Level();
+function loadLevel() {
+  if (!G.game) {
+    return;
+  }
 
-G.game.add('first-level', level);
-G.game.goToScene('first-level');
+  const level = new Level();
+  G.game.add('level', level);
+  G.game.goToScene('level');
+}
+
+G.game.add('void', new Scene());
 
 class QuickLoader extends Loader {
   showPlayButton() {
@@ -49,6 +57,7 @@ for (const resourceKey in Resources) {
 }
 
 G.game.start(loader);
+loadLevel();
 
 ReactDOM.createRoot(document.getElementById('ui') as HTMLElement).render(
   <React.StrictMode>

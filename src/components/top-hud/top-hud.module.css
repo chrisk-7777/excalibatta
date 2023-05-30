@@ -1,22 +1,24 @@
 .topHud {
-    position: absolute;
-    top: 4px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 4px;
+  transform-origin: 0 0;
+  transform: scale(3);
 }
 
 .topHudLeft {
-    transform: scale( var(--pixel-size) );
-    transform-origin: top left;
-    display: flex;
-    gap: 2px;
+  transform: scale(var(--pixel-size));
+  transform-origin: top left;
+  display: flex;
+  gap: 2px;
 }
 
 .topHudRight {
-    transform: scale( var(--pixel-size) );
-    transform-origin: top right;
-    display: flex;
-    gap: 2px;
+  transform: scale(var(--pixel-size));
+  transform-origin: top right;
+  display: flex;
+  gap: 2px;
 }

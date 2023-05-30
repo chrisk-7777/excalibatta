@@ -55,11 +55,11 @@ export class Collision {
   //   });
   // }
 
-  // withSelfGetsDamaged() {
-  //   return this.placementsAtPosition.find((p) => {
-  //     return p.damagesBodyOnCollide(this.forBody);
-  //   });
-  // }
+  withSelfGetsDamaged() {
+    return this.placementsAtPosition.find((p) => {
+      return p.damagesBodyOnCollide(this.forBody);
+    });
+  }
 
   // withChangesHeroSkin() {
   //   return this.placementsAtPosition.find((p) => {

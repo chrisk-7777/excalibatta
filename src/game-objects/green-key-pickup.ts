@@ -7,13 +7,14 @@ import { Resources, TileSetGrid16 } from '../services/resources';
 import { TILES } from '../helpers/tiles';
 
 export class GreenKeyPickup extends GameObject {
-  constructor(pos: Vector, level: Level) {
+  constructor(pos: Vector, level: Level, type: string) {
     super({
       pos,
       width: 16,
       height: 16,
       anchor: vec(0, 0),
       level,
+      type,
     });
   }
 
