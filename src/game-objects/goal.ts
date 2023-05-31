@@ -1,4 +1,4 @@
-import { Vector, vec } from 'excalibur';
+import { Vector } from 'excalibur';
 
 import { CELL_SIZE } from '../helpers/consts';
 import { GameObject } from './game-object';
@@ -13,7 +13,7 @@ export class Goal extends GameObject {
       pos,
       width: CELL_SIZE,
       height: CELL_SIZE,
-      anchor: vec(0, 0),
+      anchor: Vector.Zero,
       level,
       type,
     });

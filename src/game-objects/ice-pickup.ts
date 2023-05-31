@@ -1,30 +1,25 @@
-import { Sprite, SpriteSheet, Vector, vec } from 'excalibur';
+import { Vector } from 'excalibur';
 
 import { GameObject } from './game-object';
 import { Level } from '../services/level';
-import { PLACEMENT_TYPE_ICE_PICKUP } from '../helpers/consts';
-import { Resources, TileSetGrid16 } from '../services/resources';
+import { CELL_SIZE, PLACEMENT_TYPE_ICE_PICKUP } from '../helpers/consts';
+import { TileSetGrid16 } from '../services/resources';
 import { TILES } from '../helpers/tiles';
 
 export class IcePickup extends GameObject {
   constructor(pos: Vector, level: Level, type: string) {
     super({
       pos,
-      width: 16,
-      height: 16,
-      anchor: vec(0, 0),
+      width: CELL_SIZE,
+      height: CELL_SIZE,
+      anchor: Vector.Zero,
       level,
       type,
     });
   }
 
   onInitialize(): void {
-    const spriteSheet = SpriteSheet.fromImageSource({
-      image: Resources.TileSet,
-      grid: TileSetGrid16,
-    });
-
-    this.graphics.use(spriteSheet.getSprite(TILES.ICE_PICKUP[0], TILES.ICE_PICKUP[1]) as Sprite);
+    this.graphics.use(this.generateGraphic(TILES.ICE_PICKUP, TileSetGrid16));
   }
 
   addsItemToInventoryOnCollide() {

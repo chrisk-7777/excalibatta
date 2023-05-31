@@ -25,13 +25,19 @@
 - [ ] ground enemy #big (might require refactoring)
 - [ ] Door isRaised from config
 - [ ] Particle effect when collect
+- [ ] THEME_BACKGROUNDS back ground
 
 ## Low
 
+- [x] not all gameobjects using simplifed sprite setup
 - [ ] water tile turnsAroundAtWater?
 - [ ] game instance doesn't need to be a global, it can just be exported from the file. similar to inventory
 - [ ] reset events for death message and timer are a bit icky
 - [ ] fix types in wall
 - [ ] not all functions have return types
-- [ ] not all gameobjects using simplifed sprite setup
 - [ ] sizing in GO + collision still inconsistent (sometimes / CELL sometimes not)
+
+## Cusotm
+
+- [ ] door timers
+- [ ] more keys

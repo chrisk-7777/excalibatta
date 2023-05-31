@@ -1,4 +1,4 @@
-import { Engine, Vector, vec } from 'excalibur';
+import { Engine, Vector } from 'excalibur';
 
 import { GameObject } from './game-object';
 import { Level } from '../services/level';
@@ -15,7 +15,7 @@ export class FireTile extends GameObject {
       pos,
       width: CELL_SIZE,
       height: CELL_SIZE,
-      anchor: vec(0, 0),
+      anchor: Vector.Zero,
       level,
       type,
     });

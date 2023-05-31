@@ -2,7 +2,7 @@ import { Vector, vec } from 'excalibur';
 
 import { GameObject } from './game-object';
 import { Level } from '../services/level';
-import { PLACEMENT_TYPE_KEY_BLUE } from '../helpers/consts';
+import { CELL_SIZE, PLACEMENT_TYPE_KEY_BLUE } from '../helpers/consts';
 import { TileSetGrid16 } from '../services/resources';
 import { TILES } from '../helpers/tiles';
 
@@ -10,8 +10,8 @@ export class BlueKeyPickup extends GameObject {
   constructor(pos: Vector, level: Level, type: string) {
     super({
       pos,
-      width: 16,
-      height: 16,
+      width: CELL_SIZE,
+      height: CELL_SIZE,
       anchor: vec(0, 0),
       level,
       type,
@@ -22,7 +22,7 @@ export class BlueKeyPickup extends GameObject {
     this.graphics.use(this.generateGraphic(TILES.BLUE_KEY, TileSetGrid16));
   }
 
-  addsItemToInventoryOnCollide() {
+  addsItemToInventoryOnCollide(): string {
     return PLACEMENT_TYPE_KEY_BLUE;
   }
 }

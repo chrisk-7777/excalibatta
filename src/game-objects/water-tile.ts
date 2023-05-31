@@ -1,4 +1,4 @@
-import { Engine, Vector, vec } from 'excalibur';
+import { Engine, Vector } from 'excalibur';
 
 import { BODY_SKINS, CELL_SIZE, PLACEMENT_TYPE_HERO, PLACEMENT_TYPE_WATER_PICKUP } from '../helpers/consts';
 import { GameObject } from './game-object';
@@ -15,7 +15,7 @@ export class WaterTile extends GameObject {
       pos,
       width: CELL_SIZE,
       height: CELL_SIZE,
-      anchor: vec(0, 0),
+      anchor: Vector.Zero,
       level,
       type,
     });

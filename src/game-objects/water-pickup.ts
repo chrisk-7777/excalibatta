@@ -1,9 +1,9 @@
-import { Sprite, SpriteSheet, Vector, vec } from 'excalibur';
+import { Vector } from 'excalibur';
 
 import { CELL_SIZE, PLACEMENT_TYPE_WATER_PICKUP } from '../helpers/consts';
 import { GameObject } from './game-object';
 import { Level } from '../services/level';
-import { Resources, TileSetGrid16 } from '../services/resources';
+import { TileSetGrid16 } from '../services/resources';
 import { TILES } from '../helpers/tiles';
 
 export class WaterPickup extends GameObject {
@@ -12,15 +12,14 @@ export class WaterPickup extends GameObject {
       pos,
       width: CELL_SIZE,
       height: CELL_SIZE,
-      anchor: vec(0, 0),
+      anchor: Vector.Zero,
       level,
       type,
     });
   }
 
   onInitialize(): void {
-    const spriteSheet = SpriteSheet.fromImageSource({ image: Resources.TileSet, grid: TileSetGrid16 });
-    this.graphics.use(spriteSheet.getSprite(TILES.WATER_PICKUP[0], TILES.WATER_PICKUP[1]) as Sprite);
+    this.graphics.use(this.generateGraphic(TILES.WATER_PICKUP, TileSetGrid16));
   }
 
   addsItemToInventoryOnCollide() {
