@@ -1,32 +1,37 @@
-import { Actor, Canvas, Scene, Sprite, vec } from 'excalibur';
+import { Actor, Camera, CameraStrategy, Canvas, Engine, Scene, Vector, vec } from 'excalibur';
 
 import { BlueKeyPickup } from '../game-objects/blue-key-pickup';
 import { CELL_SIZE, THEME_TILES_MAP } from '../helpers/consts';
 import { Clock } from '../services/clock';
+import { Door } from '../game-objects/door';
+import { DoorSwitch } from '../game-objects/door-switch';
 import { FirePickup } from '../game-objects/fire-pickup';
 import { FireTile } from '../game-objects/fire-tile';
 import { Flour } from '../game-objects/flour';
 import { G } from './global';
+import { GameObject } from '../game-objects/game-object';
 import { Goal } from '../game-objects/goal';
 import { GreenKeyPickup } from '../game-objects/green-key-pickup';
 import { IcePickup } from '../game-objects/ice-pickup';
 import { Inventory } from '../services/inventory';
 import { Player } from '../game-objects/player';
 import { Resources } from './resources';
+import { Wall } from '../game-objects/wall';
 import { WaterPickup } from '../game-objects/water-pickup';
+import { WaterTile } from '../game-objects/water-tile';
 import * as CONSTS from '../helpers/consts';
 import Levels from '../levels/levels-map';
 
 const placementTypeClassMap = {
   [CONSTS.PLACEMENT_TYPE_HERO]: Player,
   [CONSTS.PLACEMENT_TYPE_GOAL]: Goal,
-  // [CONSTS.PLACEMENT_TYPE_WALL]: Wall,
+  [CONSTS.PLACEMENT_TYPE_WALL]: Wall,
   [CONSTS.PLACEMENT_TYPE_FLOUR]: Flour,
   // [CONSTS.PLACEMENT_TYPE_CELEBRATION]: Celebration,
   // [CONSTS.PLACEMENT_TYPE_LOCK]: Lock,
   [CONSTS.PLACEMENT_TYPE_KEY_GREEN]: GreenKeyPickup,
   [CONSTS.PLACEMENT_TYPE_KEY_BLUE]: BlueKeyPickup,
-  // [CONSTS.PLACEMENT_TYPE_WATER]: Water,
+  [CONSTS.PLACEMENT_TYPE_WATER]: WaterTile,
   [CONSTS.PLACEMENT_TYPE_WATER_PICKUP]: WaterPickup,
   // [CONSTS.PLACEMENT_TYPE_GROUND_ENEMY]: GroundEnemy,
   // [CONSTS.PLACEMENT_TYPE_FLYING_ENEMY]: FlyingEnemy,
@@ -36,12 +41,29 @@ const placementTypeClassMap = {
   [CONSTS.PLACEMENT_TYPE_ICE_PICKUP]: IcePickup,
   [CONSTS.PLACEMENT_TYPE_FIRE]: FireTile,
   [CONSTS.PLACEMENT_TYPE_FIRE_PICKUP]: FirePickup,
-  // [CONSTS.PLACEMENT_TYPE_SWITCH_DOOR]: SwitchableDoor,
-  // [CONSTS.PLACEMENT_TYPE_SWITCH]: DoorSwitch,
+  [CONSTS.PLACEMENT_TYPE_SWITCH_DOOR]: Door,
+  [CONSTS.PLACEMENT_TYPE_SWITCH]: DoorSwitch,
   // [CONSTS.PLACEMENT_TYPE_TELEPORT]: Teleport,
   // [CONSTS.PLACEMENT_TYPE_THIEF]: Thief,
   // [CONSTS.PLACEMENT_TYPE_CIABATTA]: Ciabatta,
 };
+
+const lerp = (start: number, end: number, t: number) => {
+  return start * (1 - t) + end * t;
+};
+
+export class LerpStrategy implements CameraStrategy<Actor> {
+  constructor(public target: Actor) {}
+  public action = (target: Actor, cam: Camera, _eng: Engine, _delta: number) => {
+    const center = target.center;
+    const currentFocus = cam.getFocus();
+
+    const nextX = Math.round(lerp(currentFocus.x, center.x, 0.1));
+    const nextY = Math.round(lerp(currentFocus.y, center.y, 0.1));
+
+    return new Vector(nextX, nextY);
+  };
+}
 
 export class Level extends Scene {
   clock: Clock;
@@ -49,9 +71,10 @@ export class Level extends Scene {
   deathOutcome: string | null;
   heightWithWalls: number;
   inventory: Inventory;
-  level: (typeof Levels)['DemoLevel1'];
+  level: (typeof Levels)[keyof typeof Levels];
   tiles: (typeof THEME_TILES_MAP)[0];
   widthWithWalls: number;
+  isCompleted: boolean;
 
   constructor() {
     super();
@@ -59,6 +82,7 @@ export class Level extends Scene {
     this.currentLevelId = 'DemoLevel1';
     this.level = Levels[this.currentLevelId];
     this.deathOutcome = null;
+    this.isCompleted = false;
 
     this.widthWithWalls = this.level.tilesWidth + 1;
     this.heightWithWalls = this.level.tilesHeight + 1;
@@ -126,17 +150,14 @@ export class Level extends Scene {
     this.level.placements.forEach((gameObject) => {
       const { type, x, y } = gameObject;
       if (this.isKeyOfPlacementTypeClassMap(type)) {
-        const instance = new placementTypeClassMap[type](vec(CELL_SIZE * x, CELL_SIZE * y), this, type);
+        const instance = new placementTypeClassMap[type](vec(x, y), this, type);
         this.add(instance);
       }
     });
 
-    this.camera.strategy.elasticToActor(
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      this.actors.find((p) => p instanceof Player)!,
-      0.1,
-      0.05
-    );
+    const player = this.actors.find((p) => p instanceof Player);
+    // this.camera.addStrategy(new LerpStrategy(player!));
+    this.camera.strategy.lockToActor(player!);
 
     // Funky smell - triggering event for ui to update... can be better?
     this.inventory.clear();
@@ -146,6 +167,20 @@ export class Level extends Scene {
     this.deathOutcome = causeOfDeath;
     this.engine.clock.stop();
     G.emit('Death', {});
+  }
+
+  switchAllDoors() {
+    this.actors.forEach((actor) => {
+      if (actor instanceof GameObject && actor.toggleIsRaised) {
+        actor.toggleIsRaised();
+      }
+    });
+  }
+
+  completeLevel() {
+    this.isCompleted = true;
+    this.engine.clock.stop();
+    G.emit('Complete', {});
   }
 
   onPostUpdate(): void {

@@ -1,11 +1,11 @@
-import { Sprite, SpriteSheet, Vector, vec } from 'excalibur';
+import { Vector, vec } from 'excalibur';
 
 import { CELL_SIZE } from '../helpers/consts';
 import { GameObject } from './game-object';
 import { Level } from '../services/level';
 import { TILES } from '../helpers/tiles';
 import { Flour } from './flour';
-import { Resources, TileSetGrid16 } from '../services/resources';
+import { TileSetGrid16 } from '../services/resources';
 
 export class Goal extends GameObject {
   constructor(pos: Vector, level: Level, type: string) {
@@ -19,7 +19,7 @@ export class Goal extends GameObject {
     });
   }
 
-  get isDisabled() {
+  get isDisabled(): boolean {
     const nonCollectedFlour = this.level.actors.find((p) => {
       return p instanceof Flour && p.active;
     });
@@ -27,15 +27,13 @@ export class Goal extends GameObject {
     return nonCollectedFlour !== undefined;
   }
 
-  completesLevelOnCollide() {
+  completesLevelOnCollide(): boolean {
     return !this.isDisabled;
   }
 
   onInitialize(): void {
-    const spriteSheet = SpriteSheet.fromImageSource({ image: Resources.TileSet, grid: TileSetGrid16 });
-
-    this.graphics.add('disabled', spriteSheet.getSprite(TILES.GOAL_DISABLED[0], TILES.GOAL_DISABLED[1]) as Sprite);
-    this.graphics.add('enabled', spriteSheet.getSprite(TILES.GOAL_ENABLED[0], TILES.GOAL_ENABLED[1]) as Sprite);
+    this.graphics.add('disabled', this.generateGraphic(TILES.GOAL_DISABLED, TileSetGrid16));
+    this.graphics.add('enabled', this.generateGraphic(TILES.GOAL_ENABLED, TileSetGrid16));
   }
 
   onPostUpdate(): void {

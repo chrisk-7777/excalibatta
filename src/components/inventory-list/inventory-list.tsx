@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { G } from '../../services/global';
-import { Inventory, InventoryItems } from '../../services/inventory';
+import { Level } from '../../services/level';
 import { TILES } from '../../helpers/tiles';
 import * as CONSTS from '../../helpers/consts';
 import Sprite from '../sprite/sprite';
@@ -32,30 +32,30 @@ const showInventory = [
 ];
 
 export default function InventoryList() {
-  const [inventory, setInventory] = useState<InventoryItems>({});
+  const [filteredInventory, setFilteredInventory] = useState<typeof showInventory>([]);
 
   useEffect(() => {
-    const handle = (e: any) => {
-      setInventory(e.inventory);
+    const handle = () => {
+      // TODO Nasty ref
+      const inventory = (G.game?.currentScene as Level).inventory;
+      setFilteredInventory(showInventory.filter((i) => inventory.has(i.key)));
     };
 
     G.on('InventoryUpdated', handle);
     return () => G.off('InventoryUpdated', handle);
   }, []);
 
-  if (!inventory) {
+  if (!filteredInventory) {
     return null;
   }
 
   return (
     <div className={styles.inventory}>
-      {showInventory
-        .filter((i) => inventory[i.key])
-        .map((i) => (
-          <div key={i.key} className={styles.inventoryEntry}>
-            <Sprite frameCoord={i.tile} />
-          </div>
-        ))}
+      {filteredInventory.map((i) => (
+        <div key={i.key} className={styles.inventoryEntry}>
+          <Sprite frameCoord={i.tile} />
+        </div>
+      ))}
     </div>
   );
 }

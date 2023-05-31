@@ -1,21 +1,25 @@
 import { G } from '../services/global';
 
-export type InventoryItems = Record<string, boolean>;
+export type InventoryItems = Map<string, boolean>;
 
 export class Inventory {
   items: InventoryItems;
 
   constructor() {
-    this.items = {};
+    this.items = new Map();
   }
 
-  add(key: string) {
-    this.items[key] = true;
-    G.emit('InventoryUpdated', { inventory: { ...this.items } });
+  has(key: string): boolean {
+    return Boolean(this.items.has(key));
   }
 
-  clear() {
-    this.items = {};
-    G.emit('InventoryUpdated', { inventory: { ...this.items } });
+  add(key: string): void {
+    this.items.set(key, true);
+    G.emit('InventoryUpdated', {});
+  }
+
+  clear(): void {
+    this.items = new Map();
+    G.emit('InventoryUpdated', {});
   }
 }

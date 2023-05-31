@@ -3,12 +3,12 @@ import { Animation, Engine, Input, Sprite, SpriteSheet, Vector, vec } from 'exca
 import { Collision } from '../services/collision';
 import { GameObject } from './game-object';
 import { Level } from '../services/level';
-import { Resources, TileSetGrid32 } from '../services/resources';
+import { Resources, TileSetGrid16, TileSetGrid32 } from '../services/resources';
 import { TILES } from '../helpers/tiles';
 import * as CONSTS from '../helpers/consts';
 import soundsManager, { SFX } from '../services/sounds';
 
-const heroSkinMap = {
+export const heroSkinMap = {
   [CONSTS.BODY_SKINS.NORMAL]: [TILES.HERO_LEFT, TILES.HERO_RIGHT],
   [CONSTS.BODY_SKINS.WATER]: [TILES.HERO_WATER_LEFT, TILES.HERO_WATER_RIGHT],
   [CONSTS.BODY_SKINS.FIRE]: [TILES.HERO_FIRE_LEFT, TILES.HERO_FIRE_RIGHT],
@@ -25,7 +25,6 @@ export class Player extends GameObject {
   canCollectItems: boolean;
   canCompleteLevel: boolean;
   direction: typeof CONSTS.DIRECTION_LEFT | typeof CONSTS.DIRECTION_RIGHT;
-  interactsWithGround: boolean;
   isDead: boolean;
   movingPixelDirection: CONSTS.FourDirections;
   movingPixelsRemaining: number;
@@ -36,8 +35,8 @@ export class Player extends GameObject {
   constructor(pos: Vector, level: Level, type: string) {
     super({
       pos,
-      width: 16,
-      height: 16,
+      width: CONSTS.CELL_SIZE,
+      height: CONSTS.CELL_SIZE,
       anchor: vec(0, 0),
       level,
       type,
@@ -55,6 +54,7 @@ export class Player extends GameObject {
     this.skin = CONSTS.BODY_SKINS.NORMAL;
     this.spriteWalkFrame = 0;
     this.travelPixelsPerFrame = 1.5;
+    this.canCompleteLevel = true;
   }
 
   onInitialize(): void {
@@ -63,11 +63,17 @@ export class Player extends GameObject {
       grid: TileSetGrid32,
     });
 
+    this.graphics.layers.create({ name: 'shadow', order: 1 });
+    this.graphics.layers.create({ name: 'foreground', order: 2 });
+
+    const shadow = this.generateGraphic(TILES.SHADOW, TileSetGrid16);
+    this.graphics.layers.get('shadow').show(shadow);
+
     Object.entries(heroSkinMap).map(([skin, frames]) => {
       frames.forEach((frame, index) => {
         const leftX = frame[0] / 2;
         const leftY = frame[1] / 2;
-        const key = `${skin}-${index === 0 ? CONSTS.DIRECTION_LEFT : CONSTS.DIRECTION_RIGHT}`;
+        const key = `${skin}-${index}`;
         const animation = new Animation({
           frames: [
             {
@@ -81,21 +87,32 @@ export class Player extends GameObject {
     });
   }
 
-  // Not used
   updateWalkFrame() {
     this.spriteWalkFrame = this.spriteWalkFrame === 1 ? 0 : 1;
   }
 
-  getFrame() {
-    return `${this.skin}-${this.direction}`;
+  getFrame(): string {
+    //Which frame to show?
+    const index = this.direction === CONSTS.DIRECTION_LEFT ? 0 : 1;
+
+    // If dead, show the dead skin
+    if (this.level.deathOutcome) {
+      return `${CONSTS.BODY_SKINS.DEATH}-${index}`;
+    }
+
+    //Use correct walking frame per direction
+    if (this.movingPixelsRemaining > 0 && this.skin === CONSTS.BODY_SKINS.NORMAL) {
+      const walkKey = this.spriteWalkFrame === 0 ? CONSTS.HERO_RUN_1 : CONSTS.HERO_RUN_2;
+      return `${walkKey}-${index}`;
+    }
+
+    return `${this.skin}-${index}`;
   }
 
   // Body
   requestMovement(direction: CONSTS.FourDirections) {
-    // console.log('req', direction, this.movingPixelsRemaining);
     //Attempt to start moving
-    if (this.movingPixelsRemaining !== 0) {
-      // console.log('🛑 req nope');
+    if (this.movingPixelsRemaining > 0) {
       return;
     }
 
@@ -119,12 +136,11 @@ export class Player extends GameObject {
     //   }
     // }
 
-    //Start the move
-    // console.log('🟢 req start');
-    this.movingPixelsRemaining = 1;
+    // Start the move
+    this.movingPixelsRemaining = CONSTS.CELL_SIZE;
     this.movingPixelDirection = direction;
     this.updateFacingDirection();
-    // this.updateWalkFrame();
+    this.updateWalkFrame();
   }
 
   updateFacingDirection() {
@@ -133,19 +149,37 @@ export class Player extends GameObject {
     }
   }
 
-  // tickMovingPixelProgress() {
-  //   if (this.movingPixelsRemaining === 0) {
-  //     return;
-  //   }
-  //   this.movingPixelsRemaining -= this.travelPixelsPerFrame;
-  //   if (this.movingPixelsRemaining <= 0) {
-  //     this.movingPixelsRemaining = 0;
-  //     this.onDoneMoving();
-  //   }
-  // }
+  tickMovingPixelProgress() {
+    if (this.movingPixelsRemaining === 0) {
+      return;
+    }
+    this.movingPixelsRemaining -= this.travelPixelsPerFrame;
+    if (this.movingPixelsRemaining <= 0) {
+      this.movingPixelsRemaining = 0;
+      this.onDoneMoving();
+    }
+  }
 
+  onDoneMoving() {
+    //Update my x/y!
+    const { x, y } = CONSTS.directionUpdateMap[this.movingPixelDirection];
+    this.tile.x += x;
+    this.tile.y += y;
+    this.pos.x = this.tile.x * CONSTS.CELL_SIZE;
+    this.pos.y = this.tile.y * CONSTS.CELL_SIZE;
+    this.handleCollisions();
+    // this.onPostMove();
+  }
+
+  // Should be in parent (or Body) to work with eneimes
   handleCollisions() {
     const collision = new Collision(this, this.level);
+
+    this.skin = CONSTS.BODY_SKINS.NORMAL;
+    const changesHeroSkin = collision.withChangesHeroSkin();
+    if (changesHeroSkin) {
+      this.skin = changesHeroSkin.changesHeroSkinOnCollide() ?? this.skin;
+    }
 
     // Adding to inventory
     const collideThatAddsToInventory = collision.withPlacementAddsToInventory();
@@ -159,11 +193,22 @@ export class Player extends GameObject {
       soundsManager.playSfx(SFX.COLLECT);
     }
 
+    // Purple switches
+    if (collision.withDoorSwitch()) {
+      this.level.switchAllDoors();
+    }
+
     // Damaging and death
     const takesDamages = collision.withSelfGetsDamaged();
     if (takesDamages) {
-      console.log(takesDamages.type);
       this.takesDamage(takesDamages.type);
+    }
+
+    // Finishing the level
+    const completesLevel = collision.withCompletesLevel();
+    if (completesLevel) {
+      this.level.completeLevel();
+      soundsManager.playSfx(SFX.WIN);
     }
   }
 
@@ -171,20 +216,24 @@ export class Player extends GameObject {
     this.level.setDeathOutcome(deathType);
   }
 
-  onDoneMoving() {
-    //Update my x/y!
-    // const { x, y } = directionUpdateMap[this.movingPixelDirection];
-    // this.x += x;
-    // this.y += y;
-    this.movingPixelsRemaining = 0;
-    this.handleCollisions();
-    // this.onPostMove();
+  getYTranslate() {
+    // Stand on ground when not moving
+    if (this.movingPixelsRemaining === 0 || this.skin !== CONSTS.BODY_SKINS.NORMAL) {
+      return 0;
+    }
+
+    //Elevate ramp up or down at beginning/end of movement
+    const PIXELS_FROM_END = 2;
+    if (this.movingPixelsRemaining < PIXELS_FROM_END || this.movingPixelsRemaining > 16 - PIXELS_FROM_END) {
+      return -1;
+    }
+
+    // Highest in the middle of the movement
+    return -2;
   }
 
-  onPreUpdate(engine: Engine, delta: number): void {
-    // super.update(engine, delta);
-
-    // console.log("***", this.movingPixelDirection);
+  onPreUpdate(engine: Engine): void {
+    this.tickMovingPixelProgress();
 
     if (engine.input.keyboard.isHeld(Input.Keys.ArrowLeft)) {
       this.requestMovement(CONSTS.DIRECTION_LEFT);
@@ -199,50 +248,29 @@ export class Player extends GameObject {
       this.requestMovement(CONSTS.DIRECTION_DOWN);
     }
 
-    // this.tickMovingPixelProgress();
-    // console.log('***', this.movingPixelsRemaining);
+    if (this.movingPixelsRemaining > 0) {
+      const x = this.tile.x * CONSTS.CELL_SIZE;
+      const y = this.tile.y * CONSTS.CELL_SIZE;
+      const progressPixels = CONSTS.CELL_SIZE - this.movingPixelsRemaining;
 
-    if (this.movingPixelsRemaining === 1) {
       switch (this.movingPixelDirection) {
         case CONSTS.DIRECTION_LEFT:
-          this.movingPixelsRemaining = 2;
-          this.actions.moveBy(-CONSTS.CELL_SIZE, 0, 100).callMethod(() => this.onDoneMoving());
+          this.pos.x = x - progressPixels;
           break;
         case CONSTS.DIRECTION_RIGHT:
-          this.movingPixelsRemaining = 2;
-          this.actions.moveBy(CONSTS.CELL_SIZE, 0, 100).callMethod(() => this.onDoneMoving());
+          this.pos.x = x + progressPixels;
           break;
         case CONSTS.DIRECTION_DOWN:
-          this.movingPixelsRemaining = 2;
-          this.actions.moveBy(0, CONSTS.CELL_SIZE, 100).callMethod(() => this.onDoneMoving());
+          this.pos.y = y + progressPixels;
           break;
         case CONSTS.DIRECTION_UP:
-          this.movingPixelsRemaining = 2;
-          this.actions.moveBy(0, -CONSTS.CELL_SIZE, 100).callMethod(() => this.onDoneMoving());
+          this.pos.y = y - progressPixels;
           break;
       }
     }
 
-    // console.log(this.pos.x);
-    this.graphics.use(this.getFrame(), { anchor: vec(0.25, 0.5) });
+    this.graphics.layers
+      .get('foreground')
+      .use(this.getFrame(), { anchor: vec(0.25, 0.6), offset: vec(0, this.getYTranslate()) });
   }
-
-  // onPreUpdate(engine: Engine, elapsedMs: number): void {
-  //   this.vel = Vector.Zero;
-
-  //   if (engine.input.keyboard.isHeld(Input.Keys.ArrowRight)) {
-  //     this.vel = vec(64, 0);
-  //   }
-  //   if (engine.input.keyboard.isHeld(Input.Keys.ArrowLeft)) {
-  //     this.vel = vec(-64, 0);
-  //   }
-  //   if (engine.input.keyboard.isHeld(Input.Keys.ArrowUp)) {
-  //     this.vel = vec(0, -64);
-  //   }
-  //   if (engine.input.keyboard.isHeld(Input.Keys.ArrowDown)) {
-  //     this.vel = vec(0, 64);
-  //   }
-
-  //   this.graphics.use(this.getFrame(), { anchor: vec(0.25, 0.5) });
-  // }
 }

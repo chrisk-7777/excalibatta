@@ -9,10 +9,29 @@
 - [x] (1) Stop / start game timer
 - [x] restart level
 - [x] tearing on camera
-- [ ] internal Wall
-- [ ] DoorSwitch
-- [ ] (2) Fix janky control
-- [ ] Particle effect when collect
+- [x] internal Wall
+- [x] Door
+- [x] DoorSwitch
+- [x] Fix janky control
+- [x] bug where nextx nexty in GO isn't always a full int. not related to janky, need to mark actual x/y
+- [x] Water
+- [x] map skin change
+- [x] Animated tiles
+- [x] goal complete level
+- [x] water and fire tile need skin change
+- [ ] swap level #big (requires some refactoring)
 - [ ] Teleport
+- [ ] Lock
+- [ ] ground enemy #big (might require refactoring)
+- [ ] Door isRaised from config
+- [ ] Particle effect when collect
+
+## Low
+
+- [ ] water tile turnsAroundAtWater?
 - [ ] game instance doesn't need to be a global, it can just be exported from the file. similar to inventory
 - [ ] reset events for death message and timer are a bit icky
+- [ ] fix types in wall
+- [ ] not all functions have return types
+- [ ] not all gameobjects using simplifed sprite setup
+- [ ] sizing in GO + collision still inconsistent (sometimes / CELL sometimes not)

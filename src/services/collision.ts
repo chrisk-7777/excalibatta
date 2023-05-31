@@ -13,8 +13,8 @@ export class Collision {
   constructor(forBody: GameObject, level: Level, position: Vector | null = null) {
     this.forBody = forBody;
     this.level = level;
-    this.x = position ? position.x : forBody.pos.x;
-    this.y = position ? position.y : forBody.pos.y;
+    this.x = position ? position.x : forBody.tile.x;
+    this.y = position ? position.y : forBody.tile.y;
     this.scanPlacementsAtPosition();
   }
 
@@ -23,7 +23,7 @@ export class Collision {
       const isSelf = p.id === this.forBody.id;
       const isType = p instanceof GameObject;
 
-      return !isSelf && isType && p.pos.x === this.x && p.pos.y === this.y;
+      return !isSelf && isType && p.tile.x === this.x && p.tile.y === this.y;
     }) as Array<GameObject>;
   }
 
@@ -40,14 +40,14 @@ export class Collision {
     return null;
   }
 
-  // withCompletesLevel() {
-  //   if (this.forBody.canCompleteLevel) {
-  //     return this.placementsAtPosition.find((p) => {
-  //       return p.completesLevelOnCollide();
-  //     });
-  //   }
-  //   return null;
-  // }
+  withCompletesLevel() {
+    if (this.forBody.canCompleteLevel) {
+      return this.placementsAtPosition.find((p) => {
+        return p.completesLevelOnCollide();
+      });
+    }
+    return null;
+  }
 
   // withLock() {
   //   return this.placementsAtPosition.find((p) => {
@@ -61,11 +61,11 @@ export class Collision {
     });
   }
 
-  // withChangesHeroSkin() {
-  //   return this.placementsAtPosition.find((p) => {
-  //     return p.changesHeroSkinOnCollide();
-  //   });
-  // }
+  withChangesHeroSkin() {
+    return this.placementsAtPosition.find((p) => {
+      return p.changesHeroSkinOnCollide();
+    });
+  }
 
   // withPlacementMovesBody() {
   //   if (this.forBody.interactsWithGround) {
@@ -82,11 +82,11 @@ export class Collision {
   //   });
   // }
 
-  // withDoorSwitch() {
-  //   return this.placementsAtPosition.find((p) => {
-  //     return p.switchesDoorsOnCollide(this.forBody);
-  //   });
-  // }
+  withDoorSwitch() {
+    return this.placementsAtPosition.find((p) => {
+      return p.switchesDoorsOnCollide(this.forBody);
+    });
+  }
 
   // withTeleport() {
   //   return this.placementsAtPosition.find((p) => {

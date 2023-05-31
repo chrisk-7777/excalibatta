@@ -1,12 +1,11 @@
 import { Vector, vec } from 'excalibur';
 
+import { LEVEL_THEMES, THEME_TILES_MAP } from '../helpers/consts';
 import { GameObject } from './game-object';
 import { Level } from '../services/level';
-import { PLACEMENT_TYPE_KEY_BLUE } from '../helpers/consts';
 import { TileSetGrid16 } from '../services/resources';
-import { TILES } from '../helpers/tiles';
 
-export class BlueKeyPickup extends GameObject {
+export class Wall extends GameObject {
   constructor(pos: Vector, level: Level, type: string) {
     super({
       pos,
@@ -19,10 +18,12 @@ export class BlueKeyPickup extends GameObject {
   }
 
   onInitialize(): void {
-    this.graphics.use(this.generateGraphic(TILES.BLUE_KEY, TileSetGrid16));
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    this.graphics.use(this.generateGraphic(THEME_TILES_MAP[LEVEL_THEMES.YELLOW].WALL, TileSetGrid16));
   }
 
-  addsItemToInventoryOnCollide() {
-    return PLACEMENT_TYPE_KEY_BLUE;
+  isSolidForBody() {
+    return true;
   }
 }

@@ -1,8 +1,11 @@
-import { Actor, CollisionType, Engine, Vector, vec } from 'excalibur';
+import { Actor, CollisionType, Engine, Sprite, SpriteSheet, Vector, vec } from 'excalibur';
 
 import { Level } from '../services/level';
 import { CELL_SIZE, FourDirections, directionUpdateMap } from '../helpers/consts';
 import { Collision } from '../services/collision';
+import { TILES } from '../helpers/tiles';
+import { Resources, TileSetGrid16, TileSetGrid32 } from '../services/resources';
+import { heroSkinMap } from './player';
 
 interface Options {
   anchor: Vector;
@@ -15,24 +18,47 @@ interface Options {
 
 export abstract class GameObject extends Actor {
   canBeStolen: boolean;
+  canCompleteLevel: boolean;
   canCollectItems: boolean;
+  isRaised: boolean;
+  interactsWithGround: boolean;
   level: Level;
   type: string;
   zOffset: number;
+  tile: Vector;
 
   constructor(options: Options) {
     super({
-      pos: options.pos,
+      pos: options.pos.clone().scale(CELL_SIZE),
       width: options.width,
       height: options.height,
       anchor: options.anchor,
       collisionType: CollisionType.Passive,
     });
     this.canBeStolen = false;
+    this.canCompleteLevel = false;
     this.canCollectItems = false;
+    this.isRaised = false;
+    this.interactsWithGround = false;
     this.level = options.level;
     this.type = options.type;
     this.zOffset = 1;
+    this.tile = options.pos.clone();
+  }
+
+  generateGraphic(tile: (typeof TILES)[keyof typeof TILES], grid: typeof TileSetGrid16 | typeof TileSetGrid32): Sprite {
+    const spriteSheet = SpriteSheet.fromImageSource({
+      image: Resources.TileSet,
+      grid,
+    });
+
+    const sprite = spriteSheet.getSprite(tile[0], tile[1]);
+
+    if (!sprite) {
+      throw new Error('Sprite graphic misconfigured');
+    }
+
+    return sprite;
   }
 
   isSolidForBody() {
@@ -44,6 +70,19 @@ export abstract class GameObject extends Actor {
   }
 
   completesLevelOnCollide(): boolean {
+    return false;
+  }
+
+  changesHeroSkinOnCollide(): keyof typeof heroSkinMap | null {
+    return null;
+  }
+
+  toggleIsRaised(): void {
+    return;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  switchesDoorsOnCollide(_body: GameObject): boolean {
     return false;
   }
 
@@ -67,8 +106,8 @@ export abstract class GameObject extends Actor {
 
   getCollisionAtNextPosition(direction: FourDirections) {
     const { x, y } = directionUpdateMap[direction];
-    const nextX = this.pos.x / CELL_SIZE + x;
-    const nextY = this.pos.y / CELL_SIZE + y;
+    const nextX = this.tile.x + x;
+    const nextY = this.tile.y + y;
     return new Collision(this, this.level, vec(nextX, nextY));
   }
 

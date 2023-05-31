@@ -1,13 +1,13 @@
 import { Engine, Vector, vec } from 'excalibur';
 
+import { BODY_SKINS, CELL_SIZE, PLACEMENT_TYPE_HERO, PLACEMENT_TYPE_WATER_PICKUP } from '../helpers/consts';
 import { GameObject } from './game-object';
 import { Level } from '../services/level';
-import { BODY_SKINS, CELL_SIZE, PLACEMENT_TYPE_FIRE_PICKUP, PLACEMENT_TYPE_HERO } from '../helpers/consts';
-import { TileSetGrid16 } from '../services/resources';
 import { TILES } from '../helpers/tiles';
+import { TileSetGrid16 } from '../services/resources';
 
-export class FireTile extends GameObject {
-  private frames = [TILES.FIRE1, TILES.FIRE2, TILES.FIRE3];
+export class WaterTile extends GameObject {
+  private frames = [TILES.WATER1, TILES.WATER2];
   private frameDuration: number = 5;
 
   constructor(pos: Vector, level: Level, type: string) {
@@ -27,21 +27,18 @@ export class FireTile extends GameObject {
     });
   }
 
+  // Not sure what this was for?
+  // isSolidForBody(body) {
+  //   return body.turnsAroundAtWater ?? false;
+  // }
+
   damagesBodyOnCollide(body: GameObject): boolean {
     const { inventory } = this.level;
-    if (body.type === PLACEMENT_TYPE_HERO && !inventory.has(PLACEMENT_TYPE_FIRE_PICKUP)) {
-      return true;
-    }
-
-    // if (body.type === PLACEMENT_TYPE_CIABATTA) {
-    //   return this.type;
-    // }
-
-    return false;
+    return body.type === PLACEMENT_TYPE_HERO && !inventory.has(PLACEMENT_TYPE_WATER_PICKUP);
   }
 
   changesHeroSkinOnCollide() {
-    return BODY_SKINS.FIRE;
+    return BODY_SKINS.WATER;
   }
 
   onPostUpdate(engine: Engine): void {

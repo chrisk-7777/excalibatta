@@ -22,7 +22,7 @@ G.game = new Engine({
   suppressPlayButton: true,
   canvasElementId: 'game',
 });
-// G.game.showDebug(true);
+G.game.showDebug(false);
 // new DevTool(G.game);
 
 function loadLevel() {
