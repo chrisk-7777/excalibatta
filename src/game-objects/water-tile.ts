@@ -27,10 +27,9 @@ export class WaterTile extends GameObject {
     });
   }
 
-  // Not sure what this was for?
-  // isSolidForBody(body) {
-  //   return body.turnsAroundAtWater ?? false;
-  // }
+  isSolidForBody(body: GameObject): boolean {
+    return body.turnsAroundAtWater ?? false;
+  }
 
   damagesBodyOnCollide(body: GameObject): boolean {
     const { inventory } = this.level;

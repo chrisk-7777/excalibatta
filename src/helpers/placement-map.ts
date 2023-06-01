@@ -6,6 +6,7 @@ import { FireTile } from '../game-objects/fire-tile';
 import { Flour } from '../game-objects/flour';
 import { Goal } from '../game-objects/goal';
 import { GreenKeyPickup } from '../game-objects/green-key-pickup';
+import { GroundEnemy } from '../game-objects/ground-enemy';
 import { IcePickup } from '../game-objects/ice-pickup';
 import { Player } from '../game-objects/player';
 import { Wall } from '../game-objects/wall';
@@ -25,6 +26,7 @@ import {
   PLACEMENT_TYPE_FIRE_PICKUP,
   PLACEMENT_TYPE_SWITCH_DOOR,
   PLACEMENT_TYPE_SWITCH,
+  PLACEMENT_TYPE_GROUND_ENEMY,
 } from './consts';
 
 export const placementTypeClassMap = {
@@ -38,7 +40,7 @@ export const placementTypeClassMap = {
   [PLACEMENT_TYPE_KEY_BLUE]: BlueKeyPickup,
   [PLACEMENT_TYPE_WATER]: WaterTile,
   [PLACEMENT_TYPE_WATER_PICKUP]: WaterPickup,
-  // [PLACEMENT_TYPE_GROUND_ENEMY]: GroundEnemy,
+  [PLACEMENT_TYPE_GROUND_ENEMY]: GroundEnemy,
   // [PLACEMENT_TYPE_FLYING_ENEMY]: FlyingEnemy,
   // [PLACEMENT_TYPE_ROAMING_ENEMY]: RoamingEnemy,
   // [PLACEMENT_TYPE_CONVEYOR]: Conveyor,

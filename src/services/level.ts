@@ -20,6 +20,7 @@ export class Level extends Scene {
   level: LevelsMap;
   tiles: ThemeTiles;
   widthWithWalls: number;
+  player: Player | undefined;
 
   constructor() {
     super();
@@ -104,9 +105,9 @@ export class Level extends Scene {
 
     this.placeGameObjects();
 
-    const player = this.actors.find((p) => p instanceof Player);
+    this.player = this.actors.find((p) => p instanceof Player) as Player;
     // this.camera.addStrategy(new LerpStrategy(player!));
-    this.camera.strategy.lockToActor(player!);
+    this.camera.strategy.lockToActor(this.player!);
 
     // Funky smell - triggering event for ui to update... can be better?
     this.inventory.clear();

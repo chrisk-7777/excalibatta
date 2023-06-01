@@ -28,7 +28,7 @@ export class Collision {
   }
 
   withSolidPlacement() {
-    return this.placementsAtPosition.find((p) => p.isSolidForBody());
+    return this.placementsAtPosition.find((p) => p.isSolidForBody(this.forBody));
   }
 
   withPlacementAddsToInventory() {

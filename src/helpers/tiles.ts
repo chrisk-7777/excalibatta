@@ -133,3 +133,5 @@ export const TILES = {
   CIABATTA_TELEPORT: [20, 4],
   CIABATTA_BLAST: [6, 3],
 } as const;
+
+export type Tile = (typeof TILES)[keyof typeof TILES];

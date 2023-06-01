@@ -21,16 +21,19 @@
 - [x] water and fire tile need skin change
 - [x] THEME_BACKGROUNDS back ground
 - [x] Door isRaised from config
+- [x] ground enemy
+- [ ] lift common ground + player into body
 - [ ] swap level #big (requires some refactoring)
 - [ ] Teleport
+- [ ] Ice tile
 - [ ] Lock
-- [ ] ground enemy #big (might require refactoring)
 - [ ] Particle effect when collect
 - [ ] Clock news to come from level config
 
 ## Low
 
 - [x] not all gameobjects using simplifed sprite setup
+- [ ] shadow glitch on enemy
 - [ ] water tile turnsAroundAtWater?
 - [ ] game instance doesn't need to be a global, it can just be exported from the file. similar to inventory
 - [ ] reset events for death message and timer are a bit icky

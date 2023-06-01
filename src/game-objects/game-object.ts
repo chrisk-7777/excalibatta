@@ -3,7 +3,7 @@ import { Actor, CollisionType, Engine, Sprite, SpriteSheet, Vector, vec } from '
 import { Level } from '../services/level';
 import { CELL_SIZE, FourDirections, directionUpdateMap } from '../helpers/consts';
 import { Collision } from '../services/collision';
-import { TILES } from '../helpers/tiles';
+import { TILES, Tile } from '../helpers/tiles';
 import { Resources, TileSetGrid16, TileSetGrid32 } from '../services/resources';
 import { heroSkinMap } from './player';
 
@@ -22,6 +22,7 @@ export abstract class GameObject extends Actor {
   canCollectItems: boolean;
   isRaised: boolean;
   interactsWithGround: boolean;
+  turnsAroundAtWater: boolean;
   level: Level;
   type: string;
   zOffset: number;
@@ -40,19 +41,26 @@ export abstract class GameObject extends Actor {
     this.canCollectItems = false;
     this.isRaised = false;
     this.interactsWithGround = false;
+    this.turnsAroundAtWater = false;
     this.level = options.level;
     this.type = options.type;
     this.zOffset = 1;
     this.tile = options.pos.clone();
   }
 
-  generateGraphic(tile: (typeof TILES)[keyof typeof TILES], grid: typeof TileSetGrid16 | typeof TileSetGrid32): Sprite {
+  generateGraphic(tile: Tile, grid: typeof TileSetGrid16 | typeof TileSetGrid32): Sprite {
     const spriteSheet = SpriteSheet.fromImageSource({
       image: Resources.TileSet,
       grid,
     });
 
-    const sprite = spriteSheet.getSprite(tile[0], tile[1]);
+    // grid.spriteWidth / CELL_SIZE:
+    // - Divivdes the sprite by 1 when TileSetGrid16
+    // - Divivdes the sprite by 2 when TileSetGrid32
+    const sprite = spriteSheet.getSprite(
+      tile[0] / (grid.spriteWidth / CELL_SIZE),
+      tile[1] / (grid.spriteWidth / CELL_SIZE)
+    );
 
     if (!sprite) {
       throw new Error('Sprite graphic misconfigured');
@@ -61,7 +69,8 @@ export abstract class GameObject extends Actor {
     return sprite;
   }
 
-  isSolidForBody() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  isSolidForBody(_body: GameObject): boolean {
     return false;
   }
 
@@ -78,6 +87,10 @@ export abstract class GameObject extends Actor {
   }
 
   toggleIsRaised(): void {
+    return;
+  }
+
+  handleCollisions(): void {
     return;
   }
 
