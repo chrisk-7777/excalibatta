@@ -1,69 +1,14 @@
-import { Actor, Camera, CameraStrategy, Canvas, Engine, Scene, Vector, vec } from 'excalibur';
+import { Actor, Canvas, Color, Scene, vec } from 'excalibur';
 
-import { BlueKeyPickup } from '../game-objects/blue-key-pickup';
-import { CELL_SIZE, THEME_TILES_MAP } from '../helpers/consts';
+import { CELL_SIZE, THEME_BACKGROUNDS, THEME_TILES_MAP, ThemeTiles } from '../helpers/consts';
 import { Clock } from '../services/clock';
-import { Door } from '../game-objects/door';
-import { DoorSwitch } from '../game-objects/door-switch';
-import { FirePickup } from '../game-objects/fire-pickup';
-import { FireTile } from '../game-objects/fire-tile';
-import { Flour } from '../game-objects/flour';
 import { G } from './global';
 import { GameObject } from '../game-objects/game-object';
-import { Goal } from '../game-objects/goal';
-import { GreenKeyPickup } from '../game-objects/green-key-pickup';
-import { IcePickup } from '../game-objects/ice-pickup';
 import { Inventory } from '../services/inventory';
+import { isKeyOfPlacementTypeClassMap, placementTypeClassMap } from '../helpers/placement-map';
 import { Player } from '../game-objects/player';
 import { Resources } from './resources';
-import { Wall } from '../game-objects/wall';
-import { WaterPickup } from '../game-objects/water-pickup';
-import { WaterTile } from '../game-objects/water-tile';
-import * as CONSTS from '../helpers/consts';
 import Levels from '../levels/levels-map';
-
-const placementTypeClassMap = {
-  [CONSTS.PLACEMENT_TYPE_HERO]: Player,
-  [CONSTS.PLACEMENT_TYPE_GOAL]: Goal,
-  [CONSTS.PLACEMENT_TYPE_WALL]: Wall,
-  [CONSTS.PLACEMENT_TYPE_FLOUR]: Flour,
-  // [CONSTS.PLACEMENT_TYPE_CELEBRATION]: Celebration,
-  // [CONSTS.PLACEMENT_TYPE_LOCK]: Lock,
-  [CONSTS.PLACEMENT_TYPE_KEY_GREEN]: GreenKeyPickup,
-  [CONSTS.PLACEMENT_TYPE_KEY_BLUE]: BlueKeyPickup,
-  [CONSTS.PLACEMENT_TYPE_WATER]: WaterTile,
-  [CONSTS.PLACEMENT_TYPE_WATER_PICKUP]: WaterPickup,
-  // [CONSTS.PLACEMENT_TYPE_GROUND_ENEMY]: GroundEnemy,
-  // [CONSTS.PLACEMENT_TYPE_FLYING_ENEMY]: FlyingEnemy,
-  // [CONSTS.PLACEMENT_TYPE_ROAMING_ENEMY]: RoamingEnemy,
-  // [CONSTS.PLACEMENT_TYPE_CONVEYOR]: Conveyor,
-  // [CONSTS.PLACEMENT_TYPE_ICE]: Ice,
-  [CONSTS.PLACEMENT_TYPE_ICE_PICKUP]: IcePickup,
-  [CONSTS.PLACEMENT_TYPE_FIRE]: FireTile,
-  [CONSTS.PLACEMENT_TYPE_FIRE_PICKUP]: FirePickup,
-  [CONSTS.PLACEMENT_TYPE_SWITCH_DOOR]: Door,
-  [CONSTS.PLACEMENT_TYPE_SWITCH]: DoorSwitch,
-  // [CONSTS.PLACEMENT_TYPE_TELEPORT]: Teleport,
-  // [CONSTS.PLACEMENT_TYPE_THIEF]: Thief,
-  // [CONSTS.PLACEMENT_TYPE_CIABATTA]: Ciabatta,
-};
-
-const lerp = (start: number, end: number, t: number) => {
-  return start * (1 - t) + end * t;
-};
-
-export class LerpStrategy implements CameraStrategy<Actor> {
-  constructor(public target: Actor) {}
-  public action = (target: Actor, cam: Camera, _eng: Engine, _delta: number) => {
-    const center = target.center;
-    const currentFocus = cam.getFocus();
-
-    const nextX = Math.round(lerp(currentFocus.x, center.x, 0.1));
-    const nextY = Math.round(lerp(currentFocus.y, center.y, 0.1));
-
-    return new Vector(nextX, nextY);
-  };
-}
 
 export class Level extends Scene {
   clock: Clock;
@@ -71,15 +16,15 @@ export class Level extends Scene {
   deathOutcome: string | null;
   heightWithWalls: number;
   inventory: Inventory;
-  level: (typeof Levels)[keyof typeof Levels];
-  tiles: (typeof THEME_TILES_MAP)[0];
-  widthWithWalls: number;
   isCompleted: boolean;
+  level: (typeof Levels)[keyof typeof Levels];
+  tiles: ThemeTiles;
+  widthWithWalls: number;
 
   constructor() {
     super();
 
-    this.currentLevelId = 'DemoLevel1';
+    this.currentLevelId = 'DemoLevel2';
     this.level = Levels[this.currentLevelId];
     this.deathOutcome = null;
     this.isCompleted = false;
@@ -106,10 +51,6 @@ export class Level extends Scene {
       return this.tiles.BOTTOM;
     }
     return this.tiles.FLOOR;
-  }
-
-  isKeyOfPlacementTypeClassMap(key: string): key is keyof typeof placementTypeClassMap {
-    return key in placementTypeClassMap;
   }
 
   onInitialize(): void {
@@ -149,11 +90,13 @@ export class Level extends Scene {
 
     this.level.placements.forEach((gameObject) => {
       const { type, x, y } = gameObject;
-      if (this.isKeyOfPlacementTypeClassMap(type)) {
+      if (isKeyOfPlacementTypeClassMap(type)) {
         const instance = new placementTypeClassMap[type](vec(x, y), this, type);
         this.add(instance);
       }
     });
+
+    this.engine.backgroundColor = Color.fromHex(THEME_BACKGROUNDS[this.level.theme]);
 
     const player = this.actors.find((p) => p instanceof Player);
     // this.camera.addStrategy(new LerpStrategy(player!));

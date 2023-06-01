@@ -19,13 +19,13 @@
 - [x] Animated tiles
 - [x] goal complete level
 - [x] water and fire tile need skin change
+- [x] THEME_BACKGROUNDS back ground
+- [ ] Door isRaised from config
 - [ ] swap level #big (requires some refactoring)
 - [ ] Teleport
 - [ ] Lock
 - [ ] ground enemy #big (might require refactoring)
-- [ ] Door isRaised from config
 - [ ] Particle effect when collect
-- [ ] THEME_BACKGROUNDS back ground
 
 ## Low
 

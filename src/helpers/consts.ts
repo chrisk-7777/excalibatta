@@ -61,18 +61,13 @@ export const BODY_SKINS = {
 export const HERO_RUN_1 = 'HERO_RUN_1';
 export const HERO_RUN_2 = 'HERO_RUN_2';
 
-export const LOCK_KEY_COLORS = {
-  BLUE: 'BLUE',
-  GREEN: 'GREEN',
-};
-
 export const LEVEL_THEMES = {
   YELLOW: 'YELLOW',
   BLUE: 'BLUE',
   GREEN: 'GREEN',
   PINK: 'PINK',
   GRAY: 'GRAY',
-};
+} as const;
 
 export const THEME_BACKGROUNDS = {
   [LEVEL_THEMES.YELLOW]: '#2f2808',
@@ -80,7 +75,7 @@ export const THEME_BACKGROUNDS = {
   [LEVEL_THEMES.GREEN]: '#2f2808',
   [LEVEL_THEMES.PINK]: '#673d5e',
   [LEVEL_THEMES.GRAY]: '#96a1c7',
-};
+} as const;
 
 export const THEME_TILES_MAP = {
   [LEVEL_THEMES.YELLOW]: {
@@ -124,6 +119,8 @@ export const THEME_TILES_MAP = {
     WALL: [12, 2],
   },
 } as const;
+
+export type ThemeTiles = (typeof THEME_TILES_MAP)[keyof typeof THEME_TILES_MAP];
 
 export const ICE_CORNERS = {
   TOP_LEFT: 'TOP_LEFT',

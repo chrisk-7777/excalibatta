@@ -28,6 +28,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 h1 {
@@ -86,8 +87,7 @@ button:focus-visible {
 
 #ui {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   z-index: 10;
   overflow: hidden;
   pointer-events: none;

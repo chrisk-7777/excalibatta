@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { DisplayMode, Engine, Scene } from 'excalibur';
+// import { DevTool } from '@excaliburjs/dev-tools';
 
 import { CELL_SIZE } from './helpers/consts';
 import { G } from './services/global';
@@ -22,6 +23,7 @@ G.game = new Engine({
   canvasElementId: 'game',
 });
 G.game.showDebug(false);
+// new DevTool(G.game);
 
 G.game.add('void', new Scene());
 G.game.add('level', new Level());
