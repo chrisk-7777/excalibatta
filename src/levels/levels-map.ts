@@ -6,4 +6,6 @@ const Levels = {
   DemoLevel2: DemoLevel2,
 } as const;
 
+export type LevelsMap = (typeof Levels)[keyof typeof Levels];
+
 export default Levels;

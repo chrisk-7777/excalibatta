@@ -8,7 +8,7 @@ import { Inventory } from '../services/inventory';
 import { isKeyOfPlacementTypeClassMap, placementTypeClassMap } from '../helpers/placement-map';
 import { Player } from '../game-objects/player';
 import { Resources } from './resources';
-import Levels from '../levels/levels-map';
+import Levels, { LevelsMap } from '../levels/levels-map';
 
 export class Level extends Scene {
   clock: Clock;
@@ -17,14 +17,14 @@ export class Level extends Scene {
   heightWithWalls: number;
   inventory: Inventory;
   isCompleted: boolean;
-  level: (typeof Levels)[keyof typeof Levels];
+  level: LevelsMap;
   tiles: ThemeTiles;
   widthWithWalls: number;
 
   constructor() {
     super();
 
-    this.currentLevelId = 'DemoLevel2';
+    this.currentLevelId = 'DemoLevel1';
     this.level = Levels[this.currentLevelId];
     this.deathOutcome = null;
     this.isCompleted = false;
@@ -53,10 +53,8 @@ export class Level extends Scene {
     return this.tiles.FLOOR;
   }
 
-  onInitialize(): void {
-    const actorInstnace = new Actor({ pos: vec(0, 0), anchor: vec(0, 0) });
-
-    const canvas = new Canvas({
+  generateBackground(): Actor {
+    const background = new Canvas({
       width: (this.widthWithWalls + 1) * CELL_SIZE,
       height: (this.heightWithWalls + 1) * CELL_SIZE,
       cache: true,
@@ -85,18 +83,26 @@ export class Level extends Scene {
       },
     });
 
-    actorInstnace.graphics.use(canvas);
-    this.add(actorInstnace);
+    const backgroundInstance = new Actor({ pos: vec(0, 0), anchor: vec(0, 0) });
+    backgroundInstance.graphics.use(background);
 
+    return backgroundInstance;
+  }
+
+  placeGameObjects(): void {
     this.level.placements.forEach((gameObject) => {
-      const { type, x, y } = gameObject;
+      const { type, x, y, ...data } = gameObject;
       if (isKeyOfPlacementTypeClassMap(type)) {
-        const instance = new placementTypeClassMap[type](vec(x, y), this, type);
-        this.add(instance);
+        this.add(new placementTypeClassMap[type](vec(x, y), this, type, data));
       }
     });
+  }
 
+  onInitialize(): void {
+    this.add(this.generateBackground());
     this.engine.backgroundColor = Color.fromHex(THEME_BACKGROUNDS[this.level.theme]);
+
+    this.placeGameObjects();
 
     const player = this.actors.find((p) => p instanceof Player);
     // this.camera.addStrategy(new LerpStrategy(player!));

@@ -38,14 +38,14 @@ const level = {
     { x: 7, y: 6, type: PLACEMENT_TYPE_TELEPORT },
 
     { x: 4, y: 3, type: PLACEMENT_TYPE_SWITCH_DOOR, isRaised: true },
-    { x: 5, y: 3, type: PLACEMENT_TYPE_SWITCH_DOOR, isRaised: true },
+    { x: 5, y: 3, type: PLACEMENT_TYPE_SWITCH_DOOR, isRaised: false },
     { x: 6, y: 3, type: PLACEMENT_TYPE_SWITCH_DOOR, isRaised: true },
     { x: 7, y: 3, type: PLACEMENT_TYPE_SWITCH_DOOR, isRaised: false },
-    { x: 8, y: 3, type: PLACEMENT_TYPE_SWITCH_DOOR, isRaised: false },
+    { x: 8, y: 3, type: PLACEMENT_TYPE_SWITCH_DOOR, isRaised: true },
     { x: 9, y: 3, type: PLACEMENT_TYPE_SWITCH_DOOR, isRaised: false },
-    { x: 10, y: 3, type: PLACEMENT_TYPE_SWITCH_DOOR, isRaised: false },
+    { x: 10, y: 3, type: PLACEMENT_TYPE_SWITCH_DOOR, isRaised: true },
     { x: 11, y: 3, type: PLACEMENT_TYPE_SWITCH_DOOR, isRaised: false },
-    { x: 12, y: 3, type: PLACEMENT_TYPE_SWITCH_DOOR, isRaised: false },
+    { x: 12, y: 3, type: PLACEMENT_TYPE_SWITCH_DOOR, isRaised: true },
     { x: 4, y: 2, type: PLACEMENT_TYPE_SWITCH },
 
     { x: 8, y: 2, type: PLACEMENT_TYPE_WALL },

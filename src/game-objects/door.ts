@@ -7,7 +7,7 @@ import { TILES } from '../helpers/tiles';
 import { TileSetGrid16 } from '../services/resources';
 
 export class Door extends GameObject {
-  constructor(pos: Vector, level: Level, type: string) {
+  constructor(pos: Vector, level: Level, type: string, data: any) {
     super({
       pos,
       width: CELL_SIZE,
@@ -17,7 +17,7 @@ export class Door extends GameObject {
       type,
     });
 
-    this.isRaised = false; //needs to come from config
+    this.isRaised = data.isRaised;
   }
 
   onInitialize(): void {
