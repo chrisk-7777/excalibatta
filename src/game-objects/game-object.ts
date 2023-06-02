@@ -1,20 +1,10 @@
 import { Actor, CollisionType, Engine, Sprite, SpriteSheet, Vector, vec } from 'excalibur';
 
 import { Level } from '../services/level';
-import { CELL_SIZE, FourDirections, directionUpdateMap } from '../helpers/consts';
+import { CELL_SIZE, FourDirections, Skin, directionUpdateMap } from '../helpers/consts';
 import { Collision } from '../services/collision';
-import { TILES, Tile } from '../helpers/tiles';
+import { Tile } from '../helpers/tiles';
 import { Resources, TileSetGrid16, TileSetGrid32 } from '../services/resources';
-import { heroSkinMap } from './player';
-
-interface Options {
-  anchor: Vector;
-  height: number;
-  level: Level;
-  pos: Vector;
-  type: string;
-  width: number;
-}
 
 export abstract class GameObject extends Actor {
   canBeStolen: boolean;
@@ -27,25 +17,27 @@ export abstract class GameObject extends Actor {
   type: string;
   zOffset: number;
   tile: Vector;
+  skin: Skin | null;
 
-  constructor(options: Options) {
+  constructor(pos: Vector, level: Level, type: string) {
     super({
-      pos: options.pos.clone().scale(CELL_SIZE),
-      width: options.width,
-      height: options.height,
-      anchor: options.anchor,
+      pos: pos.clone().scale(CELL_SIZE),
+      width: CELL_SIZE,
+      height: CELL_SIZE,
+      anchor: Vector.Zero,
       collisionType: CollisionType.Passive,
     });
+    this.level = level;
+    this.type = type;
     this.canBeStolen = false;
     this.canCompleteLevel = false;
     this.canCollectItems = false;
     this.isRaised = false;
     this.interactsWithGround = false;
     this.turnsAroundAtWater = false;
-    this.level = options.level;
-    this.type = options.type;
     this.zOffset = 1;
-    this.tile = options.pos.clone();
+    this.tile = pos.clone();
+    this.skin = null;
   }
 
   generateGraphic(tile: Tile, grid: typeof TileSetGrid16 | typeof TileSetGrid32): Sprite {
@@ -82,8 +74,18 @@ export abstract class GameObject extends Actor {
     return false;
   }
 
-  changesHeroSkinOnCollide(): keyof typeof heroSkinMap | null {
+  changesHeroSkinOnCollide(): Skin | null {
     return null;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  autoMovesBodyOnCollide(_body: GameObject): false | FourDirections {
+    return false;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onAutoMovement(_direction: FourDirections): void {
+    return;
   }
 
   toggleIsRaised(): void {
@@ -92,6 +94,19 @@ export abstract class GameObject extends Actor {
 
   handleCollisions(): void {
     return;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  startMoving(_direction: FourDirections): void {
+    return;
+  }
+
+  onStartMoving(): void {
+    return;
+  }
+
+  isMoving(): boolean {
+    return false;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

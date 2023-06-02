@@ -1,6 +1,5 @@
-import { Vector, vec } from 'excalibur';
+import { Vector } from 'excalibur';
 
-import { CELL_SIZE } from '../helpers/consts';
 import { GameObject } from './game-object';
 import { Level } from '../services/level';
 import { TILES } from '../helpers/tiles';
@@ -8,15 +7,7 @@ import { TileSetGrid16 } from '../services/resources';
 
 export class Door extends GameObject {
   constructor(pos: Vector, level: Level, type: string, data: any) {
-    super({
-      pos,
-      width: CELL_SIZE,
-      height: CELL_SIZE,
-      anchor: vec(0, 0),
-      level,
-      type,
-    });
-
+    super(pos, level, type);
     this.isRaised = data.isRaised;
   }
 

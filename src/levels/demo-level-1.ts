@@ -58,6 +58,15 @@ const level = {
     { x: 4, y: 4, type: PLACEMENT_TYPE_FIRE_PICKUP },
     { x: 5, y: 4, type: PLACEMENT_TYPE_FIRE },
 
+    { x: 7, y: 1, type: PLACEMENT_TYPE_ICE },
+    { x: 8, y: 1, type: PLACEMENT_TYPE_ICE },
+    { x: 9, y: 1, type: PLACEMENT_TYPE_ICE },
+    { x: 10, y: 1, type: PLACEMENT_TYPE_ICE },
+    { x: 11, y: 1, type: PLACEMENT_TYPE_ICE },
+    { x: 12, y: 1, type: PLACEMENT_TYPE_ICE },
+    { x: 13, y: 1, type: PLACEMENT_TYPE_ICE },
+    { x: 14, y: 1, type: PLACEMENT_TYPE_ICE },
+
     { x: 4, y: 7, type: PLACEMENT_TYPE_ICE_PICKUP },
     { x: 3, y: 6, type: PLACEMENT_TYPE_ICE, corner: 'TOP_LEFT' },
     { x: 3, y: 7, type: PLACEMENT_TYPE_ICE },

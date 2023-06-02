@@ -4,42 +4,24 @@ import { GameObject } from './game-object';
 import { Level } from '../services/level';
 import { TILES } from '../helpers/tiles';
 import { TileSetGrid16, TileSetGrid32 } from '../services/resources';
-import {
-  BODY_SKINS,
-  CELL_SIZE,
-  DIRECTION_DOWN,
-  DIRECTION_LEFT,
-  DIRECTION_RIGHT,
-  DIRECTION_UP,
-  FourDirections,
-} from '../helpers/consts';
-import { Collision } from '../services/collision';
-import { heroSkinMap } from './player';
-import { TileMover } from '../traits/tile-mover';
+import { DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT, DIRECTION_UP, FourDirections } from '../helpers/consts';
+
+import { TileMover } from '../systems/tile-mover';
 
 export class GroundEnemy extends GameObject {
   tickBetweenMovesInterval: number;
   ticksUntilNextMove: number;
   turnsAroundAtWater: boolean;
-  skin: keyof typeof heroSkinMap;
   mover: TileMover;
 
   constructor(pos: Vector, level: Level, type: string) {
-    super({
-      pos,
-      width: CELL_SIZE,
-      height: CELL_SIZE,
-      anchor: Vector.Zero,
-      level,
-      type,
-    });
+    super(pos, level, type);
 
-    this.zOffset = 10;
+    this.zOffset = 100;
     this.tickBetweenMovesInterval = 28;
     this.ticksUntilNextMove = this.tickBetweenMovesInterval;
     this.turnsAroundAtWater = true;
     this.interactsWithGround = true;
-    this.skin = BODY_SKINS.NORMAL;
 
     // TODO Initial direction should be from config
     // TODO needs to pass to tile mover constructor
@@ -59,45 +41,8 @@ export class GroundEnemy extends GameObject {
     this.graphics.add(DIRECTION_RIGHT, this.generateGraphic(TILES.ENEMY_RIGHT, TileSetGrid32));
   }
 
-  // Should be in parent (or Body) to work with eneimes
-  handleCollisions() {
-    const collision = new Collision(this, this.level);
-
-    this.skin = BODY_SKINS.NORMAL;
-    const changesHeroSkin = collision.withChangesHeroSkin();
-    if (changesHeroSkin) {
-      this.skin = changesHeroSkin.changesHeroSkinOnCollide() ?? this.skin;
-    }
-
-    // Adding to inventory
-    const collideThatAddsToInventory = collision.withPlacementAddsToInventory();
-    if (collideThatAddsToInventory) {
-      collideThatAddsToInventory.collect();
-      // this.level.addPlacement({
-      //   type: PLACEMENT_TYPE_CELEBRATION,
-      //   x: this.x,
-      //   y: this.y,
-      // });
-      // soundsManager.playSfx(SFX.COLLECT);
-    }
-
-    // Purple switches
-    if (collision.withDoorSwitch()) {
-      this.level.switchAllDoors();
-    }
-
-    // Damaging and death
-    const takesDamages = collision.withSelfGetsDamaged();
-    if (takesDamages) {
-      this.takesDamage(takesDamages.type);
-    }
-
-    // Finishing the level
-    const completesLevel = collision.withCompletesLevel();
-    if (completesLevel) {
-      this.level.completeLevel();
-      // soundsManager.playSfx(SFX.WIN);
-    }
+  handleCollisions(): void {
+    this.mover.handleCollisions();
   }
 
   tickAttemptAiMove() {
@@ -132,10 +77,6 @@ export class GroundEnemy extends GameObject {
     this.mover.reset(direction);
   }
 
-  onAutoMovement(direction: FourDirections) {
-    this.internalMoveRequested(direction);
-  }
-
   switchDirection() {
     const currentDir = this.mover.movingPixelDirection;
 
@@ -149,9 +90,9 @@ export class GroundEnemy extends GameObject {
   }
 
   onPreUpdate(): void {
-    this.mover.tick();
+    this.mover.earlyUpdate();
     this.tickAttemptAiMove();
-    this.mover.update();
+    this.mover.lateUpdate();
   }
 
   onPostUpdate(): void {

@@ -22,26 +22,26 @@
 - [x] THEME_BACKGROUNDS back ground
 - [x] Door isRaised from config
 - [x] ground enemy
-- [ ] lift common ground + player into body
-- [ ] swap level #big (requires some refactoring)
-- [ ] Teleport
-- [ ] Ice tile
-- [ ] Lock
-- [ ] Particle effect when collect
+- [x] lift common ground + player into body
+- [x] Ice tile
 - [ ] Clock news to come from level config
+- [ ] Lock
+- [ ] Teleport
+- [ ] Particle effect when collect
+- [ ] swap level #big (requires some refactoring)
 
 ## Low
 
 - [x] not all gameobjects using simplifed sprite setup
+- [x] sizing in GO + collision still inconsistent (sometimes / CELL sometimes not)
+- [x] water tile turnsAroundAtWater?
 - [ ] shadow glitch on enemy
-- [ ] water tile turnsAroundAtWater?
 - [ ] game instance doesn't need to be a global, it can just be exported from the file. similar to inventory
 - [ ] reset events for death message and timer are a bit icky
 - [ ] fix types in wall
 - [ ] not all functions have return types
-- [ ] sizing in GO + collision still inconsistent (sometimes / CELL sometimes not)
 
-## Cusotm
+## Custom
 
 - [ ] door timers
 - [ ] more keys

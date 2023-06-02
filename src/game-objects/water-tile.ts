@@ -1,25 +1,13 @@
-import { Engine, Vector } from 'excalibur';
+import { Engine } from 'excalibur';
 
-import { BODY_SKINS, CELL_SIZE, PLACEMENT_TYPE_HERO, PLACEMENT_TYPE_WATER_PICKUP } from '../helpers/consts';
+import { BODY_SKINS, PLACEMENT_TYPE_HERO, PLACEMENT_TYPE_WATER_PICKUP } from '../helpers/consts';
 import { GameObject } from './game-object';
-import { Level } from '../services/level';
 import { TILES } from '../helpers/tiles';
 import { TileSetGrid16 } from '../services/resources';
 
 export class WaterTile extends GameObject {
   private frames = [TILES.WATER1, TILES.WATER2];
   private frameDuration: number = 5;
-
-  constructor(pos: Vector, level: Level, type: string) {
-    super({
-      pos,
-      width: CELL_SIZE,
-      height: CELL_SIZE,
-      anchor: Vector.Zero,
-      level,
-      type,
-    });
-  }
 
   onInitialize(): void {
     this.frames.forEach((frame, i) => {

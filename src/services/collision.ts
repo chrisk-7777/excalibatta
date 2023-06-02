@@ -2,6 +2,7 @@ import { Vector } from 'excalibur';
 
 import { GameObject } from '../game-objects/game-object';
 import { Level } from './level';
+import { PLACEMENT_TYPE_GROUND_ENEMY, PLACEMENT_TYPE_HERO } from '../helpers/consts';
 
 export class Collision {
   forBody: GameObject;
@@ -67,14 +68,19 @@ export class Collision {
     });
   }
 
-  // withPlacementMovesBody() {
-  //   if (this.forBody.interactsWithGround) {
-  //     return this.placementsAtPosition.find((p) => {
-  //       return p.autoMovesBodyOnCollide(this.forBody);
-  //     });
-  //   }
-  //   return null;
-  // }
+  withPlacementMovesBody(): GameObject | null {
+    if (this.forBody.interactsWithGround) {
+      return (
+        this.placementsAtPosition.find((p) => {
+          if (this.forBody.type !== PLACEMENT_TYPE_HERO && this.forBody.type !== PLACEMENT_TYPE_GROUND_ENEMY) {
+            return false;
+          }
+          return p.autoMovesBodyOnCollide(this.forBody);
+        }) ?? null
+      );
+    }
+    return null;
+  }
 
   // withIceCorner() {
   //   return this.placementsAtPosition.find((p) => {
