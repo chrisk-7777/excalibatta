@@ -25,7 +25,7 @@ export class Level extends Scene {
   constructor() {
     super();
 
-    this.currentLevelId = 'DemoLevel1';
+    this.currentLevelId = 'DemoLevel2';
     this.level = Levels[this.currentLevelId];
     this.deathOutcome = null;
     this.isCompleted = false;
@@ -35,7 +35,7 @@ export class Level extends Scene {
     this.tiles = THEME_TILES_MAP[this.level.theme];
 
     this.inventory = new Inventory();
-    this.clock = new Clock(77 /* from level config */, this);
+    this.clock = new Clock(this.level.timeAvailable, this);
   }
 
   getBackgroundTile(x: number, y: number) {

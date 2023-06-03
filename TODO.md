@@ -24,11 +24,12 @@
 - [x] ground enemy
 - [x] lift common ground + player into body
 - [x] Ice tile
-- [ ] Clock news to come from level config
+- [x] Clock news to come from level config
 - [ ] Lock
 - [ ] Teleport
 - [ ] Particle effect when collect
 - [ ] swap level #big (requires some refactoring)
+- [ ] doesn't respect refresh rate
 
 ## Low
 

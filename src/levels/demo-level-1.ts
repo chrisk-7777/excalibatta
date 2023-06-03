@@ -25,6 +25,7 @@ import {
 
 const level = {
   theme: LEVEL_THEMES.GREEN,
+  timeAvailable: 99,
   tilesWidth: 20,
   tilesHeight: 8,
   placements: [

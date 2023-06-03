@@ -4,10 +4,11 @@ import {
   PLACEMENT_TYPE_GOAL,
   PLACEMENT_TYPE_HERO,
   PLACEMENT_TYPE_WALL,
-} from "../helpers/consts";
+} from '../helpers/consts';
 
 const level = {
   theme: LEVEL_THEMES.YELLOW,
+  timeAvailable: 55,
   tilesWidth: 8,
   tilesHeight: 5,
   placements: [
