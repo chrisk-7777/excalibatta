@@ -22,6 +22,7 @@ import {
   PLACEMENT_TYPE_LOCK_BLUE,
   PLACEMENT_TYPE_KEY_BLUE,
   PLACEMENT_TYPE_FLYING_ENEMY,
+  PLACEMENT_TYPE_ROAMING_ENEMY,
   //PLACEMENT_TYPE_THIEF,
   //PLACEMENT_TYPE_CIABATTA,
 } from '../helpers/consts';
@@ -83,8 +84,8 @@ const level = {
     { x: 7, y: 8, type: PLACEMENT_TYPE_WATER },
 
     { x: 10, y: 6, type: PLACEMENT_TYPE_GROUND_ENEMY },
-
     { x: 10, y: 8, type: PLACEMENT_TYPE_FLYING_ENEMY },
+    { x: 19, y: 8, type: PLACEMENT_TYPE_ROAMING_ENEMY },
 
     { x: 20, y: 1, type: PLACEMENT_TYPE_KEY_GREEN },
 

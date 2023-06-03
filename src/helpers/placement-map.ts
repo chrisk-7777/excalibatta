@@ -14,6 +14,7 @@ import { GroundEnemy } from '../game-objects/ground-enemy';
 import { IcePickup } from '../game-objects/ice-pickup';
 import { IceTile } from '../game-objects/ice-tile';
 import { Player } from '../game-objects/player';
+import { RoamingEnemy } from '../game-objects/roaming-enemy';
 import { Teleport } from '../game-objects/teleport';
 import { Wall } from '../game-objects/wall';
 import { WaterPickup } from '../game-objects/water-pickup';
@@ -39,6 +40,7 @@ import {
   PLACEMENT_TYPE_TELEPORT,
   PLACEMENT_TYPE_CELEBRATION,
   PLACEMENT_TYPE_FLYING_ENEMY,
+  PLACEMENT_TYPE_ROAMING_ENEMY,
 } from './consts';
 
 export const placementTypeClassMap = {
@@ -55,7 +57,7 @@ export const placementTypeClassMap = {
   [PLACEMENT_TYPE_WATER_PICKUP]: WaterPickup,
   [PLACEMENT_TYPE_GROUND_ENEMY]: GroundEnemy,
   [PLACEMENT_TYPE_FLYING_ENEMY]: FlyingEnemy,
-  // [PLACEMENT_TYPE_ROAMING_ENEMY]: RoamingEnemy,
+  [PLACEMENT_TYPE_ROAMING_ENEMY]: RoamingEnemy,
   // [PLACEMENT_TYPE_CONVEYOR]: Conveyor,
   [PLACEMENT_TYPE_ICE]: IceTile,
   [PLACEMENT_TYPE_ICE_PICKUP]: IcePickup,

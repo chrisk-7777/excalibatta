@@ -29,7 +29,7 @@
 - [x] Teleport
 - [x] Particle effect when collect
 - [x] flying enemy
-- [ ] roaming enemy
+- [x] roaming enemy
 - [ ] theif
 - [ ] conveyer
 - [ ] ice corners

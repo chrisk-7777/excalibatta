@@ -152,6 +152,6 @@ export class TileMover {
     this.gameObject.pos.x = this.gameObject.tile.x * CELL_SIZE;
     this.gameObject.pos.y = this.gameObject.tile.y * CELL_SIZE;
     this.gameObject.handleCollisions();
-    // this.onPostMove();
+    this.gameObject.onPostMove();
   }
 }

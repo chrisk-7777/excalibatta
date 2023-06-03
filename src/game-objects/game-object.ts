@@ -117,6 +117,10 @@ export abstract class GameObject extends Actor {
     return false;
   }
 
+  onPostMove(): void {
+    return;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   switchesDoorsOnCollide(_body: GameObject): boolean {
     return false;
