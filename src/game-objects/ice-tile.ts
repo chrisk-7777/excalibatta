@@ -1,13 +1,12 @@
 import { BODY_SKINS, FourDirections, PLACEMENT_TYPE_HERO, PLACEMENT_TYPE_ICE_PICKUP } from '../helpers/consts';
 import { GameObject } from './game-object';
 import { TILES } from '../helpers/tiles';
-import { TileSetGrid16 } from '../services/resources';
 import { Player } from './player';
 import { GroundEnemy } from './ground-enemy';
 
 export class IceTile extends GameObject {
   onInitialize(): void {
-    this.graphics.use(this.generateGraphic(TILES.ICE, TileSetGrid16));
+    this.graphics.use(this.generateGraphic(TILES.ICE));
   }
 
   isSolidForBody(body: GameObject): boolean {

@@ -16,6 +16,7 @@ import { IceTile } from '../game-objects/ice-tile';
 import { Player } from '../game-objects/player';
 import { RoamingEnemy } from '../game-objects/roaming-enemy';
 import { Teleport } from '../game-objects/teleport';
+import { Thief } from '../game-objects/thief';
 import { Wall } from '../game-objects/wall';
 import { WaterPickup } from '../game-objects/water-pickup';
 import { WaterTile } from '../game-objects/water-tile';
@@ -41,6 +42,7 @@ import {
   PLACEMENT_TYPE_CELEBRATION,
   PLACEMENT_TYPE_FLYING_ENEMY,
   PLACEMENT_TYPE_ROAMING_ENEMY,
+  PLACEMENT_TYPE_THIEF,
 } from './consts';
 
 export const placementTypeClassMap = {
@@ -66,7 +68,7 @@ export const placementTypeClassMap = {
   [PLACEMENT_TYPE_SWITCH_DOOR]: Door,
   [PLACEMENT_TYPE_SWITCH]: DoorSwitch,
   [PLACEMENT_TYPE_TELEPORT]: Teleport,
-  // [PLACEMENT_TYPE_THIEF]: Thief,
+  [PLACEMENT_TYPE_THIEF]: Thief,
   // [PLACEMENT_TYPE_CIABATTA]: Ciabatta,
 } as const;
 

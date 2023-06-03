@@ -82,6 +82,11 @@ export abstract class GameObject extends Actor {
     return null;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  stealsInventoryOnCollide(_body: GameObject): boolean {
+    return false;
+  }
+
   canBeUnlocked(): boolean {
     return false;
   }
@@ -144,8 +149,14 @@ export abstract class GameObject extends Actor {
   collect() {
     const item = this.addsItemToInventoryOnCollide();
     if (item) {
-      this.active = false;
+      this.graphics.visible = false;
       this.level.inventory.add(item);
+    }
+  }
+
+  resetHasBeenCollected() {
+    if (this.canBeStolen && !this.graphics.visible) {
+      this.graphics.visible = true;
     }
   }
 

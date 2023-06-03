@@ -14,7 +14,7 @@ export default function FlourCount() {
   useEffect(() => {
     const handle = () => {
       const count = G.game?.currentScene.actors.filter((p) => {
-        return p instanceof Flour && p.active;
+        return p instanceof Flour && p.graphics.visible;
       });
 
       setCount((count ?? []).length.toString());

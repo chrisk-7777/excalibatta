@@ -5,7 +5,7 @@ import { Flour } from './flour';
 export class Goal extends GameObject {
   get isDisabled(): boolean {
     const nonCollectedFlour = this.level.actors.find((p) => {
-      return p instanceof Flour && p.active;
+      return p instanceof Flour && p.graphics.visible;
     });
 
     return nonCollectedFlour !== undefined;

@@ -35,7 +35,7 @@ export class Collision {
   withPlacementAddsToInventory() {
     if (this.forBody.canCollectItems) {
       return this.placementsAtPosition.find((p) => {
-        return p.active && p.addsItemToInventoryOnCollide();
+        return p.graphics.visible && p.addsItemToInventoryOnCollide();
       });
     }
     return null;
@@ -101,9 +101,9 @@ export class Collision {
     });
   }
 
-  // withStealsInventory() {
-  //   return this.placementsAtPosition.find((p) => {
-  //     return p.stealsInventoryOnCollide(this.forBody);
-  //   });
-  // }
+  withStealsInventory() {
+    return this.placementsAtPosition.find((p) => {
+      return p.stealsInventoryOnCollide(this.forBody);
+    });
+  }
 }

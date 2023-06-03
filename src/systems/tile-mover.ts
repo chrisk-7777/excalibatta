@@ -103,6 +103,11 @@ export class TileMover {
       this.gameObject.level.switchAllDoors();
     }
 
+    // Resets inventory
+    if (collision.withStealsInventory()) {
+      this.gameObject.level.stealInventory();
+    }
+
     // Teleports
     const teleport = collision.withTeleport();
     if (teleport) {

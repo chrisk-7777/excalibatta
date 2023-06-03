@@ -129,6 +129,18 @@ export class Level extends Scene {
     });
   }
 
+  stealInventory() {
+    this.actors.forEach((actor) => {
+      if (actor instanceof GameObject) {
+        actor.resetHasBeenCollected();
+      }
+    });
+
+    // TODO this is risky - it assumes anything shown in the inventory can be stolen and vice versa
+    // It should only clear those in the above loop, or better listen to an event simialr to adding
+    this.inventory.clear();
+  }
+
   completeLevel() {
     this.isCompleted = true;
     this.engine.clock.stop();

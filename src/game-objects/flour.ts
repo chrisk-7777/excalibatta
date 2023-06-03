@@ -3,8 +3,6 @@ import { GameObject } from './game-object';
 import { TILES } from '../helpers/tiles';
 
 export class Flour extends GameObject {
-  canBeStolen: boolean = false;
-
   onInitialize(): void {
     this.graphics.use(this.generateGraphic(TILES.FLOUR));
   }

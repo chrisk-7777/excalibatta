@@ -30,7 +30,7 @@
 - [x] Particle effect when collect
 - [x] flying enemy
 - [x] roaming enemy
-- [ ] theif
+- [x] thief
 - [ ] conveyer
 - [ ] ice corners
 - [ ] swap level #big (requires some refactoring)
