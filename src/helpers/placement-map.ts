@@ -1,10 +1,12 @@
 import { BlueKeyPickup } from '../game-objects/blue-key-pickup';
 import { BlueLock } from '../game-objects/blue-lock';
+import { Celebration } from '../game-objects/celebration';
 import { Door } from '../game-objects/door';
 import { DoorSwitch } from '../game-objects/door-switch';
 import { FirePickup } from '../game-objects/fire-pickup';
 import { FireTile } from '../game-objects/fire-tile';
 import { Flour } from '../game-objects/flour';
+import { FlyingEnemy } from '../game-objects/flying-enemy';
 import { Goal } from '../game-objects/goal';
 import { GreenKeyPickup } from '../game-objects/green-key-pickup';
 import { GreenLock } from '../game-objects/green-lock';
@@ -35,6 +37,8 @@ import {
   PLACEMENT_TYPE_LOCK_GREEN,
   PLACEMENT_TYPE_LOCK_BLUE,
   PLACEMENT_TYPE_TELEPORT,
+  PLACEMENT_TYPE_CELEBRATION,
+  PLACEMENT_TYPE_FLYING_ENEMY,
 } from './consts';
 
 export const placementTypeClassMap = {
@@ -42,7 +46,7 @@ export const placementTypeClassMap = {
   [PLACEMENT_TYPE_GOAL]: Goal,
   [PLACEMENT_TYPE_WALL]: Wall,
   [PLACEMENT_TYPE_FLOUR]: Flour,
-  // [PLACEMENT_TYPE_CELEBRATION]: Celebration,
+  [PLACEMENT_TYPE_CELEBRATION]: Celebration,
   [PLACEMENT_TYPE_LOCK_GREEN]: GreenLock,
   [PLACEMENT_TYPE_LOCK_BLUE]: BlueLock,
   [PLACEMENT_TYPE_KEY_GREEN]: GreenKeyPickup,
@@ -50,7 +54,7 @@ export const placementTypeClassMap = {
   [PLACEMENT_TYPE_WATER]: WaterTile,
   [PLACEMENT_TYPE_WATER_PICKUP]: WaterPickup,
   [PLACEMENT_TYPE_GROUND_ENEMY]: GroundEnemy,
-  // [PLACEMENT_TYPE_FLYING_ENEMY]: FlyingEnemy,
+  [PLACEMENT_TYPE_FLYING_ENEMY]: FlyingEnemy,
   // [PLACEMENT_TYPE_ROAMING_ENEMY]: RoamingEnemy,
   // [PLACEMENT_TYPE_CONVEYOR]: Conveyor,
   [PLACEMENT_TYPE_ICE]: IceTile,

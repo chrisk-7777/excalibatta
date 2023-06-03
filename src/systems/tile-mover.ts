@@ -1,3 +1,5 @@
+import { vec } from 'excalibur';
+import { Celebration } from '../game-objects/celebration';
 import { GameObject } from '../game-objects/game-object';
 import {
   BODY_SKINS,
@@ -7,6 +9,7 @@ import {
   DIRECTION_RIGHT,
   DIRECTION_UP,
   FourDirections,
+  PLACEMENT_TYPE_CELEBRATION,
   directionUpdateMap,
   heroSkinMap,
 } from '../helpers/consts';
@@ -80,11 +83,9 @@ export class TileMover {
     const collideThatAddsToInventory = collision.withPlacementAddsToInventory();
     if (collideThatAddsToInventory) {
       collideThatAddsToInventory.collect();
-      // this.level.addPlacement({
-      //   type: PLACEMENT_TYPE_CELEBRATION,
-      //   x: this.x,
-      //   y: this.y,
-      // });
+      this.gameObject.level.add(
+        new Celebration(this.gameObject.tile.clone(), this.gameObject.level, PLACEMENT_TYPE_CELEBRATION, {})
+      );
       soundsManager.playSfx(SFX.COLLECT);
     }
 

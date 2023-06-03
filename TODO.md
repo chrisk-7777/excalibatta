@@ -27,7 +27,12 @@
 - [x] Clock news to come from level config
 - [x] Lock
 - [x] Teleport
-- [ ] Particle effect when collect
+- [x] Particle effect when collect
+- [x] flying enemy
+- [ ] roaming enemy
+- [ ] theif
+- [ ] conveyer
+- [ ] ice corners
 - [ ] swap level #big (requires some refactoring)
 - [ ] doesn't respect refresh rate
 
