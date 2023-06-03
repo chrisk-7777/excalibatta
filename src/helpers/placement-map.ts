@@ -12,6 +12,7 @@ import { GroundEnemy } from '../game-objects/ground-enemy';
 import { IcePickup } from '../game-objects/ice-pickup';
 import { IceTile } from '../game-objects/ice-tile';
 import { Player } from '../game-objects/player';
+import { Teleport } from '../game-objects/teleport';
 import { Wall } from '../game-objects/wall';
 import { WaterPickup } from '../game-objects/water-pickup';
 import { WaterTile } from '../game-objects/water-tile';
@@ -33,6 +34,7 @@ import {
   PLACEMENT_TYPE_ICE,
   PLACEMENT_TYPE_LOCK_GREEN,
   PLACEMENT_TYPE_LOCK_BLUE,
+  PLACEMENT_TYPE_TELEPORT,
 } from './consts';
 
 export const placementTypeClassMap = {
@@ -57,7 +59,7 @@ export const placementTypeClassMap = {
   [PLACEMENT_TYPE_FIRE_PICKUP]: FirePickup,
   [PLACEMENT_TYPE_SWITCH_DOOR]: Door,
   [PLACEMENT_TYPE_SWITCH]: DoorSwitch,
-  // [PLACEMENT_TYPE_TELEPORT]: Teleport,
+  [PLACEMENT_TYPE_TELEPORT]: Teleport,
   // [PLACEMENT_TYPE_THIEF]: Thief,
   // [PLACEMENT_TYPE_CIABATTA]: Ciabatta,
 } as const;

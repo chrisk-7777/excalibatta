@@ -26,7 +26,7 @@
 - [x] Ice tile
 - [x] Clock news to come from level config
 - [x] Lock
-- [ ] Teleport
+- [x] Teleport
 - [ ] Particle effect when collect
 - [ ] swap level #big (requires some refactoring)
 - [ ] doesn't respect refresh rate

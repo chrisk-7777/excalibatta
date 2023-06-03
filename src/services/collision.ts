@@ -94,12 +94,12 @@ export class Collision {
     });
   }
 
-  // withTeleport() {
-  //   return this.placementsAtPosition.find((p) => {
-  //     const teleportPos = p.teleportsToPositionOnCollide(this.forBody);
-  //     return Boolean(teleportPos);
-  //   });
-  // }
+  withTeleport() {
+    return this.placementsAtPosition.find((p) => {
+      const teleportPos = p.teleportsToPositionOnCollide(this.forBody);
+      return Boolean(teleportPos);
+    });
+  }
 
   // withStealsInventory() {
   //   return this.placementsAtPosition.find((p) => {

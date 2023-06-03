@@ -128,6 +128,11 @@ export abstract class GameObject extends Actor {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  teleportsToPositionOnCollide(_body: GameObject): false | { x: number; y: number } {
+    return false;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   takesDamage(_body: string): void {
     return;
   }

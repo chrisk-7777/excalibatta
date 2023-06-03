@@ -102,6 +102,19 @@ export class TileMover {
       this.gameObject.level.switchAllDoors();
     }
 
+    // Teleports
+    const teleport = collision.withTeleport();
+    if (teleport) {
+      const pos = teleport.teleportsToPositionOnCollide(this.gameObject);
+      if (pos) {
+        this.gameObject.tile.x = pos.x;
+        this.gameObject.tile.y = pos.y;
+        this.gameObject.pos.x = this.gameObject.tile.x * CELL_SIZE;
+        this.gameObject.pos.y = this.gameObject.tile.y * CELL_SIZE;
+        soundsManager.playSfx(SFX.TELEPORT);
+      }
+    }
+
     // Damaging and death
     const takesDamages = collision.withSelfGetsDamaged();
     if (takesDamages) {
