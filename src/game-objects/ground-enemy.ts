@@ -1,9 +1,9 @@
-import { Vector, vec } from 'excalibur';
+import { SpriteSheet, Vector, vec } from 'excalibur';
 
 import { GameObject } from './game-object';
 import { Level } from '../services/level';
 import { TILES } from '../helpers/tiles';
-import { TileSetGrid16, TileSetGrid32 } from '../services/resources';
+import { Resources, TileSetGrid32 } from '../services/resources';
 import { DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT, DIRECTION_UP, FourDirections } from '../helpers/consts';
 
 import { TileMover } from '../systems/tile-mover';
@@ -34,11 +34,18 @@ export class GroundEnemy extends GameObject {
     this.graphics.layers.create({ name: 'shadow', order: 1 });
     this.graphics.layers.create({ name: 'foreground', order: 2 });
 
-    const shadow = this.generateGraphic(TILES.SHADOW, TileSetGrid16);
+    const shadow = this.generateGraphic(TILES.SHADOW);
     this.graphics.layers.get('shadow').show(shadow);
 
-    this.graphics.add(DIRECTION_LEFT, this.generateGraphic(TILES.ENEMY_LEFT, TileSetGrid32));
-    this.graphics.add(DIRECTION_RIGHT, this.generateGraphic(TILES.ENEMY_RIGHT, TileSetGrid32));
+    const spriteSheet = SpriteSheet.fromImageSource({
+      image: Resources.TileSet,
+      grid: TileSetGrid32,
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    this.graphics.add(DIRECTION_LEFT, spriteSheet.getSprite(TILES.ENEMY_LEFT[0] / 2, TILES.ENEMY_LEFT[1] / 2)!);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    this.graphics.add(DIRECTION_RIGHT, spriteSheet.getSprite(TILES.ENEMY_RIGHT[0] / 2, TILES.ENEMY_RIGHT[1] / 2)!);
   }
 
   handleCollisions(): void {

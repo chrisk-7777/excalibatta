@@ -4,7 +4,7 @@ import { Level } from '../services/level';
 import { CELL_SIZE, FourDirections, Skin, directionUpdateMap } from '../helpers/consts';
 import { Collision } from '../services/collision';
 import { Tile } from '../helpers/tiles';
-import { Resources, TileSetGrid16, TileSetGrid32 } from '../services/resources';
+import { Resources, TileSetGrid16 } from '../services/resources';
 
 export abstract class GameObject extends Actor {
   canBeStolen: boolean;
@@ -40,19 +40,23 @@ export abstract class GameObject extends Actor {
     this.skin = null;
   }
 
-  generateGraphic(tile: Tile, grid: typeof TileSetGrid16 | typeof TileSetGrid32): Sprite {
+  generateGraphic(tile: Tile): Sprite {
     const spriteSheet = SpriteSheet.fromImageSource({
-      image: Resources.TileSet,
-      grid,
+      image: Resources.TileSetExtruded,
+      grid: TileSetGrid16,
+      spacing: {
+        margin: {
+          x: 2,
+          y: 2,
+        },
+        originOffset: {
+          x: 1,
+          y: 1,
+        },
+      },
     });
 
-    // grid.spriteWidth / CELL_SIZE:
-    // - Divivdes the sprite by 1 when TileSetGrid16
-    // - Divivdes the sprite by 2 when TileSetGrid32
-    const sprite = spriteSheet.getSprite(
-      tile[0] / (grid.spriteWidth / CELL_SIZE),
-      tile[1] / (grid.spriteWidth / CELL_SIZE)
-    );
+    const sprite = spriteSheet.getSprite(tile[0], tile[1]);
 
     if (!sprite) {
       throw new Error('Sprite graphic misconfigured');
@@ -76,6 +80,10 @@ export abstract class GameObject extends Actor {
 
   changesHeroSkinOnCollide(): Skin | null {
     return null;
+  }
+
+  canBeUnlocked(): boolean {
+    return false;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -137,6 +145,11 @@ export abstract class GameObject extends Actor {
     const nextX = this.tile.x + x;
     const nextY = this.tile.y + y;
     return new Collision(this, this.level, vec(nextX, nextY));
+  }
+
+  getLockAtNextPosition(direction: FourDirections) {
+    const collision = this.getCollisionAtNextPosition(direction);
+    return collision.withLock();
   }
 
   isSolidAtNextPosition(direction: FourDirections) {

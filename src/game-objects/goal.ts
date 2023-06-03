@@ -1,7 +1,6 @@
 import { GameObject } from './game-object';
 import { TILES } from '../helpers/tiles';
 import { Flour } from './flour';
-import { TileSetGrid16 } from '../services/resources';
 
 export class Goal extends GameObject {
   get isDisabled(): boolean {
@@ -17,8 +16,8 @@ export class Goal extends GameObject {
   }
 
   onInitialize(): void {
-    this.graphics.add('disabled', this.generateGraphic(TILES.GOAL_DISABLED, TileSetGrid16));
-    this.graphics.add('enabled', this.generateGraphic(TILES.GOAL_ENABLED, TileSetGrid16));
+    this.graphics.add('disabled', this.generateGraphic(TILES.GOAL_DISABLED));
+    this.graphics.add('enabled', this.generateGraphic(TILES.GOAL_ENABLED));
   }
 
   onPostUpdate(): void {

@@ -1,6 +1,8 @@
 import { Engine, Input } from 'excalibur';
 import { GameObject } from '../game-objects/game-object';
 import { DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT, DIRECTION_UP, FourDirections } from '../helpers/consts';
+import { GreenLock } from '../game-objects/green-lock';
+import { BlueLock } from '../game-objects/blue-lock';
 
 export class UserController {
   gameObject: GameObject;
@@ -16,11 +18,12 @@ export class UserController {
     }
 
     // Check for lock at next position
-    // const possibleLock = this.getLockAtNextPosition(direction);
-    // if (possibleLock) {
-    //   possibleLock.unlock();
-    //   return;
-    // }
+    const possibleLock = this.gameObject.getLockAtNextPosition(direction);
+    // Meh this is getting messy
+    if (possibleLock && (possibleLock instanceof GreenLock || possibleLock instanceof BlueLock)) {
+      possibleLock.unlock();
+      return;
+    }
 
     //Make sure the next space is available
     if (this.gameObject.isSolidAtNextPosition(direction)) {

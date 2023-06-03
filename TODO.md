@@ -25,7 +25,7 @@
 - [x] lift common ground + player into body
 - [x] Ice tile
 - [x] Clock news to come from level config
-- [ ] Lock
+- [x] Lock
 - [ ] Teleport
 - [ ] Particle effect when collect
 - [ ] swap level #big (requires some refactoring)
@@ -36,7 +36,7 @@
 - [x] not all gameobjects using simplifed sprite setup
 - [x] sizing in GO + collision still inconsistent (sometimes / CELL sometimes not)
 - [x] water tile turnsAroundAtWater?
-- [ ] shadow glitch on enemy
+- [x] shadow glitch on enemy
 - [ ] game instance doesn't need to be a global, it can just be exported from the file. similar to inventory
 - [ ] reset events for death message and timer are a bit icky
 - [ ] fix types in wall

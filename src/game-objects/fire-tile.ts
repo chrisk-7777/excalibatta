@@ -2,7 +2,6 @@ import { Engine } from 'excalibur';
 
 import { GameObject } from './game-object';
 import { BODY_SKINS, PLACEMENT_TYPE_FIRE_PICKUP, PLACEMENT_TYPE_HERO } from '../helpers/consts';
-import { TileSetGrid16 } from '../services/resources';
 import { TILES } from '../helpers/tiles';
 
 export class FireTile extends GameObject {
@@ -11,7 +10,7 @@ export class FireTile extends GameObject {
 
   onInitialize(): void {
     this.frames.forEach((frame, i) => {
-      this.graphics.add(i.toString(), this.generateGraphic(frame, TileSetGrid16));
+      this.graphics.add(i.toString(), this.generateGraphic(frame));
     });
   }
 

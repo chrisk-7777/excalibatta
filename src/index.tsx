@@ -25,6 +25,8 @@ G.game = new Engine({
 G.game.showDebug(false);
 // new DevTool(G.game);
 
+G.game.snapToPixel = true;
+
 G.game.add('void', new Scene());
 G.game.add('level', new Level());
 

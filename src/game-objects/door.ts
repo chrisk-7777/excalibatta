@@ -3,7 +3,6 @@ import { Vector } from 'excalibur';
 import { GameObject } from './game-object';
 import { Level } from '../services/level';
 import { TILES } from '../helpers/tiles';
-import { TileSetGrid16 } from '../services/resources';
 
 export class Door extends GameObject {
   constructor(pos: Vector, level: Level, type: string, data: any) {
@@ -12,8 +11,8 @@ export class Door extends GameObject {
   }
 
   onInitialize(): void {
-    this.graphics.add('closed', this.generateGraphic(TILES.PURPLE_DOOR_SOLID, TileSetGrid16));
-    this.graphics.add('open', this.generateGraphic(TILES.PURPLE_DOOR_OUTLINE, TileSetGrid16));
+    this.graphics.add('closed', this.generateGraphic(TILES.PURPLE_DOOR_SOLID));
+    this.graphics.add('open', this.generateGraphic(TILES.PURPLE_DOOR_OUTLINE));
   }
 
   toggleIsRaised(): void {

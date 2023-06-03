@@ -50,11 +50,11 @@ export class Collision {
     return null;
   }
 
-  // withLock() {
-  //   return this.placementsAtPosition.find((p) => {
-  //     return p.canBeUnlocked();
-  //   });
-  // }
+  withLock() {
+    return this.placementsAtPosition.find((p) => {
+      return p.canBeUnlocked();
+    });
+  }
 
   withSelfGetsDamaged() {
     return this.placementsAtPosition.find((p) => {

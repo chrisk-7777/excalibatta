@@ -49,7 +49,7 @@ export class Player extends GameObject {
     this.graphics.layers.create({ name: 'shadow', order: 1 });
     this.graphics.layers.create({ name: 'foreground', order: 2 });
 
-    const shadow = this.generateGraphic(TILES.SHADOW, TileSetGrid16);
+    const shadow = this.generateGraphic(TILES.SHADOW);
     this.graphics.layers.get('shadow').show(shadow);
 
     Object.entries(heroSkinMap).map(([skin, frames]) => {

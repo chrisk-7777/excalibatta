@@ -25,7 +25,7 @@ export class Level extends Scene {
   constructor() {
     super();
 
-    this.currentLevelId = 'DemoLevel2';
+    this.currentLevelId = 'DemoLevel1';
     this.level = Levels[this.currentLevelId];
     this.deathOutcome = null;
     this.isCompleted = false;
@@ -69,9 +69,11 @@ export class Level extends Scene {
 
             const [tileX, tileY] = this.getBackgroundTile(x, y);
             ctx.drawImage(
-              Resources.TileSet.image,
-              tileX * CELL_SIZE,
-              tileY * CELL_SIZE,
+              Resources.TileSetExtruded.image,
+              // 2 = spacing between extrdued tiles
+              // 1 = margin of extrdued tiles to image frame
+              tileX * CELL_SIZE + 2 * tileX + 1,
+              tileY * CELL_SIZE + 2 * tileY + 1,
               CELL_SIZE,
               CELL_SIZE,
               x * CELL_SIZE,

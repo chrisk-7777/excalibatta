@@ -24,7 +24,7 @@ export class TileMover {
   constructor(gameObject: ControllableGameObject) {
     this.gameObject = gameObject;
     this.movingPixelsRemaining = 0;
-    this.travelPixelsPerFrame = 1.5;
+    this.travelPixelsPerFrame = 1.511111;
     this.movingPixelDirection = DIRECTION_RIGHT;
   }
 
