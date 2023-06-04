@@ -1,27 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { CELL_SIZE } from '../../helpers/consts';
-import { G } from '../../services/global';
 import { TILES } from '../../helpers/tiles';
 import PixelNumber from '../pixel-number/pixel-number';
 import Sprite from '../sprite/sprite';
 
 import styles from './clock-count.module.css';
+import { useGameEvent } from '../../hooks/use-game-event';
 
 export default function ClockCount() {
   const [secondsRemaining, setSecondsRemaining] = useState<number | string>('-');
 
-  useEffect(() => {
-    const handle = (e: any) => {
-      setSecondsRemaining(e.secondsRemaining);
-    };
-
-    G.on('CLOCK_TICK', handle);
-
-    return () => {
-      G.off('CLOCK_TICK', handle);
-    };
-  }, []);
+  useGameEvent('ClockTick', (e: any) => {
+    setSecondsRemaining(e.secondsRemaining);
+  });
 
   return (
     <div className={styles.clockCount}>

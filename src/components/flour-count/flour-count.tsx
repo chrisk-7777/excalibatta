@@ -1,28 +1,25 @@
+import { useState } from 'react';
+
 import { CELL_SIZE } from '../../helpers/consts';
-import Sprite from '../sprite/sprite';
+import { Flour } from '../../game-objects/flour';
+import { G } from '../../services/global';
 import { TILES } from '../../helpers/tiles';
+import { useGameEvent } from '../../hooks/use-game-event';
 import PixelNumber from '../pixel-number/pixel-number';
+import Sprite from '../sprite/sprite';
 
 import styles from './flour-count.module.css';
-import { G } from '../../services/global';
-import { useEffect, useState } from 'react';
-import { Flour } from '../../game-objects/flour';
 
 export default function FlourCount() {
   const [count, setCount] = useState('0');
 
-  useEffect(() => {
-    const handle = () => {
-      const count = G.game?.currentScene.actors.filter((p) => {
-        return p instanceof Flour && p.graphics.visible;
-      });
+  useGameEvent('InventoryUpdated', () => {
+    const count = G.game?.currentScene.actors.filter((p) => {
+      return p instanceof Flour && p.graphics.visible;
+    });
 
-      setCount((count ?? []).length.toString());
-    };
-
-    G.on('InventoryUpdated', handle);
-    return () => G.off('InventoryUpdated', handle);
-  }, []);
+    setCount((count ?? []).length.toString());
+  });
 
   return (
     <div className={styles.flourCount}>

@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { DisplayMode, Engine, Scene } from 'excalibur';
+import { DisplayMode, Engine } from 'excalibur';
 // import { DevTool } from '@excaliburjs/dev-tools';
 
 import { CELL_SIZE } from './helpers/consts';
 import { G } from './services/global';
-import { Level } from './services/level';
 import { loader } from './services/quick-loader';
 import DeathMessage from './components/popup-message/death-message';
 import LevelCompleteMessage from './components/popup-message/level-complete-message';
 import TopHud from './components/top-hud/top-hud';
+import { LevelManager } from './services/level-manager';
 
 import './index.css';
 
@@ -27,11 +27,10 @@ G.game.showDebug(false);
 
 G.game.snapToPixel = true;
 
-G.game.add('void', new Scene());
-G.game.add('level', new Level());
+G.levelManager = new LevelManager(G.game);
 
 G.game.start(loader);
-G.game.goToScene('level');
+G.levelManager.start();
 
 ReactDOM.createRoot(document.getElementById('ui') as HTMLElement).render(
   <React.StrictMode>

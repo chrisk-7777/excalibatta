@@ -6,36 +6,34 @@ import { G } from './global';
 import { GameObject } from '../game-objects/game-object';
 import { Inventory } from '../services/inventory';
 import { isKeyOfPlacementTypeClassMap, placementTypeClassMap } from '../helpers/placement-map';
+import { LevelData } from '../levels/levels-map';
 import { Player } from '../game-objects/player';
 import { Resources } from './resources';
-import Levels, { LevelsMap } from '../levels/levels-map';
 
 export class Level extends Scene {
   clock: Clock;
-  currentLevelId: keyof typeof Levels;
   deathOutcome: string | null;
   heightWithWalls: number;
   inventory: Inventory;
   isCompleted: boolean;
-  level: LevelsMap;
+  data: LevelData;
+  player: Player | undefined;
   tiles: ThemeTiles;
   widthWithWalls: number;
-  player: Player | undefined;
 
-  constructor() {
+  constructor(data: LevelData) {
     super();
 
-    this.currentLevelId = 'DemoLevel1';
-    this.level = Levels[this.currentLevelId];
+    this.data = data;
     this.deathOutcome = null;
     this.isCompleted = false;
 
-    this.widthWithWalls = this.level.tilesWidth + 1;
-    this.heightWithWalls = this.level.tilesHeight + 1;
-    this.tiles = THEME_TILES_MAP[this.level.theme];
+    this.widthWithWalls = this.data.tilesWidth + 1;
+    this.heightWithWalls = this.data.tilesHeight + 1;
+    this.tiles = THEME_TILES_MAP[this.data.theme];
 
     this.inventory = new Inventory();
-    this.clock = new Clock(this.level.timeAvailable, this);
+    this.clock = new Clock(this.data.timeAvailable, this);
   }
 
   getBackgroundTile(x: number, y: number) {
@@ -93,7 +91,7 @@ export class Level extends Scene {
   }
 
   placeGameObjects(): void {
-    this.level.placements.forEach((gameObject) => {
+    this.data.placements.forEach((gameObject) => {
       const { type, x, y, ...data } = gameObject;
       if (isKeyOfPlacementTypeClassMap(type)) {
         this.add(new placementTypeClassMap[type](vec(x, y), this, type, data));
@@ -103,7 +101,7 @@ export class Level extends Scene {
 
   onInitialize(): void {
     this.add(this.generateBackground());
-    this.engine.backgroundColor = Color.fromHex(THEME_BACKGROUNDS[this.level.theme]);
+    this.engine.backgroundColor = Color.fromHex(THEME_BACKGROUNDS[this.data.theme]);
 
     this.placeGameObjects();
 
@@ -152,6 +150,6 @@ export class Level extends Scene {
   }
 
   isPositionOutOfBounds(x: number, y: number) {
-    return x === 0 || y === 0 || x >= this.level.tilesWidth + 1 || y >= this.level.tilesHeight + 1;
+    return x === 0 || y === 0 || x >= this.data.tilesWidth + 1 || y >= this.data.tilesHeight + 1;
   }
 }

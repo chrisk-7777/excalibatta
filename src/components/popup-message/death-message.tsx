@@ -16,6 +16,8 @@ import { Level } from '../../services/level';
 import LevelFailedSvg from './components/level-failed-svg';
 import Sprite from '../sprite/sprite';
 import styles from './popup-message.module.css';
+import { useKeyPress } from '../../hooks/use-key-press';
+import { useGameEvent } from '../../hooks/use-game-event';
 
 const showDeathType = (deathType: string | null) => {
   switch (deathType) {
@@ -27,41 +29,25 @@ const showDeathType = (deathType: string | null) => {
       return <Sprite size={CELL_SIZE} frameCoord={TILES.CLOCK} />;
     case PLACEMENT_TYPE_GROUND_ENEMY:
       return (
-        <div
-          style={{
-            paddingBottom: 12,
-          }}
-        >
+        <div className={styles.spriteSmall}>
           <Sprite frameCoord={TILES.ENEMY_RIGHT} size={32} />
         </div>
       );
     case PLACEMENT_TYPE_ROAMING_ENEMY:
       return (
-        <div
-          style={{
-            paddingBottom: 12,
-          }}
-        >
+        <div className={styles.spriteSmall}>
           <Sprite frameCoord={TILES.ENEMY_ROAMING} size={32} />
         </div>
       );
     case PLACEMENT_TYPE_FLYING_ENEMY:
       return (
-        <div
-          style={{
-            paddingBottom: 12,
-          }}
-        >
+        <div className={styles.spriteSmall}>
           <Sprite frameCoord={TILES.ENEMY_FLYING_RIGHT} size={32} />
         </div>
       );
     case PLACEMENT_TYPE_CIABATTA:
       return (
-        <div
-          style={{
-            paddingBottom: 4,
-          }}
-        >
+        <div className={styles.spriteLarge}>
           <Sprite frameCoord={TILES.CIABATTA_RIGHT} size={48} />
         </div>
       );
@@ -73,33 +59,22 @@ const showDeathType = (deathType: string | null) => {
 export default function DeathMessage() {
   const [deathOutcome, setDeathOutcome] = useState<string | null>(null);
   const handleRestartLevel = () => {
-    G.game!.goToScene('void');
-    G.game!.clock.start();
+    if (deathOutcome === null) {
+      return;
+    }
 
     // A bit icky. ditto with timer, needs a reset event ?
     setDeathOutcome(null);
-
-    const level = new Level();
-    G.game!.removeScene('level');
-    G.game!.add('level', level);
-    G.game!.goToScene('level');
+    G.levelManager.resetCurrent();
   };
 
-  // useKeyPress("Enter", () => {
-  //   handleRestartLevel();
-  // });
+  useKeyPress('Enter', () => {
+    handleRestartLevel();
+  });
 
-  useEffect(() => {
-    const handle = () => {
-      setDeathOutcome((G.game?.currentScene as Level).deathOutcome);
-    };
-
-    G.on('Death', handle);
-
-    return () => {
-      G.off('Death', handle);
-    };
-  }, []);
+  useGameEvent('Death', () => {
+    setDeathOutcome((G.game?.currentScene as Level).deathOutcome);
+  });
 
   if (deathOutcome === null) {
     return null;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { G } from '../../services/global';
 import { Level } from '../../services/level';
@@ -7,6 +7,7 @@ import * as CONSTS from '../../helpers/consts';
 import Sprite from '../sprite/sprite';
 
 import styles from './inventory-list.module.css';
+import { useGameEvent } from '../../hooks/use-game-event';
 
 const showInventory = [
   {
@@ -34,16 +35,11 @@ const showInventory = [
 export default function InventoryList() {
   const [filteredInventory, setFilteredInventory] = useState<typeof showInventory>([]);
 
-  useEffect(() => {
-    const handle = () => {
-      // TODO Nasty ref
-      const inventory = (G.game?.currentScene as Level).inventory;
-      setFilteredInventory(showInventory.filter((i) => inventory.has(i.key)));
-    };
-
-    G.on('InventoryUpdated', handle);
-    return () => G.off('InventoryUpdated', handle);
-  }, []);
+  useGameEvent('InventoryUpdated', () => {
+    // TODO Nasty ref
+    const inventory = (G.game?.currentScene as Level).inventory;
+    setFilteredInventory(showInventory.filter((i) => inventory.has(i.key)));
+  });
 
   if (!filteredInventory) {
     return null;

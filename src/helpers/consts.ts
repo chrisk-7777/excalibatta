@@ -26,7 +26,6 @@ export const PLACEMENT_TYPE_GROUND_ENEMY = 'GROUND_ENEMY';
 export const PLACEMENT_TYPE_FLYING_ENEMY = 'FLYING_ENEMY';
 export const PLACEMENT_TYPE_ROAMING_ENEMY = 'ROAMING_ENEMY';
 export const PLACEMENT_TYPE_CIABATTA = 'CIABATTA';
-
 export const PLACEMENT_TYPE_SWITCH_DOOR = 'SWITCH_DOOR';
 export const PLACEMENT_TYPE_SWITCH = 'SWITCH';
 
@@ -86,6 +85,8 @@ export const LEVEL_THEMES = {
   PINK: 'PINK',
   GRAY: 'GRAY',
 } as const;
+
+export type LevelTheme = keyof typeof LEVEL_THEMES;
 
 export const THEME_BACKGROUNDS = {
   [LEVEL_THEMES.YELLOW]: '#2f2808',
