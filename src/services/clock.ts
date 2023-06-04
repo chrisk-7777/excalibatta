@@ -22,7 +22,7 @@ export class Clock {
       this.msRemainingInSecond = 1000;
       this.secondsRemaining -= 1;
 
-      G.emit('CLOCK_TICK', { secondsRemaining: this.secondsRemaining });
+      G.emit('ClockTick', { secondsRemaining: this.secondsRemaining });
 
       if (this.secondsRemaining <= 0) {
         this.level.setDeathOutcome(DEATH_TYPE_CLOCK);

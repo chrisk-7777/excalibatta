@@ -31,10 +31,11 @@
 - [x] flying enemy
 - [x] roaming enemy
 - [x] thief
-- [ ] swap level #big (requires some refactoring)
-- [ ] conveyer
+- [x] swap level #big (requires some refactoring)
+- [x] enter key on death message. emit from Ex
+- [x] conveyer
 - [ ] ice corners
-- [ ] enter key on death message. emit from Ex
+- [ ] event constants
 - [ ] doesn't respect refresh rate
 - [ ] maybe some kind of "implenets" in JS vs lots of inherintance (https://timmousk.com/blog/typescript-instanceof-interface/)
 

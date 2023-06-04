@@ -1,4 +1,3 @@
-import { vec } from 'excalibur';
 import { Celebration } from '../game-objects/celebration';
 import { GameObject } from '../game-objects/game-object';
 import {

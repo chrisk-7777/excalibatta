@@ -1,6 +1,7 @@
 import { BlueKeyPickup } from '../game-objects/blue-key-pickup';
 import { BlueLock } from '../game-objects/blue-lock';
 import { Celebration } from '../game-objects/celebration';
+import { ConveyorTile } from '../game-objects/conveyor-tile';
 import { Door } from '../game-objects/door';
 import { DoorSwitch } from '../game-objects/door-switch';
 import { FirePickup } from '../game-objects/fire-pickup';
@@ -21,28 +22,29 @@ import { Wall } from '../game-objects/wall';
 import { WaterPickup } from '../game-objects/water-pickup';
 import { WaterTile } from '../game-objects/water-tile';
 import {
-  PLACEMENT_TYPE_HERO,
-  PLACEMENT_TYPE_GOAL,
-  PLACEMENT_TYPE_WALL,
-  PLACEMENT_TYPE_FLOUR,
-  PLACEMENT_TYPE_KEY_GREEN,
-  PLACEMENT_TYPE_KEY_BLUE,
-  PLACEMENT_TYPE_WATER,
-  PLACEMENT_TYPE_WATER_PICKUP,
-  PLACEMENT_TYPE_ICE_PICKUP,
-  PLACEMENT_TYPE_FIRE,
+  PLACEMENT_TYPE_CELEBRATION,
+  PLACEMENT_TYPE_CONVEYOR,
   PLACEMENT_TYPE_FIRE_PICKUP,
+  PLACEMENT_TYPE_FIRE,
+  PLACEMENT_TYPE_FLOUR,
+  PLACEMENT_TYPE_FLYING_ENEMY,
+  PLACEMENT_TYPE_GOAL,
+  PLACEMENT_TYPE_GROUND_ENEMY,
+  PLACEMENT_TYPE_HERO,
+  PLACEMENT_TYPE_ICE_PICKUP,
+  PLACEMENT_TYPE_ICE,
+  PLACEMENT_TYPE_KEY_BLUE,
+  PLACEMENT_TYPE_KEY_GREEN,
+  PLACEMENT_TYPE_LOCK_BLUE,
+  PLACEMENT_TYPE_LOCK_GREEN,
+  PLACEMENT_TYPE_ROAMING_ENEMY,
   PLACEMENT_TYPE_SWITCH_DOOR,
   PLACEMENT_TYPE_SWITCH,
-  PLACEMENT_TYPE_GROUND_ENEMY,
-  PLACEMENT_TYPE_ICE,
-  PLACEMENT_TYPE_LOCK_GREEN,
-  PLACEMENT_TYPE_LOCK_BLUE,
   PLACEMENT_TYPE_TELEPORT,
-  PLACEMENT_TYPE_CELEBRATION,
-  PLACEMENT_TYPE_FLYING_ENEMY,
-  PLACEMENT_TYPE_ROAMING_ENEMY,
   PLACEMENT_TYPE_THIEF,
+  PLACEMENT_TYPE_WALL,
+  PLACEMENT_TYPE_WATER_PICKUP,
+  PLACEMENT_TYPE_WATER,
 } from './consts';
 
 export const placementTypeClassMap = {
@@ -60,7 +62,7 @@ export const placementTypeClassMap = {
   [PLACEMENT_TYPE_GROUND_ENEMY]: GroundEnemy,
   [PLACEMENT_TYPE_FLYING_ENEMY]: FlyingEnemy,
   [PLACEMENT_TYPE_ROAMING_ENEMY]: RoamingEnemy,
-  // [PLACEMENT_TYPE_CONVEYOR]: Conveyor,
+  [PLACEMENT_TYPE_CONVEYOR]: ConveyorTile,
   [PLACEMENT_TYPE_ICE]: IceTile,
   [PLACEMENT_TYPE_ICE_PICKUP]: IcePickup,
   [PLACEMENT_TYPE_FIRE]: FireTile,
