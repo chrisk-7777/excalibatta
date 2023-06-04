@@ -1,4 +1,4 @@
-import { Engine, Vector } from 'excalibur';
+import { Vector } from 'excalibur';
 
 import { GameObject } from './game-object';
 import { TILES } from '../helpers/tiles';

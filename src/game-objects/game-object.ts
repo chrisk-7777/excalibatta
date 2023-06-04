@@ -174,10 +174,14 @@ export abstract class GameObject extends Actor {
 
   isSolidAtNextPosition(direction: FourDirections) {
     // Check for ice corner...
-    // const onIceCorner = new Collision(this, this.level).withIceCorner();
-    // if (onIceCorner?.blocksMovementDirection(direction)) {
-    //   return true;
-    // }
+    const onIceCorner = new Collision(this, this.level).withIceCorner();
+    if (onIceCorner) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore need to fix up duck types
+      if (onIceCorner.blocksMovementDirection(direction)) {
+        return true;
+      }
+    }
 
     const collision = this.getCollisionAtNextPosition(direction);
     const isOutOfBounds = this.level.isPositionOutOfBounds(collision.x, collision.y);

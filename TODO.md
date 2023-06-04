@@ -34,7 +34,8 @@
 - [x] swap level #big (requires some refactoring)
 - [x] enter key on death message. emit from Ex
 - [x] conveyer
-- [ ] ice corners
+- [x] ice corners
+- [x] ground enemy initial direction from config
 - [ ] event constants
 - [ ] doesn't respect refresh rate
 - [ ] maybe some kind of "implenets" in JS vs lots of inherintance (https://timmousk.com/blog/typescript-instanceof-interface/)

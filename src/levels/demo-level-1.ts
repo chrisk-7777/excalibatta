@@ -70,12 +70,22 @@ const level = {
     { x: 13, y: 1, type: PLACEMENT_TYPE_ICE },
     { x: 14, y: 1, type: PLACEMENT_TYPE_ICE },
 
-    { x: 4, y: 7, type: PLACEMENT_TYPE_ICE_PICKUP },
+    { x: 1, y: 8, type: PLACEMENT_TYPE_ICE_PICKUP },
+
+    // Row 1
     { x: 3, y: 6, type: PLACEMENT_TYPE_ICE, corner: 'TOP_LEFT' },
-    { x: 3, y: 7, type: PLACEMENT_TYPE_ICE },
-    { x: 3, y: 8, type: PLACEMENT_TYPE_ICE, corner: 'BOTTOM_LEFT' },
+    { x: 4, y: 6, type: PLACEMENT_TYPE_ICE },
     { x: 5, y: 6, type: PLACEMENT_TYPE_ICE, corner: 'TOP_RIGHT' },
+
+    // Row 2
+    { x: 3, y: 7, type: PLACEMENT_TYPE_ICE },
+    { x: 4, y: 7, type: PLACEMENT_TYPE_ICE },
     { x: 5, y: 7, type: PLACEMENT_TYPE_ICE },
+
+    // Row 3
+    { x: 2, y: 8, type: PLACEMENT_TYPE_ICE, corner: 'BOTTOM_LEFT' },
+    { x: 3, y: 8, type: PLACEMENT_TYPE_ICE },
+    { x: 4, y: 8, type: PLACEMENT_TYPE_ICE },
     { x: 5, y: 8, type: PLACEMENT_TYPE_ICE, corner: 'BOTTOM_RIGHT' },
 
     { x: 6, y: 8, type: PLACEMENT_TYPE_WATER_PICKUP },

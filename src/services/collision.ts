@@ -2,7 +2,7 @@ import { Vector } from 'excalibur';
 
 import { GameObject } from '../game-objects/game-object';
 import { Level } from './level';
-import { PLACEMENT_TYPE_GROUND_ENEMY, PLACEMENT_TYPE_HERO } from '../helpers/consts';
+import { PLACEMENT_TYPE_GROUND_ENEMY, PLACEMENT_TYPE_HERO, PLACEMENT_TYPE_ICE } from '../helpers/consts';
 
 export class Collision {
   forBody: GameObject;
@@ -82,11 +82,15 @@ export class Collision {
     return null;
   }
 
-  // withIceCorner() {
-  //   return this.placementsAtPosition.find((p) => {
-  //     return p.type === PLACEMENT_TYPE_ICE && p.corner;
-  //   });
-  // }
+  withIceCorner(): GameObject | false {
+    return (
+      this.placementsAtPosition.find((p) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore need to fix up types and ducktypes
+        return p.type === PLACEMENT_TYPE_ICE && p.corner;
+      }) ?? false
+    );
+  }
 
   withDoorSwitch() {
     return this.placementsAtPosition.find((p) => {

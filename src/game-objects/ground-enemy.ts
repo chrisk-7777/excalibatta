@@ -14,7 +14,7 @@ export class GroundEnemy extends GameObject {
   turnsAroundAtWater: boolean;
   mover: TileMover;
 
-  constructor(pos: Vector, level: Level, type: string) {
+  constructor(pos: Vector, level: Level, type: string, data: any) {
     super(pos, level, type);
 
     this.zOffset = 100;
@@ -23,11 +23,8 @@ export class GroundEnemy extends GameObject {
     this.turnsAroundAtWater = true;
     this.interactsWithGround = true;
 
-    // TODO Initial direction should be from config
-    // TODO needs to pass to tile mover constructor
-    // this.mover.movingPixelDirection = /*properties.initialDirection ??*/ DIRECTION_RIGHT;
-
     this.mover = new TileMover(this);
+    this.mover.movingPixelDirection = data?.direction ?? DIRECTION_RIGHT;
   }
 
   onInitialize(): void {
@@ -46,6 +43,10 @@ export class GroundEnemy extends GameObject {
     this.graphics.add(DIRECTION_LEFT, spriteSheet.getSprite(TILES.ENEMY_LEFT[0] / 2, TILES.ENEMY_LEFT[1] / 2)!);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.graphics.add(DIRECTION_RIGHT, spriteSheet.getSprite(TILES.ENEMY_RIGHT[0] / 2, TILES.ENEMY_RIGHT[1] / 2)!);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    this.graphics.add(DIRECTION_UP, spriteSheet.getSprite(TILES.ENEMY_RIGHT[0] / 2, TILES.ENEMY_RIGHT[1] / 2)!);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    this.graphics.add(DIRECTION_DOWN, spriteSheet.getSprite(TILES.ENEMY_RIGHT[0] / 2, TILES.ENEMY_RIGHT[1] / 2)!);
   }
 
   handleCollisions(): void {
