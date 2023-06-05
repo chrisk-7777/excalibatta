@@ -9,7 +9,7 @@ export class BlueLock extends GameObject {
   collectInFrames: number;
   unlocked: boolean;
 
-  constructor(pos: Vector, level: Level, type: string, data: any) {
+  constructor(pos: Vector, level: Level, type: string) {
     super(pos, level, type);
     this.collectInFrames = 0;
     this.unlocked = false;

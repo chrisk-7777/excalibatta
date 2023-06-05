@@ -4,7 +4,7 @@ import InventoryList from '../inventory-list/inventory-list';
 
 import styles from './top-hud.module.css';
 
-export default function TopHud() {
+export function TopHud() {
   return (
     <div className={styles.topHud}>
       <div className={styles.topHudLeft}>

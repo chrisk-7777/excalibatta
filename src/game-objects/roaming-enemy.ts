@@ -28,13 +28,14 @@ export class RoamingEnemy extends GroundEnemy {
       grid: TileSetGrid32,
     });
 
+    // TODO better types (!)
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.graphics.use(spriteSheet.getSprite(TILES.ENEMY_ROAMING[0] / 2, TILES.ENEMY_ROAMING[1] / 2)!, {
       anchor: vec(0.25, 0.6),
     });
   }
 
-  onPostMove() {
+  onPostMove(): void {
     // Do not choose next move if we are on an automoving tile
     const collision = new Collision(this, this.level);
     if (collision.withPlacementMovesBody()) {

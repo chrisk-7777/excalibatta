@@ -18,7 +18,7 @@ export class Celebration extends GameObject {
     TILES.PARTICLE_9,
   ];
 
-  constructor(pos: Vector, level: Level, type: string, data: any) {
+  constructor(pos: Vector, level: Level, type: string) {
     super(pos, level, type);
     this.frame = 0;
     this.zOffset = 200;
@@ -38,7 +38,7 @@ export class Celebration extends GameObject {
     this.kill();
   }
 
-  onPostUpdate() {
+  onPostUpdate(): void {
     this.graphics.use(Math.ceil(this.frame).toString());
   }
 }

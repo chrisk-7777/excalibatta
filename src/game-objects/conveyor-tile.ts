@@ -10,6 +10,7 @@ import {
   DIRECTION_RIGHT,
   DIRECTION_UP,
   FourDirections,
+  Skin,
 } from '../helpers/consts';
 
 export class ConveyorTile extends GameObject {
@@ -33,15 +34,15 @@ export class ConveyorTile extends GameObject {
     });
   }
 
-  autoMovesBodyOnCollide() {
+  autoMovesBodyOnCollide(): FourDirections {
     return this.direction;
   }
 
-  changesHeroSkinOnCollide() {
+  changesHeroSkinOnCollide(): Skin {
     return BODY_SKINS.CONVEYOR;
   }
 
-  onPostUpdate() {
+  onPostUpdate(): void {
     this.graphics.use(this.direction);
   }
 }

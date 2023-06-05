@@ -1,6 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { TILES } from '../../helpers/tiles';
+import { game } from '../../services/game';
+import { useGameEvent } from '../../hooks/use-game-event';
+import { useKeyPress } from '../../hooks/use-key-press';
+import { Sprite } from '../sprite/sprite';
 import {
   DEATH_TYPE_CLOCK,
   PLACEMENT_TYPE_GROUND_ENEMY,
@@ -11,13 +15,9 @@ import {
   PLACEMENT_TYPE_CIABATTA,
   CELL_SIZE,
 } from '../../helpers/consts';
-import { G } from '../../services/global';
-import { Level } from '../../services/level';
+
 import LevelFailedSvg from './components/level-failed-svg';
-import Sprite from '../sprite/sprite';
 import styles from './popup-message.module.css';
-import { useKeyPress } from '../../hooks/use-key-press';
-import { useGameEvent } from '../../hooks/use-game-event';
 
 const showDeathType = (deathType: string | null) => {
   switch (deathType) {
@@ -56,7 +56,7 @@ const showDeathType = (deathType: string | null) => {
   }
 };
 
-export default function DeathMessage() {
+export function DeathMessage() {
   const [deathOutcome, setDeathOutcome] = useState<string | null>(null);
   const handleRestartLevel = () => {
     if (deathOutcome === null) {
@@ -65,7 +65,7 @@ export default function DeathMessage() {
 
     // A bit icky. ditto with timer, needs a reset event ?
     setDeathOutcome(null);
-    G.levelManager.resetCurrent();
+    game.levelManager.resetCurrent();
   };
 
   useKeyPress('Enter', () => {
@@ -73,7 +73,7 @@ export default function DeathMessage() {
   });
 
   useGameEvent('Death', () => {
-    setDeathOutcome((G.game?.currentScene as Level).deathOutcome);
+    setDeathOutcome(game.currentLevel.deathOutcome);
   });
 
   if (deathOutcome === null) {

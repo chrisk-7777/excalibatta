@@ -5,7 +5,7 @@ import { Vector } from 'excalibur';
 import { Level } from '../services/level';
 
 export class GreenKeyPickup extends GameObject {
-  constructor(pos: Vector, level: Level, type: string, data: any) {
+  constructor(pos: Vector, level: Level, type: string) {
     super(pos, level, type);
     this.canBeStolen = true;
   }
@@ -14,7 +14,7 @@ export class GreenKeyPickup extends GameObject {
     this.graphics.use(this.generateGraphic(TILES.GREEN_KEY));
   }
 
-  addsItemToInventoryOnCollide() {
+  addsItemToInventoryOnCollide(): string {
     return PLACEMENT_TYPE_KEY_GREEN;
   }
 }

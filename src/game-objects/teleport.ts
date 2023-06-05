@@ -1,5 +1,5 @@
 import { GameObject } from './game-object';
-import { BODY_SKINS } from '../helpers/consts';
+import { BODY_SKINS, Skin } from '../helpers/consts';
 import { TILES } from '../helpers/tiles';
 
 export class Teleport extends GameObject {
@@ -7,11 +7,11 @@ export class Teleport extends GameObject {
     this.graphics.use(this.generateGraphic(TILES.TELEPORT1));
   }
 
-  changesHeroSkinOnCollide() {
+  changesHeroSkinOnCollide(): Skin {
     return BODY_SKINS.TELEPORT;
   }
 
-  teleportsToPositionOnCollide(body: GameObject) {
+  teleportsToPositionOnCollide(body: GameObject): false | { x: number; y: number } {
     if (body.interactsWithGround) {
       // Get all teleports
       const allTeleports = this.level.actors.filter((p) => {

@@ -6,10 +6,10 @@ import { Level } from '../services/level';
 import { PLACEMENT_TYPE_KEY_GREEN } from '../helpers/consts';
 
 export class GreenLock extends GameObject {
-  collectInFrames: number;
-  unlocked: boolean;
+  private collectInFrames: number;
+  private unlocked: boolean;
 
-  constructor(pos: Vector, level: Level, type: string, data: any) {
+  constructor(pos: Vector, level: Level, type: string) {
     super(pos, level, type);
     this.collectInFrames = 0;
     this.unlocked = false;
@@ -24,18 +24,18 @@ export class GreenLock extends GameObject {
     return !this.unlocked;
   }
 
-  canBeUnlocked() {
+  canBeUnlocked(): boolean {
     return !this.unlocked && this.level.inventory.has(PLACEMENT_TYPE_KEY_GREEN);
   }
 
-  unlock() {
+  unlock(): void {
     if (this.collectInFrames > 0) {
       return;
     }
     this.collectInFrames = 11;
   }
 
-  onPreUpdate() {
+  onPreUpdate(): void {
     if (this.collectInFrames > 0) {
       this.collectInFrames -= 1;
       if (this.collectInFrames === 0) {

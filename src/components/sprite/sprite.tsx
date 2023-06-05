@@ -7,7 +7,7 @@ interface SpriteProps {
   size?: number;
 }
 
-export default function Sprite(props: SpriteProps) {
+export function Sprite(props: SpriteProps) {
   const { frameCoord, size = CELL_SIZE } = props;
 
   //Draw a graphic to the canvas tag

@@ -5,7 +5,7 @@ import { Vector } from 'excalibur';
 import { Level } from '../services/level';
 
 export class FirePickup extends GameObject {
-  constructor(pos: Vector, level: Level, type: string, data: any) {
+  constructor(pos: Vector, level: Level, type: string) {
     super(pos, level, type);
     this.canBeStolen = true;
   }

@@ -195,7 +195,7 @@ interface PixelNumberProps {
   number: string;
 }
 
-export default function PixelNumber(props: PixelNumberProps) {
+export function PixelNumber(props: PixelNumberProps) {
   const { number } = props;
   const mappedChars = String(number)
     .split('')

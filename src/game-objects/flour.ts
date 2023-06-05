@@ -7,7 +7,7 @@ export class Flour extends GameObject {
     this.graphics.use(this.generateGraphic(TILES.FLOUR));
   }
 
-  addsItemToInventoryOnCollide() {
+  addsItemToInventoryOnCollide(): string {
     return PLACEMENT_TYPE_FLOUR;
   }
 }

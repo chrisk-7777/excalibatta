@@ -1,19 +1,23 @@
-import { Engine } from 'excalibur';
+import { Game } from './game';
 import { Level } from './level';
 import { Levels, levelsMap } from '../levels/levels-map';
 
 export class LevelManager {
-  engine: Engine;
-  currentLevelKey: number;
-  index: number;
+  private engine: Game;
+  private currentLevelKey: number;
+  private index: number;
 
-  constructor(engine: Engine) {
+  constructor(engine: Game) {
     this.engine = engine;
     this.currentLevelKey = 0;
     this.index = 0;
   }
 
-  start() {
+  getCurrentLevel(): Level {
+    return this.engine.currentScene as Level;
+  }
+
+  start(): void {
     const data = levelsMap[Levels[this.currentLevelKey]];
     this.index++;
 
@@ -21,12 +25,12 @@ export class LevelManager {
     this.engine.goToScene(`level-${this.index}`);
   }
 
-  resetCurrent() {
+  resetCurrent(): void {
     this.start();
     this.engine.clock.start();
   }
 
-  nextLevel() {
+  nextLevel(): void {
     this.currentLevelKey++;
     if (this.currentLevelKey >= Levels.length) {
       this.currentLevelKey = 0;

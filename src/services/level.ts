@@ -2,7 +2,7 @@ import { Actor, Canvas, Color, Scene, vec } from 'excalibur';
 
 import { CELL_SIZE, THEME_BACKGROUNDS, THEME_TILES_MAP, ThemeTiles } from '../helpers/consts';
 import { Clock } from '../services/clock';
-import { G } from './global';
+import { game } from './game';
 import { GameObject } from '../game-objects/game-object';
 import { Inventory } from '../services/inventory';
 import { isKeyOfPlacementTypeClassMap, placementTypeClassMap } from '../helpers/placement-map';
@@ -104,11 +104,12 @@ export class Level extends Scene {
 
     this.placeGameObjects();
 
+    // TODO TS typeguard function
     this.player = this.actors.find((p) => p instanceof Player) as Player;
     // this.camera.addStrategy(new LerpStrategy(player!));
-    this.camera.strategy.lockToActor(this.player!);
+    this.camera.strategy.lockToActor(this.player);
 
-    // Funky smell - triggering event for ui to update... can be better?
+    // TODO Funky smell - triggering event for ui to update... can be better?
     this.inventory.clear();
 
     this.clock = new Clock(this.data.timeAvailable, this);
@@ -118,7 +119,7 @@ export class Level extends Scene {
   setDeathOutcome(causeOfDeath: string) {
     this.deathOutcome = causeOfDeath;
     this.engine.clock.stop();
-    G.emit('Death', {});
+    game.emit('Death', {});
   }
 
   switchAllDoors() {
@@ -144,7 +145,7 @@ export class Level extends Scene {
   completeLevel() {
     this.isCompleted = true;
     this.engine.clock.stop();
-    G.emit('Complete', {});
+    game.emit('Complete', {});
   }
 
   isPositionOutOfBounds(x: number, y: number) {

@@ -9,12 +9,13 @@ import { DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT, DIRECTION_UP, FourDire
 import { TileMover } from '../systems/tile-mover';
 
 export class GroundEnemy extends GameObject {
-  tickBetweenMovesInterval: number;
-  ticksUntilNextMove: number;
-  turnsAroundAtWater: boolean;
-  mover: TileMover;
+  protected tickBetweenMovesInterval: number;
+  protected ticksUntilNextMove: number;
 
-  constructor(pos: Vector, level: Level, type: string, data: any) {
+  public mover: TileMover;
+  public turnsAroundAtWater: boolean;
+
+  constructor(pos: Vector, level: Level, type: string, data?: any) {
     super(pos, level, type);
 
     this.zOffset = 100;
@@ -64,6 +65,7 @@ export class GroundEnemy extends GameObject {
   }
 
   checkForOverlapWithHero() {
+    // TODO fix types for this
     if (this.tile.distance(this.level.player!.tile) === 0) {
       this.level.setDeathOutcome(this.type);
     }

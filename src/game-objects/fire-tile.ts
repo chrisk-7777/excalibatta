@@ -1,7 +1,7 @@
 import { Engine } from 'excalibur';
 
 import { GameObject } from './game-object';
-import { BODY_SKINS, PLACEMENT_TYPE_FIRE_PICKUP, PLACEMENT_TYPE_HERO } from '../helpers/consts';
+import { BODY_SKINS, PLACEMENT_TYPE_FIRE_PICKUP, PLACEMENT_TYPE_HERO, Skin } from '../helpers/consts';
 import { TILES } from '../helpers/tiles';
 
 export class FireTile extends GameObject {
@@ -20,14 +20,10 @@ export class FireTile extends GameObject {
       return true;
     }
 
-    // if (body.type === PLACEMENT_TYPE_CIABATTA) {
-    //   return this.type;
-    // }
-
     return false;
   }
 
-  changesHeroSkinOnCollide() {
+  changesHeroSkinOnCollide(): Skin {
     return BODY_SKINS.FIRE;
   }
 

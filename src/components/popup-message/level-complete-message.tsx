@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
+import { game } from '../../services/game';
+import { useGameEvent } from '../../hooks/use-game-event';
+import { useKeyPress } from '../../hooks/use-key-press';
 import LevelCompletedSvg from './components/level-completed-svg';
-import { G } from '../../services/global';
 
 import styles from './popup-message.module.css';
-import { useKeyPress } from '../../hooks/use-key-press';
-import { useGameEvent } from '../../hooks/use-game-event';
 
-export default function LevelCompleteMessage() {
+export function LevelCompleteMessage() {
   const [isComplete, setIsComplete] = useState(false);
 
   const handleGoToNextLevel = () => {
@@ -15,7 +15,7 @@ export default function LevelCompleteMessage() {
       return;
     }
 
-    G.levelManager.nextLevel();
+    game.levelManager.nextLevel();
     setIsComplete(false);
   };
 

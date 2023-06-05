@@ -1,5 +1,5 @@
-import { LEVEL_THEMES, THEME_TILES_MAP } from '../helpers/consts';
 import { GameObject } from './game-object';
+import { LEVEL_THEMES, THEME_TILES_MAP } from '../helpers/consts';
 import { TileSetGrid16 } from '../services/resources';
 
 export class Wall extends GameObject {
@@ -10,7 +10,7 @@ export class Wall extends GameObject {
     this.graphics.use(this.generateGraphic(THEME_TILES_MAP[LEVEL_THEMES.YELLOW].WALL, TileSetGrid16));
   }
 
-  isSolidForBody() {
+  isSolidForBody(): true {
     return true;
   }
 }

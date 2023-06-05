@@ -1,4 +1,4 @@
-import { G } from '../services/global';
+import { game } from './game';
 
 export type InventoryItems = Map<string, boolean>;
 
@@ -15,11 +15,11 @@ export class Inventory {
 
   add(key: string): void {
     this.items.set(key, true);
-    G.emit('InventoryUpdated', {});
+    game.emit('InventoryUpdated', {});
   }
 
   clear(): void {
     this.items = new Map();
-    G.emit('InventoryUpdated', {});
+    game.emit('InventoryUpdated', {});
   }
 }

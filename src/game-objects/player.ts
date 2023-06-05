@@ -2,7 +2,7 @@ import { Animation, Engine, Sprite, SpriteSheet, Vector, vec } from 'excalibur';
 
 import { GameObject } from './game-object';
 import { Level } from '../services/level';
-import { Resources, TileSetGrid16, TileSetGrid32 } from '../services/resources';
+import { Resources, TileSetGrid32 } from '../services/resources';
 import { TILES } from '../helpers/tiles';
 import {
   BODY_SKINS,
@@ -17,11 +17,12 @@ import { TileMover } from '../systems/tile-mover';
 import { UserController } from '../systems/user-controller';
 
 export class Player extends GameObject {
-  controller: UserController;
-  direction: typeof DIRECTION_LEFT | typeof DIRECTION_RIGHT;
-  isDead: boolean;
-  mover: TileMover;
-  spriteWalkFrame: 0 | 1;
+  private controller: UserController;
+  private direction: typeof DIRECTION_LEFT | typeof DIRECTION_RIGHT;
+  private spriteWalkFrame: 0 | 1;
+
+  public isDead: boolean;
+  public mover: TileMover;
 
   constructor(pos: Vector, level: Level, type: string) {
     super(pos, level, type);
@@ -74,11 +75,11 @@ export class Player extends GameObject {
     this.mover.handleCollisions();
   }
 
-  onAutoMovement(direction: FourDirections) {
+  onAutoMovement(direction: FourDirections): void {
     this.controller.requestMovement(direction);
   }
 
-  updateWalkFrame() {
+  updateWalkFrame(): void {
     this.spriteWalkFrame = this.spriteWalkFrame === 1 ? 0 : 1;
   }
 
@@ -97,7 +98,7 @@ export class Player extends GameObject {
     return `${this.skin}-${index}`;
   }
 
-  updateFacingDirection() {
+  updateFacingDirection(): void {
     if (this.mover.movingPixelDirection === DIRECTION_LEFT || this.mover.movingPixelDirection === DIRECTION_RIGHT) {
       this.direction = this.mover.movingPixelDirection;
     }
@@ -107,13 +108,13 @@ export class Player extends GameObject {
     this.level.setDeathOutcome(deathType);
   }
 
-  getYTranslate() {
+  getYTranslate(): number {
     // Stand on ground when not moving
     if (this.mover.movingPixelsRemaining === 0 || this.skin !== BODY_SKINS.NORMAL) {
       return 0;
     }
 
-    //Elevate ramp up or down at beginning/end of movement
+    // Elevate ramp up or down at beginning/end of movement
     const PIXELS_FROM_END = 2;
     if (this.mover.movingPixelsRemaining < PIXELS_FROM_END || this.mover.movingPixelsRemaining > 16 - PIXELS_FROM_END) {
       return -1;

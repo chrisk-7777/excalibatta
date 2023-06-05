@@ -19,7 +19,7 @@ export class Door extends GameObject {
     this.isRaised = !this.isRaised;
   }
 
-  isSolidForBody() {
+  isSolidForBody(): boolean {
     return this.isRaised;
   }
 

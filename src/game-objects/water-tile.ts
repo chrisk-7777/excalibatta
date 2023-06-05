@@ -1,9 +1,8 @@
 import { Engine } from 'excalibur';
 
-import { BODY_SKINS, PLACEMENT_TYPE_HERO, PLACEMENT_TYPE_WATER_PICKUP } from '../helpers/consts';
+import { BODY_SKINS, PLACEMENT_TYPE_HERO, PLACEMENT_TYPE_WATER_PICKUP, Skin } from '../helpers/consts';
 import { GameObject } from './game-object';
 import { TILES } from '../helpers/tiles';
-import { TileSetGrid16 } from '../services/resources';
 
 export class WaterTile extends GameObject {
   private frames = [TILES.WATER1, TILES.WATER2];
@@ -11,7 +10,7 @@ export class WaterTile extends GameObject {
 
   onInitialize(): void {
     this.frames.forEach((frame, i) => {
-      this.graphics.add(i.toString(), this.generateGraphic(frame, TileSetGrid16));
+      this.graphics.add(i.toString(), this.generateGraphic(frame));
     });
   }
 
@@ -24,7 +23,7 @@ export class WaterTile extends GameObject {
     return body.type === PLACEMENT_TYPE_HERO && !inventory.has(PLACEMENT_TYPE_WATER_PICKUP);
   }
 
-  changesHeroSkinOnCollide() {
+  changesHeroSkinOnCollide(): Skin {
     return BODY_SKINS.WATER;
   }
 

@@ -15,6 +15,7 @@ import {
   ICE_CORNERS,
   PLACEMENT_TYPE_HERO,
   PLACEMENT_TYPE_ICE_PICKUP,
+  Skin,
 } from '../helpers/consts';
 
 export class IceTile extends GameObject {
@@ -24,6 +25,8 @@ export class IceTile extends GameObject {
     [ICE_CORNERS.BOTTOM_LEFT]: TILES.ICE_BOTTOM_LEFT,
     [ICE_CORNERS.BOTTOM_RIGHT]: TILES.ICE_BOTTOM_RIGHT,
   };
+
+  // TODO better types instead of key in
   private iceTileCornerBlockedMoves: Record<keyof typeof ICE_CORNERS, { [key in FourDirections]?: boolean }> = {
     TOP_LEFT: {
       [DIRECTION_UP]: true,
@@ -75,7 +78,7 @@ export class IceTile extends GameObject {
     });
   }
 
-  isSolidForBody(body: GameObject) {
+  isSolidForBody(body: GameObject): boolean {
     const bodyIsBelow = this.tile.y < body.tile.y;
     if (bodyIsBelow && this.corner?.includes('BOTTOM')) {
       return true;
@@ -118,7 +121,7 @@ export class IceTile extends GameObject {
     return body.mover.movingPixelDirection;
   }
 
-  changesHeroSkinOnCollide() {
+  changesHeroSkinOnCollide(): Skin {
     if (this.level.inventory.has(PLACEMENT_TYPE_ICE_PICKUP)) {
       return BODY_SKINS.ICE;
     }

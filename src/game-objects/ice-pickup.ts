@@ -1,11 +1,12 @@
+import { Vector } from 'excalibur';
+
 import { GameObject } from './game-object';
+import { Level } from '../services/level';
 import { PLACEMENT_TYPE_ICE_PICKUP } from '../helpers/consts';
 import { TILES } from '../helpers/tiles';
-import { Vector } from 'excalibur';
-import { Level } from '../services/level';
 
 export class IcePickup extends GameObject {
-  constructor(pos: Vector, level: Level, type: string, data: any) {
+  constructor(pos: Vector, level: Level, type: string) {
     super(pos, level, type);
     this.canBeStolen = true;
   }
@@ -14,7 +15,7 @@ export class IcePickup extends GameObject {
     this.graphics.use(this.generateGraphic(TILES.ICE_PICKUP));
   }
 
-  addsItemToInventoryOnCollide() {
+  addsItemToInventoryOnCollide(): string {
     return PLACEMENT_TYPE_ICE_PICKUP;
   }
 }

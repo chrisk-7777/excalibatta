@@ -1,25 +1,28 @@
 import { useState } from 'react';
 
-import { G } from '../../services/global';
-import { Level } from '../../services/level';
+import { game } from '../../services/game';
 import { TILES } from '../../helpers/tiles';
-import * as CONSTS from '../../helpers/consts';
-import Sprite from '../sprite/sprite';
+import { useGameEvent } from '../../hooks/use-game-event';
+import { Sprite } from '../sprite/sprite';
+import {
+  PLACEMENT_TYPE_FIRE_PICKUP,
+  PLACEMENT_TYPE_ICE_PICKUP,
+  PLACEMENT_TYPE_WATER_PICKUP,
+} from '../../helpers/consts';
 
 import styles from './inventory-list.module.css';
-import { useGameEvent } from '../../hooks/use-game-event';
 
 const showInventory = [
   {
-    key: CONSTS.PLACEMENT_TYPE_FIRE_PICKUP,
+    key: PLACEMENT_TYPE_FIRE_PICKUP,
     tile: TILES.FIRE_PICKUP,
   },
   {
-    key: CONSTS.PLACEMENT_TYPE_ICE_PICKUP,
+    key: PLACEMENT_TYPE_ICE_PICKUP,
     tile: TILES.ICE_PICKUP,
   },
   {
-    key: CONSTS.PLACEMENT_TYPE_WATER_PICKUP,
+    key: PLACEMENT_TYPE_WATER_PICKUP,
     tile: TILES.WATER_PICKUP,
   },
   {
@@ -36,8 +39,7 @@ export default function InventoryList() {
   const [filteredInventory, setFilteredInventory] = useState<typeof showInventory>([]);
 
   useGameEvent('InventoryUpdated', () => {
-    // TODO Nasty ref
-    const inventory = (G.game?.currentScene as Level).inventory;
+    const inventory = game.currentLevel.inventory;
     setFilteredInventory(showInventory.filter((i) => inventory.has(i.key)));
   });
 
