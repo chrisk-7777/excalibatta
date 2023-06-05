@@ -91,6 +91,7 @@ button:focus-visible {
   z-index: 10;
   overflow: hidden;
   pointer-events: none;
+  image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
 

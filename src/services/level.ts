@@ -11,7 +11,7 @@ import { Player } from '../game-objects/player';
 import { Resources } from './resources';
 
 export class Level extends Scene {
-  clock: Clock;
+  clock!: Clock;
   deathOutcome: string | null;
   heightWithWalls: number;
   inventory: Inventory;
@@ -33,7 +33,6 @@ export class Level extends Scene {
     this.tiles = THEME_TILES_MAP[this.data.theme];
 
     this.inventory = new Inventory();
-    this.clock = new Clock(this.data.timeAvailable, this);
   }
 
   getBackgroundTile(x: number, y: number) {
@@ -111,6 +110,9 @@ export class Level extends Scene {
 
     // Funky smell - triggering event for ui to update... can be better?
     this.inventory.clear();
+
+    this.clock = new Clock(this.data.timeAvailable, this);
+    this.add(this.clock);
   }
 
   setDeathOutcome(causeOfDeath: string) {
@@ -143,10 +145,6 @@ export class Level extends Scene {
     this.isCompleted = true;
     this.engine.clock.stop();
     G.emit('Complete', {});
-  }
-
-  onPostUpdate(): void {
-    this.clock.tick();
   }
 
   isPositionOutOfBounds(x: number, y: number) {

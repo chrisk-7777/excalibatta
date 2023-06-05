@@ -7,9 +7,8 @@ import {
 } from '../helpers/consts';
 
 export const Level_2_4 = {
-  title: 'Floor 2-4',
-  musicTrack: 'MUSIC_WORLD2',
   theme: 'GREEN',
+  timeAvailable: 99,
   tilesWidth: 9,
   tilesHeight: 9,
   placements: [

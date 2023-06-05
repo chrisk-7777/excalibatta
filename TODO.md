@@ -36,9 +36,7 @@
 - [x] conveyer
 - [x] ice corners
 - [x] ground enemy initial direction from config
-- [ ] event constants
-- [ ] doesn't respect refresh rate
-- [ ] maybe some kind of "implenets" in JS vs lots of inherintance (https://timmousk.com/blog/typescript-instanceof-interface/)
+- [x] doesn't respect refresh rate
 
 ## Low
 
@@ -47,6 +45,8 @@
 - [x] water tile turnsAroundAtWater?
 - [x] shadow glitch on enemy
 - [ ] game instance doesn't need to be a global, it can just be exported from the file. similar to inventory
+- [ ] event constants
+- [ ] maybe some kind of "implenets" in JS vs lots of inherintance (https://timmousk.com/blog/typescript-instanceof-interface/)
 - [ ] reset events for death message and timer are a bit icky
 - [ ] fix types in wall
 - [ ] not all functions have return types

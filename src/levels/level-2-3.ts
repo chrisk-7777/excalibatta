@@ -3,15 +3,12 @@ import {
   PLACEMENT_TYPE_GOAL,
   PLACEMENT_TYPE_GROUND_ENEMY,
   PLACEMENT_TYPE_HERO,
-  PLACEMENT_TYPE_SWITCH,
-  PLACEMENT_TYPE_SWITCH_DOOR,
   PLACEMENT_TYPE_WALL,
 } from '../helpers/consts';
 
 export const Level_2_3 = {
-  title: 'Floor 2-3',
-  musicTrack: 'MUSIC_WORLD2',
   theme: 'GREEN',
+  timeAvailable: 99,
   tilesWidth: 9,
   tilesHeight: 9,
   placements: [

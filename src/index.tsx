@@ -21,6 +21,7 @@ G.game = new Engine({
   suppressConsoleBootMessage: true,
   suppressPlayButton: true,
   canvasElementId: 'game',
+  maxFps: 60,
 });
 G.game.showDebug(false);
 // new DevTool(G.game);
