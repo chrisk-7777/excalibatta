@@ -3,13 +3,12 @@ import { Loader } from 'excalibur';
 import { Resources } from './resources';
 
 class QuickLoader extends Loader {
-  showPlayButton() {
-    return new Promise<void>((resolve) => resolve());
-  }
-
-  draw() {
-    // draw nothing!
-  }
+  // showPlayButton() {
+  //   return new Promise<void>((resolve) => resolve());
+  // }
+  // draw() {
+  //   // draw nothing!
+  // }
 }
 
 export const loader = new QuickLoader();

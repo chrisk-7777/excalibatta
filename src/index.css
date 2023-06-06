@@ -95,6 +95,10 @@ button:focus-visible {
   image-rendering: crisp-edges;
 }
 
+#excalibur-play-root {
+  position: relative;
+}
+
 .sprite {
   will-change: transform;
   width: 16px;

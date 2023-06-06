@@ -15,7 +15,7 @@ export class Game extends Engine {
       height: CELL_SIZE * 9,
       antialiasing: false,
       suppressConsoleBootMessage: true,
-      suppressPlayButton: true,
+      suppressPlayButton: false,
       canvasElementId: 'game',
       maxFps: 60,
       snapToPixel: true,
