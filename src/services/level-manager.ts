@@ -21,6 +21,8 @@ export class LevelManager {
     const data = levelsMap[Levels[this.currentLevelKey]];
     this.index++;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     this.engine.add(`level-${this.index}`, new Level(data));
     this.engine.goToScene(`level-${this.index}`);
   }

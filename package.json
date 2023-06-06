@@ -1,20 +1,18 @@
 {
-  "name": "vite-project",
+  "name": "excalibatta",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "build": "tsc && vite build && zip -r dist.zip dist",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
     "@excaliburjs/dev-tools": "^0.27.1",
     "excalibur": "^0.27.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tile-extruder": "^2.1.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
@@ -25,6 +23,8 @@
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "rollup-plugin-visualizer": "^5.9.0",
+    "tile-extruder": "^2.1.0",
     "typescript": "^5.0.2",
     "vite": "^4.3.2"
   }

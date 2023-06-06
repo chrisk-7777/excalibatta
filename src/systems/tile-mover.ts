@@ -83,7 +83,7 @@ export class TileMover {
     if (collideThatAddsToInventory) {
       collideThatAddsToInventory.collect();
       this.gameObject.level.add(
-        new Celebration(this.gameObject.tile.clone(), this.gameObject.level, PLACEMENT_TYPE_CELEBRATION, {})
+        new Celebration(this.gameObject.tile.clone(), this.gameObject.level, PLACEMENT_TYPE_CELEBRATION)
       );
       soundsManager.playSfx(SFX.COLLECT);
     }

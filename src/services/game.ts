@@ -1,4 +1,4 @@
-import { DevTool } from '@excaliburjs/dev-tools';
+// import { DevTool } from '@excaliburjs/dev-tools';
 import { DisplayMode, Engine } from 'excalibur';
 
 import { CELL_SIZE } from '../helpers/consts';
@@ -25,7 +25,7 @@ export class Game extends Engine {
 
     if (debug) {
       this.showDebug(true);
-      new DevTool(this);
+      // new DevTool(this);
     }
   }
 
