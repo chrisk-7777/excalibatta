@@ -10,7 +10,7 @@ The tutorial series can be found here: https://courses.drewconley.dev/
 
 ## Play game
 
-🕹️ [Play game](https://chris7777.itch.io/excalibatta) 🕹️
+🕹️ [Play game](https://excalibatta.netlify.app/) 🕹️
 
 Stack:
 
