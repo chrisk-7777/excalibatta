@@ -2,6 +2,7 @@ import { PLACEMENT_TYPE_FLOUR, PLACEMENT_TYPE_GOAL, PLACEMENT_TYPE_HERO, PLACEME
 
 export const Level_1_2 = {
   theme: 'BLUE',
+  timeAvailable: 99,
   tilesWidth: 9,
   tilesHeight: 3,
   placements: [

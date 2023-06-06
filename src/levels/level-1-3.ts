@@ -9,6 +9,7 @@ import {
 
 export const Level_1_3 = {
   theme: 'BLUE',
+  timeAvailable: 99,
   tilesWidth: 12,
   tilesHeight: 3,
   placements: [
