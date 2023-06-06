@@ -20,3 +20,11 @@ Stack:
 - [React](https://react.dev/)
 
 **Note:** This version still uses React, but only for the UI
+
+## Learning objective
+
+This isn't a complete game. It was a prototype of how well Excalibur and React could play together.
+
+## TODO
+
+More levels and everything listed in the Github issue tracker.
