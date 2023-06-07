@@ -4,6 +4,7 @@ import { Game } from '../../services/game';
 import { useGameEvent } from '../../hooks/use-game-event';
 import { useKeyPress } from '../../hooks/use-key-press';
 import LevelCompletedSvg from './components/level-completed-svg';
+import { GAME_EVENTS } from '../../helpers/events';
 
 import styles from './popup-message.module.css';
 
@@ -23,7 +24,7 @@ export function LevelCompleteMessage() {
     handleGoToNextLevel();
   });
 
-  useGameEvent('Complete', () => {
+  useGameEvent(GAME_EVENTS.COMPLETE, () => {
     setIsComplete(true);
   });
 

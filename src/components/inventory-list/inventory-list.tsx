@@ -1,9 +1,10 @@
 import { useState } from 'react';
 
 import { Game } from '../../services/game';
+import { GAME_EVENTS } from '../../helpers/events';
+import { Sprite } from '../sprite/sprite';
 import { TILES } from '../../helpers/tiles';
 import { useGameEvent } from '../../hooks/use-game-event';
-import { Sprite } from '../sprite/sprite';
 import {
   PLACEMENT_TYPE_FIRE_PICKUP,
   PLACEMENT_TYPE_ICE_PICKUP,
@@ -38,7 +39,7 @@ const showInventory = [
 export default function InventoryList() {
   const [filteredInventory, setFilteredInventory] = useState<typeof showInventory>([]);
 
-  useGameEvent('InventoryUpdated', () => {
+  useGameEvent(GAME_EVENTS.INVENTORY_UPDATED, () => {
     const inventory = Game.getInstance().currentLevel.inventory;
     setFilteredInventory(showInventory.filter((i) => inventory.has(i.key)));
   });

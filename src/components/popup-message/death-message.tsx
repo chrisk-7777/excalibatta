@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { TILES } from '../../helpers/tiles';
 import { Game } from '../../services/game';
+import { GAME_EVENTS } from '../../helpers/events';
 import { useGameEvent } from '../../hooks/use-game-event';
 import { useKeyPress } from '../../hooks/use-key-press';
 import { Sprite } from '../sprite/sprite';
@@ -72,7 +73,7 @@ export function DeathMessage() {
     handleRestartLevel();
   });
 
-  useGameEvent('Death', () => {
+  useGameEvent(GAME_EVENTS.DEATH, () => {
     setDeathOutcome(Game.getInstance().currentLevel.deathOutcome);
   });
 
