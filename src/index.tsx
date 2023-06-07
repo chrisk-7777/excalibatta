@@ -4,13 +4,15 @@ import ReactDOM from 'react-dom/client';
 import { Game } from './services/game';
 import { DeathMessage } from './components/popup-message/death-message';
 import { LevelCompleteMessage } from './components/popup-message/level-complete-message';
-import { loader } from './services/quick-loader';
+import { loader } from './services/game-loader';
 import { TopHud } from './components/top-hud/top-hud';
 
 import './index.css';
 
-Game.getInstance().start(loader);
-Game.getInstance().levelManager.start();
+(async () => {
+  await Game.getInstance().start(loader);
+  Game.getInstance().levelManager.start();
+})();
 
 ReactDOM.createRoot(document.getElementById('ui') as HTMLElement).render(
   <React.StrictMode>

@@ -57,21 +57,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
-}
-
 .root {
   width: 768px;
   height: 432px;
@@ -97,6 +82,20 @@ button:focus-visible {
 
 #excalibur-play-root {
   position: relative;
+}
+
+.root #excalibur-play-root #excalibur-play {
+  background: #ff6540;
+  background: linear-gradient(0deg, #f81d00 0%, #f81d00 5%, #ff6540 6%, #ff6540 94%, #ffd2cc 95%, #ffd2cc 100%);
+  border: 4px solid #380b05;
+  padding: 12px 24px;
+  border-radius: 0;
+  font-size: 30px;
+}
+
+.root #excalibur-play-root #excalibur-play::before,
+.root #excalibur-play-root #excalibur-play::after {
+  content: none;
 }
 
 .sprite {

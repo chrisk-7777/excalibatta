@@ -1,7 +1,7 @@
 // import { DevTool } from '@excaliburjs/dev-tools';
-import { DisplayMode, Engine } from 'excalibur';
+import { Color, DisplayMode, Engine } from 'excalibur';
 
-import { CELL_SIZE, IS_DEBUG } from '../helpers/consts';
+import { CELL_SIZE, IS_DEBUG, THEME_BACKGROUNDS } from '../helpers/consts';
 import { Level } from './level';
 import { LevelManager } from './level-manager';
 
@@ -21,6 +21,7 @@ export class Game extends Engine {
       canvasElementId: 'game',
       maxFps: 60,
       snapToPixel: true,
+      backgroundColor: Color.fromHex(THEME_BACKGROUNDS.BLUE),
     });
 
     this.levelManager = new LevelManager(this);
