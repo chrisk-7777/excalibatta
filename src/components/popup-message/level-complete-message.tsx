@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { game } from '../../services/game';
+import { Game } from '../../services/game';
 import { useGameEvent } from '../../hooks/use-game-event';
 import { useKeyPress } from '../../hooks/use-key-press';
 import LevelCompletedSvg from './components/level-completed-svg';
@@ -15,7 +15,7 @@ export function LevelCompleteMessage() {
       return;
     }
 
-    game.levelManager.nextLevel();
+    Game.getInstance().levelManager.nextLevel();
     setIsComplete(false);
   };
 

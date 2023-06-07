@@ -2,7 +2,7 @@ import { Actor, Canvas, Color, Scene, vec } from 'excalibur';
 
 import { CELL_SIZE, THEME_BACKGROUNDS, THEME_TILES_MAP, ThemeTiles } from '../helpers/consts';
 import { Clock } from '../services/clock';
-import { game } from './game';
+import { Game } from './game';
 import { GameObject } from '../game-objects/game-object';
 import { Inventory } from '../services/inventory';
 import { isKeyOfPlacementTypeClassMap, placementTypeClassMap } from '../helpers/placement-map';
@@ -119,7 +119,7 @@ export class Level extends Scene {
   setDeathOutcome(causeOfDeath: string) {
     this.deathOutcome = causeOfDeath;
     this.engine.clock.stop();
-    game.emit('Death', {});
+    Game.getInstance().emit('Death', {});
   }
 
   switchAllDoors() {
@@ -145,7 +145,7 @@ export class Level extends Scene {
   completeLevel() {
     this.isCompleted = true;
     this.engine.clock.stop();
-    game.emit('Complete', {});
+    Game.getInstance().emit('Complete', {});
   }
 
   isPositionOutOfBounds(x: number, y: number) {

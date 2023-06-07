@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { TILES } from '../../helpers/tiles';
-import { game } from '../../services/game';
+import { Game } from '../../services/game';
 import { useGameEvent } from '../../hooks/use-game-event';
 import { useKeyPress } from '../../hooks/use-key-press';
 import { Sprite } from '../sprite/sprite';
@@ -65,7 +65,7 @@ export function DeathMessage() {
 
     // A bit icky. ditto with timer, needs a reset event ?
     setDeathOutcome(null);
-    game.levelManager.resetCurrent();
+    Game.getInstance().levelManager.resetCurrent();
   };
 
   useKeyPress('Enter', () => {
@@ -73,7 +73,7 @@ export function DeathMessage() {
   });
 
   useGameEvent('Death', () => {
-    setDeathOutcome(game.currentLevel.deathOutcome);
+    setDeathOutcome(Game.getInstance().currentLevel.deathOutcome);
   });
 
   if (deathOutcome === null) {

@@ -1,14 +1,16 @@
 // import { DevTool } from '@excaliburjs/dev-tools';
 import { DisplayMode, Engine } from 'excalibur';
 
-import { CELL_SIZE } from '../helpers/consts';
+import { CELL_SIZE, IS_DEBUG } from '../helpers/consts';
 import { Level } from './level';
 import { LevelManager } from './level-manager';
 
 export class Game extends Engine {
+  private static instance: Game;
+
   public levelManager: LevelManager;
 
-  constructor(debug: boolean) {
+  constructor() {
     super({
       displayMode: DisplayMode.FitContainer,
       width: CELL_SIZE * 16,
@@ -23,7 +25,7 @@ export class Game extends Engine {
 
     this.levelManager = new LevelManager(this);
 
-    if (debug) {
+    if (IS_DEBUG) {
       this.showDebug(true);
       // new DevTool(this);
     }
@@ -32,6 +34,12 @@ export class Game extends Engine {
   public get currentLevel(): Level {
     return this.levelManager.getCurrentLevel();
   }
-}
 
-export const game = new Game(false);
+  static getInstance(): Game {
+    if (!Game.instance) {
+      Game.instance = new Game();
+    }
+
+    return Game.instance;
+  }
+}

@@ -1,14 +1,14 @@
 import { GameEvent } from 'excalibur';
 import { useEffect } from 'react';
 
-import { game } from '../services/game';
+import { Game } from '../services/game';
 
 export function useGameEvent<T>(key: string, callback: (event: GameEvent<T>) => void) {
   useEffect(() => {
-    game.on(key, callback);
+    Game.getInstance().on(key, callback);
 
     return () => {
-      game.off(key, callback);
+      Game.getInstance().off(key, callback);
     };
   }, [key, callback]);
 }
