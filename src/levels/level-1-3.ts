@@ -5,6 +5,8 @@ import {
   PLACEMENT_TYPE_KEY_BLUE,
   PLACEMENT_TYPE_FLOUR,
   PLACEMENT_TYPE_LOCK_BLUE,
+  PLACEMENT_TYPE_LOCK_GREEN,
+  PLACEMENT_TYPE_KEY_GREEN,
 } from '../helpers/consts';
 
 export const Level_1_3 = {
@@ -20,8 +22,8 @@ export const Level_1_3 = {
     },
     {
       type: PLACEMENT_TYPE_GOAL,
-      x: 11,
-      y: 2,
+      x: 12,
+      y: 3,
     },
     {
       type: PLACEMENT_TYPE_WALL,
@@ -59,18 +61,38 @@ export const Level_1_3 = {
       y: 3,
     },
     {
+      type: PLACEMENT_TYPE_KEY_GREEN,
+      x: 1,
+      y: 1,
+    },
+    {
       type: PLACEMENT_TYPE_KEY_BLUE,
       x: 8,
       y: 3,
     },
     {
       type: PLACEMENT_TYPE_FLOUR,
-      x: 9,
+      x: 12,
       y: 1,
     },
     {
       type: PLACEMENT_TYPE_LOCK_BLUE,
       x: 5,
+      y: 2,
+    },
+    {
+      type: PLACEMENT_TYPE_LOCK_GREEN,
+      x: 11,
+      y: 1,
+    },
+    {
+      type: PLACEMENT_TYPE_WALL,
+      x: 11,
+      y: 2,
+    },
+    {
+      type: PLACEMENT_TYPE_WALL,
+      x: 12,
       y: 2,
     },
   ],

@@ -1,7 +1,7 @@
 // import { DevTool } from '@excaliburjs/dev-tools';
 import { Color, DisplayMode, Engine } from 'excalibur';
 
-import { CELL_SIZE, IS_DEBUG, THEME_BACKGROUNDS } from '../helpers/consts';
+import { CELL_SIZE, IS_DEBUG, SKIP_LOADER, THEME_BACKGROUNDS } from '../helpers/consts';
 import { Level } from './level';
 import { LevelManager } from './level-manager';
 
@@ -17,7 +17,7 @@ export class Game extends Engine {
       height: CELL_SIZE * 9,
       antialiasing: false,
       suppressConsoleBootMessage: true,
-      suppressPlayButton: false,
+      suppressPlayButton: SKIP_LOADER,
       canvasElementId: 'game',
       maxFps: 60,
       snapToPixel: true,

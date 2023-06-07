@@ -5,6 +5,7 @@ import { Level_1_1 } from './level-1-1';
 import { Level_1_2 } from './level-1-2';
 import { Level_1_3 } from './level-1-3';
 import { Level_1_4 } from './level-1-4';
+import { Level_2_1 } from './level-2-1';
 import { Level_2_2 } from './level-2-2';
 import { Level_2_3 } from './level-2-3';
 import { Level_2_4 } from './level-2-4';
@@ -29,6 +30,7 @@ export const levelsMap = {
   Level_1_2: Level_1_2,
   Level_1_3: Level_1_3,
   Level_1_4: Level_1_4,
+  Level_2_1: Level_2_1,
   Level_2_2: Level_2_2,
   Level_2_3: Level_2_3,
   Level_2_4: Level_2_4,
@@ -41,9 +43,10 @@ export const Levels: Array<LevelKey> = [
   'Level_1_2',
   'Level_1_3',
   'Level_1_4',
+  'Level_2_1',
   'Level_2_2',
   'Level_2_3',
   'Level_2_4',
   'DemoLevel1',
-  'DemoLevel2',
+  // 'DemoLevel2',
 ];

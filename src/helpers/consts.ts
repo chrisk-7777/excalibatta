@@ -1,5 +1,6 @@
 import { TILES } from './tiles';
 
+export const SKIP_LOADER = false;
 export const IS_DEBUG = false;
 
 export const CELL_SIZE = 16;
