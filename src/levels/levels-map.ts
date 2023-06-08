@@ -1,6 +1,6 @@
 import { LevelTheme } from '../helpers/consts';
-import DemoLevel1 from './demo-level-1';
-import DemoLevel2 from './demo-level-2';
+import { Demo_Level_1 } from './demo-level-1';
+import { Demo_Level_2 } from './demo-level-2';
 import { Level_1_1 } from './level-1-1';
 import { Level_1_2 } from './level-1-2';
 import { Level_1_3 } from './level-1-3';
@@ -21,7 +21,7 @@ export type LevelData = {
     x: number;
     y: number;
     type: string;
-    data?: unknown;
+    [key: string]: unknown;
   }>;
 };
 
@@ -34,8 +34,8 @@ export const levelsMap = {
   Level_2_2: Level_2_2,
   Level_2_3: Level_2_3,
   Level_2_4: Level_2_4,
-  DemoLevel1: DemoLevel1,
-  DemoLevel2: DemoLevel2,
+  DemoLevel1: Demo_Level_1,
+  DemoLevel2: Demo_Level_2,
 } as const;
 
 export const Levels: Array<LevelKey> = [

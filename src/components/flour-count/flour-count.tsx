@@ -14,13 +14,16 @@ import styles from './flour-count.module.css';
 export default function FlourCount() {
   const [count, setCount] = useState('0');
 
-  useGameEvent(GAME_EVENTS.INVENTORY_UPDATED, () => {
-    const count = Game.getInstance().currentLevel.actors.filter((p) => {
+  const handleUpdate = () => {
+    const count = Game.getInstance().currentLevel.gameObjects.filter((p) => {
       return p instanceof Flour && p.graphics.visible;
     });
 
     setCount((count ?? []).length.toString());
-  });
+  };
+
+  useGameEvent(GAME_EVENTS.LEVEL_START, handleUpdate);
+  useGameEvent(GAME_EVENTS.INVENTORY_UPDATED, handleUpdate);
 
   return (
     <div className={styles.flourCount}>

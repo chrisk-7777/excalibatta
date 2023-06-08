@@ -24,8 +24,9 @@ import {
   PLACEMENT_TYPE_THIEF,
   //PLACEMENT_TYPE_CIABATTA,
 } from '../helpers/consts';
+import { LevelData } from './levels-map';
 
-const level = {
+export const Demo_Level_1: LevelData = {
   theme: LEVEL_THEMES.GREEN,
   timeAvailable: 99,
   tilesWidth: 20,
@@ -109,5 +110,3 @@ const level = {
     { x: 18, y: 5, type: PLACEMENT_TYPE_THIEF },
   ],
 };
-
-export default level;

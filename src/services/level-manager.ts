@@ -14,15 +14,16 @@ export class LevelManager {
   }
 
   getCurrentLevel(): Level {
-    return this.engine.currentScene as Level;
+    if (!(this.engine.currentScene instanceof Level)) {
+      throw new Error('Game engine expects type Level for its scenes');
+    }
+    return this.engine.currentScene;
   }
 
   start(): void {
     const data = levelsMap[Levels[this.currentLevelKey]];
     this.index++;
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     this.engine.add(`level-${this.index}`, new Level(data));
     this.engine.goToScene(`level-${this.index}`);
   }

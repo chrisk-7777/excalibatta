@@ -3,6 +3,7 @@ import { Actor, Engine } from 'excalibur';
 import { DEATH_TYPE_CLOCK } from '../helpers/consts';
 import { Game } from './game';
 import { Level } from '../services/level';
+import { GAME_EVENTS } from '../helpers/events';
 
 export class Clock extends Actor {
   private ONE_SECOND_MS = 1000;
@@ -24,7 +25,7 @@ export class Clock extends Actor {
     if (this.msRemainingInSecond <= 0) {
       this.msRemainingInSecond += this.ONE_SECOND_MS;
       this.secondsRemaining -= 1;
-      Game.getInstance().emit('ClockTick', { target: { secondsRemaining: this.secondsRemaining } });
+      Game.getInstance().emit(GAME_EVENTS.CLOCK_TICK, { target: { secondsRemaining: this.secondsRemaining } });
 
       if (this.secondsRemaining <= 0) {
         this.level.setDeathOutcome(DEATH_TYPE_CLOCK);

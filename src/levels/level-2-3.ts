@@ -5,8 +5,9 @@ import {
   PLACEMENT_TYPE_HERO,
   PLACEMENT_TYPE_WALL,
 } from '../helpers/consts';
+import { LevelData } from './levels-map';
 
-export const Level_2_3 = {
+export const Level_2_3: LevelData = {
   theme: 'GREEN',
   timeAvailable: 99,
   tilesWidth: 9,

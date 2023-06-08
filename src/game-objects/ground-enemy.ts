@@ -65,8 +65,7 @@ export class GroundEnemy extends GameObject {
   }
 
   checkForOverlapWithHero() {
-    // TODO fix types for this
-    if (this.tile.distance(this.level.player!.tile) === 0) {
+    if (this.tile.distance(this.level.getPlayer().tile) === 0) {
       this.level.setDeathOutcome(this.type);
     }
   }

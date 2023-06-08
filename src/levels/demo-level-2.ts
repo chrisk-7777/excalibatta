@@ -10,8 +10,9 @@ import {
   PLACEMENT_TYPE_HERO,
   PLACEMENT_TYPE_WALL,
 } from '../helpers/consts';
+import { LevelData } from './levels-map';
 
-const level = {
+export const Demo_Level_2: LevelData = {
   theme: LEVEL_THEMES.YELLOW,
   timeAvailable: 55,
   tilesWidth: 8,
@@ -35,5 +36,3 @@ const level = {
     { x: 4, y: 2, type: PLACEMENT_TYPE_CONVEYOR, direction: DIRECTION_LEFT },
   ],
 };
-
-export default level;

@@ -1,3 +1,4 @@
+import { GAME_EVENTS } from '../helpers/events';
 import { Game } from './game';
 
 export type InventoryItems = Map<string, boolean>;
@@ -15,11 +16,11 @@ export class Inventory {
 
   add(key: string): void {
     this.items.set(key, true);
-    Game.getInstance().emit('InventoryUpdated', {});
+    Game.getInstance().emit(GAME_EVENTS.INVENTORY_UPDATED, {});
   }
 
-  clear(): void {
-    this.items = new Map();
-    Game.getInstance().emit('InventoryUpdated', {});
+  remove(key: string): void {
+    this.items.delete(key);
+    Game.getInstance().emit(GAME_EVENTS.INVENTORY_UPDATED, {});
   }
 }

@@ -14,9 +14,9 @@ export class Teleport extends GameObject {
   teleportsToPositionOnCollide(body: GameObject): false | { x: number; y: number } {
     if (body.interactsWithGround) {
       // Get all teleports
-      const allTeleports = this.level.actors.filter((p) => {
+      const allTeleports = this.level.gameObjects.filter((p): p is Teleport => {
         return p instanceof Teleport;
-      }) as Array<Teleport>;
+      });
 
       // Find the next teleport
       if (allTeleports.length > 1) {

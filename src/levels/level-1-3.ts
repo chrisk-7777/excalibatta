@@ -8,8 +8,9 @@ import {
   PLACEMENT_TYPE_LOCK_GREEN,
   PLACEMENT_TYPE_KEY_GREEN,
 } from '../helpers/consts';
+import { LevelData } from './levels-map';
 
-export const Level_1_3 = {
+export const Level_1_3: LevelData = {
   theme: 'BLUE',
   timeAvailable: 99,
   tilesWidth: 12,

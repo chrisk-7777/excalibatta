@@ -65,7 +65,6 @@ export abstract class GameObject extends Actor {
     return sprite;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isSolidForBody(_body: GameObject): boolean {
     return false;
   }
@@ -82,7 +81,6 @@ export abstract class GameObject extends Actor {
     return null;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   stealsInventoryOnCollide(_body: GameObject): boolean {
     return false;
   }
@@ -91,12 +89,10 @@ export abstract class GameObject extends Actor {
     return false;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   autoMovesBodyOnCollide(_body: GameObject): false | FourDirections {
     return false;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onAutoMovement(_direction: FourDirections): void {
     return;
   }
@@ -109,7 +105,6 @@ export abstract class GameObject extends Actor {
     return;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   startMoving(_direction: FourDirections): void {
     return;
   }
@@ -126,22 +121,18 @@ export abstract class GameObject extends Actor {
     return;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   switchesDoorsOnCollide(_body: GameObject): boolean {
     return false;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   damagesBodyOnCollide(_body: GameObject): boolean {
     return false;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   teleportsToPositionOnCollide(_body: GameObject): false | { x: number; y: number } {
     return false;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   takesDamage(_body: string): void {
     return;
   }

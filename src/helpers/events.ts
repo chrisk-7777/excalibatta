@@ -1,6 +1,7 @@
 import { GameEvent as ExGameEvent } from 'excalibur';
 
 export const GAME_EVENTS = {
+  LEVEL_START: 'LevelStart',
   CLOCK_TICK: 'ClockTick',
   DEATH: 'Death',
   INVENTORY_UPDATED: 'InventoryUpdated',

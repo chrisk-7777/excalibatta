@@ -39,6 +39,10 @@ const showInventory = [
 export default function InventoryList() {
   const [filteredInventory, setFilteredInventory] = useState<typeof showInventory>([]);
 
+  useGameEvent(GAME_EVENTS.LEVEL_START, () => {
+    setFilteredInventory([]);
+  });
+
   useGameEvent(GAME_EVENTS.INVENTORY_UPDATED, () => {
     const inventory = Game.getInstance().currentLevel.inventory;
     setFilteredInventory(showInventory.filter((i) => inventory.has(i.key)));

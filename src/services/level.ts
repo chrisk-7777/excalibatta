@@ -9,24 +9,23 @@ import { isKeyOfPlacementTypeClassMap, placementTypeClassMap } from '../helpers/
 import { LevelData } from '../levels/levels-map';
 import { Player } from '../game-objects/player';
 import { Resources } from './resources';
+import { GAME_EVENTS } from '../helpers/events';
 
 export class Level extends Scene {
-  clock!: Clock;
-  deathOutcome: string | null;
-  heightWithWalls: number;
-  inventory: Inventory;
-  isCompleted: boolean;
-  data: LevelData;
-  player: Player | undefined;
-  tiles: ThemeTiles;
-  widthWithWalls: number;
+  private clock!: Clock;
+  private data: LevelData;
+  private heightWithWalls: number;
+  private tiles: ThemeTiles;
+  private widthWithWalls: number;
+
+  public inventory: Inventory;
+  public deathOutcome: string | null;
 
   constructor(data: LevelData) {
     super();
 
     this.data = data;
     this.deathOutcome = null;
-    this.isCompleted = false;
 
     this.widthWithWalls = this.data.tilesWidth + 1;
     this.heightWithWalls = this.data.tilesHeight + 1;
@@ -104,51 +103,56 @@ export class Level extends Scene {
 
     this.placeGameObjects();
 
-    // TODO TS typeguard function
-    this.player = this.actors.find((p) => p instanceof Player) as Player;
-    // this.camera.addStrategy(new LerpStrategy(player!));
-    this.camera.strategy.lockToActor(this.player);
-
-    // TODO Funky smell - triggering event for ui to update... can be better?
-    this.inventory.clear();
+    this.camera.strategy.lockToActor(this.getPlayer());
 
     this.clock = new Clock(this.data.timeAvailable, this);
     this.add(this.clock);
+
+    Game.getInstance().emit(GAME_EVENTS.LEVEL_START, {});
   }
 
-  setDeathOutcome(causeOfDeath: string) {
+  setDeathOutcome(causeOfDeath: string): void {
     this.deathOutcome = causeOfDeath;
     this.engine.clock.stop();
-    Game.getInstance().emit('Death', {});
+    Game.getInstance().emit(GAME_EVENTS.DEATH, {});
   }
 
-  switchAllDoors() {
-    this.actors.forEach((actor) => {
-      if (actor instanceof GameObject && actor.toggleIsRaised) {
-        actor.toggleIsRaised();
+  switchAllDoors(): void {
+    this.gameObjects.forEach((gameObject) => {
+      if (gameObject.toggleIsRaised) {
+        gameObject.toggleIsRaised();
       }
     });
   }
 
-  stealInventory() {
-    this.actors.forEach((actor) => {
-      if (actor instanceof GameObject) {
-        actor.resetHasBeenCollected();
-      }
+  stealInventory(): void {
+    this.gameObjects.forEach((gameObject) => {
+      gameObject.resetHasBeenCollected();
+      this.inventory.remove(gameObject.type);
     });
-
-    // TODO this is risky - it assumes anything shown in the inventory can be stolen and vice versa
-    // It should only clear those in the above loop, or better listen to an event simialr to adding
-    this.inventory.clear();
   }
 
-  completeLevel() {
-    this.isCompleted = true;
+  completeLevel(): void {
     this.engine.clock.stop();
-    Game.getInstance().emit('Complete', {});
+    Game.getInstance().emit(GAME_EVENTS.COMPLETE, {});
   }
 
-  isPositionOutOfBounds(x: number, y: number) {
+  isPositionOutOfBounds(x: number, y: number): boolean {
     return x === 0 || y === 0 || x >= this.data.tilesWidth + 1 || y >= this.data.tilesHeight + 1;
+  }
+
+  public get gameObjects(): Array<GameObject> {
+    return this.actors.filter((actor: Actor): actor is GameObject => {
+      return actor instanceof GameObject;
+    });
+  }
+
+  public getPlayer(): Player {
+    const player = this.gameObjects.find((actor): actor is Player => actor instanceof Player);
+    if (!player) {
+      throw new Error('Player not added to level. Check level config');
+    }
+
+    return player;
   }
 }

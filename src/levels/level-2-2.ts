@@ -7,8 +7,9 @@ import {
   PLACEMENT_TYPE_SWITCH_DOOR,
   PLACEMENT_TYPE_WALL,
 } from '../helpers/consts';
+import { LevelData } from './levels-map';
 
-export const Level_2_2 = {
+export const Level_2_2: LevelData = {
   theme: 'GREEN',
   timeAvailable: 99,
   tilesWidth: 9,

@@ -16,9 +16,6 @@ loader.logoWidth = 144;
 loader.logoHeight = 144;
 loader.logoPosition = vec(768 / 2 - 144 / 2, 140);
 
-for (const resourceKey in Resources) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const resource = Resources[resourceKey];
+Object.entries(Resources).map(([, resource]) => {
   loader.addResource(resource);
-}
+});

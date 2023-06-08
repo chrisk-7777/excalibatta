@@ -20,12 +20,11 @@ export class Collision {
   }
 
   scanPlacementsAtPosition() {
-    this.placementsAtPosition = this.level.actors.filter((p) => {
+    this.placementsAtPosition = this.level.gameObjects.filter((p) => {
       const isSelf = p.id === this.forBody.id;
-      const isType = p instanceof GameObject;
 
-      return !isSelf && isType && p.tile.x === this.x && p.tile.y === this.y;
-    }) as Array<GameObject>;
+      return !isSelf && p.tile.x === this.x && p.tile.y === this.y;
+    });
   }
 
   withSolidPlacement() {
@@ -87,7 +86,7 @@ export class Collision {
       this.placementsAtPosition.find((p) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore need to fix up types and ducktypes
-        return p.type === PLACEMENT_TYPE_ICE && p.corner;
+        return p.type === PLACEMENT_TYPE_ICE && p.corner !== null;
       }) ?? false
     );
   }

@@ -60,17 +60,18 @@ const showDeathType = (deathType: string | null) => {
 export function DeathMessage() {
   const [deathOutcome, setDeathOutcome] = useState<string | null>(null);
   const handleRestartLevel = () => {
-    if (deathOutcome === null) {
-      return;
-    }
-
-    // A bit icky. ditto with timer, needs a reset event ?
-    setDeathOutcome(null);
     Game.getInstance().levelManager.resetCurrent();
   };
 
   useKeyPress('Enter', () => {
+    if (deathOutcome === null) {
+      return;
+    }
     handleRestartLevel();
+  });
+
+  useGameEvent(GAME_EVENTS.LEVEL_START, () => {
+    setDeathOutcome(null);
   });
 
   useGameEvent(GAME_EVENTS.DEATH, () => {
